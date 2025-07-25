@@ -1,0 +1,58 @@
+{
+  "0071": {
+    "attribute_name": "Social Achievements",
+    "definition": "Measures accomplishments achieved in a social or professional context, like completing a project or receiving an award.",
+    "attribute_meta_tags": ["achievement", "success", "complete", "finish task", "award", "accomplishment", "project", "leadership", "team work"],
+    "encoding_rules": "Score is based on the significance of the achievement. 0 for no achievement, 255 for a major life accomplishment.",
+    "ai_parsing_guidelines": "Focus on verbs indicating completion and nouns related to projects, goals, and recognition."
+  },
+  "0048": {
+    "attribute_name": "Leadership Ability",
+    "definition": "Evaluates one's capacity to guide, influence, and motivate others in various contexts.",
+    "attribute_meta_tags": ["leadership", "guide", "mentor", "influence", "team leader", "manage", "supervise", "coordinate"],
+    "encoding_rules": "Score reflects leadership experience and impact. 0 for no leadership experience, 255 for exceptional leadership skills.",
+    "ai_parsing_guidelines": "Look for actions involving guiding others, taking charge, or managing teams and projects."
+  },
+  "0008": {
+    "attribute_name": "Dietary Habits",
+    "definition": "Tracks eating patterns, food preferences, and nutritional choices.",
+    "attribute_meta_tags": ["food", "eat", "meal", "restaurant", "cooking", "diet", "nutrition", "breakfast", "lunch", "dinner"],
+    "encoding_rules": "Score based on dietary diversity and healthiness. 0 for poor eating habits, 255 for excellent nutritional choices.",
+    "ai_parsing_guidelines": "Identify mentions of specific foods, meals, restaurants, or cooking activities."
+  },
+  "0032": {
+    "attribute_name": "Creative Expression",
+    "definition": "Measures involvement in artistic and creative activities.",
+    "attribute_meta_tags": ["art", "creative", "design", "music", "painting", "writing", "photography", "artistic", "imagination"],
+    "encoding_rules": "Score reflects creative output and artistic engagement. 0 for no creative activities, 255 for professional artistic work.",
+    "ai_parsing_guidelines": "Focus on artistic verbs and creative nouns, including any form of artistic expression."
+  },
+  "0156": {
+    "attribute_name": "Physical Fitness",
+    "definition": "Tracks physical activity levels and fitness-related behaviors.",
+    "attribute_meta_tags": ["exercise", "workout", "fitness", "sport", "running", "gym", "physical", "training", "health"],
+    "encoding_rules": "Score based on physical activity frequency and intensity. 0 for sedentary lifestyle, 255 for athlete-level fitness.",
+    "ai_parsing_guidelines": "Look for physical activities, exercise routines, sports participation, and fitness-related content."
+  },
+  "SP088": {
+    "attribute_name": "Social Responsibility",
+    "definition": "Measures engagement with social causes and community responsibility.",
+    "attribute_meta_tags": ["volunteer", "charity", "community", "social cause", "helping others", "donation", "civic duty"],
+    "encoding_rules": "Score reflects level of social engagement and community contribution. 0 for no social involvement, 255 for dedicated social activism.",
+    "ai_parsing_guidelines": "Identify activities related to helping others, community service, or social causes."
+  },
+  "0099": {
+    "attribute_name": "Learning Orientation",
+    "definition": "Evaluates commitment to continuous learning and skill development.",
+    "attribute_meta_tags": ["learn", "study", "education", "course", "skill", "knowledge", "research", "book", "training"],
+    "encoding_rules": "Score based on learning activities and educational engagement. 0 for no learning pursuits, 255 for dedicated lifelong learner.",
+    "ai_parsing_guidelines": "Focus on educational activities, skill acquisition, and knowledge-seeking behaviors."
+  },
+  "0203": {
+    "attribute_name": "Technology Adoption",
+    "definition": "Tracks engagement with technology and digital tools.",
+    "attribute_meta_tags": ["technology", "digital", "app", "software", "computer", "internet", "AI", "programming", "tech"],
+    "encoding_rules": "Score reflects technology usage and adoption. 0 for technology avoidance, 255 for cutting-edge technology adoption.",
+    "ai_parsing_guidelines": "Look for mentions of digital tools, software usage, or technology-related activities."
+  }
+} 
