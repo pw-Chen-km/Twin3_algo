@@ -19,34 +19,20 @@ from msmm import MSMMProcessor
 from ultu import ULTUProcessor
 
 class Twin3MainProcessor:
-    def __init__(self, user_id: int = 1, use_gemma: bool = True, gemma_model: str = "google/gemma-2b-it", local_model_path: str = "../models/gemma-2b-it"):
+    def __init__(self, user_id: int = 1):
         """初始化Twin3主處理器"""
         self.user_id = user_id
         print(f"=== Twin3 演算法框架 - 主更新循環 (用戶 {user_id}) ===")
         print("正在初始化系統組件...")
         
         # 顯示配置信息
-        if use_gemma:
-            print(f"🤖 啟用Gemma LLM模式 (模型: {gemma_model})")
-            if local_model_path:
-                print(f"🏠 本地模型路徑: {local_model_path}")
-            print("📝 將使用AI進行Meta-Tag提取和精確評分")
-        else:
-            print("⚙️  使用規則引擎模式")
-            print("📝 將使用關鍵詞匹配進行處理")
+        print("🤖 啟用 Gemini 2.5 Flash 模式")
+        print("📝 將使用AI進行Meta-Tag提取和精確評分")
         
         # 初始化各個模組
         try:
-            self.msmm = MSMMProcessor(
-                use_local_gemma=use_gemma, 
-                gemma_model_name=gemma_model,
-                local_model_path=local_model_path
-            )
-            self.ultu = ULTUProcessor(
-                use_local_gemma=use_gemma, 
-                gemma_model_name=gemma_model,
-                local_model_path=local_model_path
-            )
+            self.msmm = MSMMProcessor()
+            self.ultu = ULTUProcessor()
             print("✅ 系統初始化完成！\n")
         except Exception as e:
             print(f"⚠️  初始化警告: {e}")
@@ -54,11 +40,11 @@ class Twin3MainProcessor:
     
     def get_user_state_file(self) -> str:
         """獲取用戶專屬的狀態文件路徑"""
-        return f"../state/user_{self.user_id}_matrix_state.json"
+        return f"state/user_{self.user_id}_matrix_state.json"
     
     def get_metatags_record_file(self) -> str:
         """獲取Meta-Tag記錄文件路徑"""
-        return "../state/user_metatags_records.json"
+        return "state/user_metatags_records.json"
     
     def load_user_state(self) -> Dict:
         """讀取用戶專屬的Twin Matrix狀態"""
@@ -179,17 +165,20 @@ class Twin3MainProcessor:
         print(f"用戶 {self.user_id} - 開始處理內容：{user_content}")
         if image_url:
             print(f"包含圖片：{image_url}")
+            print(f"📊 圖片將消耗 256 tokens (總上下文限制: 32K tokens)")
         print(f"{'='*60}")
         
         # 步驟1：MSMM 語意匹配（會自動提取Meta-Tags，支持圖片）
         print("\n🔍 步驟1：執行 MSMM 語意匹配...")
         matched_attributes = self.msmm.process_user_content(user_content, image_url, similarity_threshold)
         
-        # 步驟1.5：提取並記錄Meta-Tags（支持圖片）
-        print("\n📝 步驟1.5：提取並記錄 Meta-Tags...")
-        extracted_metatags = self.msmm.extract_meta_tags(user_content, image_url)
-        if extracted_metatags:
-            self.update_user_metatags(extracted_metatags)
+        # 步驟1.5：記錄已提取的Meta-Tags
+        print("\n📝 步驟1.5：記錄 Meta-Tags...")
+        # 從 MSMM 的內部狀態獲取已提取的 Meta-Tags
+        if hasattr(self.msmm, '_last_extracted_tags'):
+            extracted_metatags = self.msmm._last_extracted_tags
+            if extracted_metatags:
+                self.update_user_metatags(extracted_metatags)
         
         if not matched_attributes:
             print("⚠️  沒有找到匹配的維度，處理結束")
@@ -198,11 +187,11 @@ class Twin3MainProcessor:
         # 修改ULTU處理器以使用用戶專屬狀態
         self.ultu.state_file = self.get_user_state_file()
         
-        # 步驟2：ULTU 動態評分更新（支持圖片）
-        print(f"\n⚡ 步驟2：執行 ULTU 動態評分更新...")
+        # 步驟3：ULTU 動態評分更新（支持圖片）
+        print(f"\n⚡ 步驟3：執行 ULTU 動態評分更新...")
         update_results = self.ultu.process_attribute_updates(matched_attributes, user_content, image_url)
         
-        # 步驟3：顯示更新摘要
+        # 步驟4：顯示更新摘要
         self._display_update_summary(update_results)
         
         return update_results
@@ -219,7 +208,10 @@ class Twin3MainProcessor:
         for attr_id, update_info in updates.items():
             change = update_info['change']
             direction = "↗️" if change > 0 else "↘️" if change < 0 else "➡️"
+            strategy = update_info.get('strategy_used', '標準更新')
+            update_count = update_info.get('update_count', 1)
             print(f"  {direction} {attr_id}-{update_info['attribute_name']}: {update_info['previous_score']} → {update_info['smoothed_score']} ({change:+d})")
+            print(f"      📊 原始分數: {update_info['new_raw_score']}, 策略: {strategy}, 第{update_count}次更新")
         
         # 只顯示有顯著衰減的維度
         significant_decays = {k: v for k, v in decays.items() if v['change'] < -5}
@@ -236,10 +228,6 @@ def parse_arguments():
     """解析命令行參數"""
     parser = argparse.ArgumentParser(description='Twin3 多用戶處理系統（支持多模態）')
     parser.add_argument('--user', type=int, default=1, help='指定用戶ID (默認: 1)')
-    parser.add_argument('--no-gemma', action='store_true', help='強制使用規則引擎模式')
-    parser.add_argument('--gemma-7b', action='store_true', help='使用大型Gemma-7B模型（已棄用，現在默認Gemma-3）')
-    parser.add_argument('--local-model', type=str, help='指定本地模型路徑')
-    parser.add_argument('--no-local', action='store_true', help='強制使用線上模型')
     parser.add_argument('--environmental-demo', action='store_true', help='運行環保主題演示')
     parser.add_argument('--image', type=str, help='圖片URL或本地路徑（支持多模態分析）')
     parser.add_argument('content', nargs='*', help='要處理的用戶內容')
@@ -255,32 +243,13 @@ def main():
         run_environmental_demo(args.user, args.image)
         return
     
-    # 配置Gemma-3n-E4B模式
-    use_gemma = not args.no_gemma
-    gemma_model = "google/gemma-3n-E4B-it"  # 默認使用Gemma-3n-E4B
-    if args.gemma_7b:
-        print("⚠️  --gemma-7b 參數已棄用，現在默認使用 Gemma-3n-E4B")
-    local_model_path = args.local_model if args.local_model else (None if args.no_local else None)  # 預設不使用本地模型
-    
     # 顯示配置
-    if use_gemma:
-        print(f"🤖 Gemma-3n-E4B多模態模式 (模型: {gemma_model})")
-        if local_model_path:
-            print(f"🏠 本地模型: {local_model_path}")
-        else:
-            print(f"🌐 將自動從Hugging Face下載模型")
-        if args.image:
-            print(f"🖼️  圖片輸入: {args.image}")
-    else:
-        print("⚙️  規則引擎模式")
+    print(f"🤖 Gemini 2.5 Flash 多模態模式")
+    if args.image:
+        print(f"🖼️  圖片輸入: {args.image}")
     
     # 創建處理器
-    processor = Twin3MainProcessor(
-        user_id=args.user,
-        use_gemma=use_gemma, 
-        gemma_model=gemma_model, 
-        local_model_path=local_model_path
-    )
+    processor = Twin3MainProcessor(user_id=args.user)
     
     # 顯示處理前的狀態
     print("處理前的狀態：")
@@ -311,7 +280,7 @@ def main():
 
 def run_environmental_demo(user_id: int = 1, image_url: str = None):
     """運行環保主題的演示（支持多模態）"""
-    processor = Twin3MainProcessor(user_id=user_id, use_gemma=True)
+    processor = Twin3MainProcessor(user_id=user_id)
     
     print(f"=== 用戶 {user_id} 環保主題演示 ===")
     

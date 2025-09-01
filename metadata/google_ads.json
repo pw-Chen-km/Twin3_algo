@@ -1,0 +1,3462 @@
+[
+    {
+      "id": "affinity_audiences",
+      "name": "Affinity Audiences",
+      "parent_id": null
+    },
+    {
+      "id": "banking_and_finance",
+      "name": "Banking & Finance",
+      "parent_id": "affinity_audiences"
+    },
+    {
+      "id": "avid_investors",
+      "name": "Avid Investors",
+      "parent_id": "banking_and_finance"
+    },
+    {
+      "id": "banks_online",
+      "name": "Banks Online",
+      "parent_id": "banking_and_finance"
+    },
+    {
+      "id": "beauty_and_wellness",
+      "name": "Beauty & Wellness",
+      "parent_id": "affinity_audiences"
+    },
+    {
+      "id": "beauty_mavens",
+      "name": "Beauty Mavens",
+      "parent_id": "beauty_and_wellness"
+    },
+    {
+      "id": "frequently_visits_salons",
+      "name": "Frequently Visits Salons",
+      "parent_id": "beauty_and_wellness"
+    },
+    {
+      "id": "food_and_dining",
+      "name": "Food & Dining",
+      "parent_id": "affinity_audiences"
+    },
+    {
+      "id": "coffee_shop_regulars",
+      "name": "Coffee Shop Regulars",
+      "parent_id": "food_and_dining"
+    },
+    {
+      "id": "cooking_enthusiasts",
+      "name": "Cooking Enthusiasts",
+      "parent_id": "food_and_dining"
+    },
+    {
+      "id": "30_minute_chefs",
+      "name": "30 Minute Chefs",
+      "parent_id": "cooking_enthusiasts"
+    },
+    {
+      "id": "aspiring_chefs",
+      "name": "Aspiring Chefs",
+      "parent_id": "cooking_enthusiasts"
+    },
+    {
+      "id": "fast_food_cravers",
+      "name": "Fast Food Cravers",
+      "parent_id": "food_and_dining"
+    },
+    {
+      "id": "foodies",
+      "name": "Foodies",
+      "parent_id": "food_and_dining"
+    },
+    {
+      "id": "frequently_dines_out",
+      "name": "Frequently Dines Out",
+      "parent_id": "food_and_dining"
+    },
+    {
+      "id": "diners_by_meal",
+      "name": "Diners by Meal",
+      "parent_id": "frequently_dines_out"
+    },
+    {
+      "id": "frequently_eats_breakfast_out",
+      "name": "Frequently Eats Breakfast Out",
+      "parent_id": "diners_by_meal"
+    },
+    {
+      "id": "frequently_eats_dinner_out",
+      "name": "Frequently Eats Dinner Out",
+      "parent_id": "diners_by_meal"
+    },
+    {
+      "id": "frequently_eats_lunch_out",
+      "name": "Frequently Eats Lunch Out",
+      "parent_id": "diners_by_meal"
+    },
+    {
+      "id": "prefer_organic_food",
+      "name": "Prefer Organic Food",
+      "parent_id": "food_and_dining"
+    },
+    {
+      "id": "vegetarians_and_vegans",
+      "name": "Vegetarians & Vegans",
+      "parent_id": "food_and_dining"
+    },
+    {
+      "id": "vegans",
+      "name": "vegans",
+      "parent_id": "vegetarians_and_vegans"
+    },
+    {
+      "id": "home_and_garden",
+      "name": "Home & Garden",
+      "parent_id": "affinity_audiences"
+    },
+    {
+      "id": "do_it_yourselfers",
+      "name": "Do-It-Yourselfers",
+      "parent_id": "home_and_garden"
+    },
+    {
+      "id": "home_decor_enthusiasts",
+      "name": "Home Decor Enthusiasts",
+      "parent_id": "home_and_garden"
+    },
+    {
+      "id": "lifestyles_and_hobbies",
+      "name": "Lifestyles & Hobbies",
+      "parent_id": "affinity_audiences"
+    },
+    {
+      "id": "art_and_theater_aficionados",
+      "name": "Art & Theater Aficionados",
+      "parent_id": "lifestyles_and_hobbies"
+    },
+    {
+      "id": "business_professionals",
+      "name": "Business Professionals",
+      "parent_id": "lifestyles_and_hobbies"
+    },
+    {
+      "id": "charitable_donors_and_volunteers",
+      "name": "Charitable Donors & Volunteers",
+      "parent_id": "lifestyles_and_hobbies"
+    },
+    {
+      "id": "family_focused",
+      "name": "Family-Focused",
+      "parent_id": "lifestyles_and_hobbies"
+    },
+    {
+      "id": "homeschooling_parents",
+      "name": "Homeschooling Parents",
+      "parent_id": "family_focused"
+    },
+    {
+      "id": "fashionistas",
+      "name": "Fashionistas",
+      "parent_id": "lifestyles_and_hobbies"
+    },
+    {
+      "id": "frequently_attends_live_events",
+      "name": "Frequently Attends Live Events",
+      "parent_id": "lifestyles_and_hobbies"
+    },
+    {
+      "id": "green_living_enthusiasts",
+      "name": "Green Living Enthusiasts",
+      "parent_id": "lifestyles_and_hobbies"
+    },
+    {
+      "id": "nightlife_enthusiasts",
+      "name": "Nightlife Enthusiasts",
+      "parent_id": "lifestyles_and_hobbies"
+    },
+    {
+      "id": "outdoor_enthusiasts",
+      "name": "Outdoor Enthusiasts",
+      "parent_id": "lifestyles_and_hobbies"
+    },
+    {
+      "id": "pet_lovers",
+      "name": "Pet Lovers",
+      "parent_id": "lifestyles_and_hobbies"
+    },
+    {
+      "id": "cat_lovers",
+      "name": "Cat Lovers",
+      "parent_id": "pet_lovers"
+    },
+    {
+      "id": "dog_lovers",
+      "name": "Dog Lovers",
+      "parent_id": "pet_lovers"
+    },
+    {
+      "id": "shutterbugs",
+      "name": "Shutterbugs",
+      "parent_id": "lifestyles_and_hobbies"
+    },
+    {
+      "id": "thrill_seekers",
+      "name": "Thrill Seekers",
+      "parent_id": "lifestyles_and_hobbies"
+    },
+    {
+      "id": "media_and_entertainment",
+      "name": "Media & Entertainment",
+      "parent_id": "affinity_audiences"
+    },
+    {
+      "id": "book_lovers",
+      "name": "Book Lovers",
+      "parent_id": "media_and_entertainment"
+    },
+    {
+      "id": "comics_and_animation_fans",
+      "name": "Comics & Animation Fans",
+      "parent_id": "media_and_entertainment"
+    },
+    {
+      "id": "gamers",
+      "name": "Gamers",
+      "parent_id": "media_and_entertainment"
+    },
+    {
+      "id": "action_game_fans",
+      "name": "Action Game Fans",
+      "parent_id": "gamers"
+    },
+    {
+      "id": "adventure_and_strategy_game_fans",
+      "name": "Adventure & Strategy Game Fans",
+      "parent_id": "gamers"
+    },
+    {
+      "id": "casual_and_social_gamers",
+      "name": "Casual & Social Gamers",
+      "parent_id": "gamers"
+    },
+    {
+      "id": "console_gamers",
+      "name": "Console Gamers",
+      "parent_id": "gamers"
+    },
+    {
+      "id": "driving_and_racing_game_fans",
+      "name": "Driving & Racing Game Fans",
+      "parent_id": "gamers"
+    },
+    {
+      "id": "esports_fans",
+      "name": "Esports Fans",
+      "parent_id": "gamers"
+    },
+    {
+      "id": "fans_of_new_and_upcoming_video_games",
+      "name": "Fans of New & Upcoming Video Games",
+      "parent_id": "gamers"
+    },
+    {
+      "id": "hardcore_gamers",
+      "name": "Hardcore Gamers",
+      "parent_id": "gamers"
+    },
+    {
+      "id": "pc_gamers",
+      "name": "PC Gamers",
+      "parent_id": "gamers"
+    },
+    {
+      "id": "roleplaying_game_fans",
+      "name": "Roleplaying Game Fans",
+      "parent_id": "gamers"
+    },
+    {
+      "id": "shooter_game_fans",
+      "name": "Shooter Game Fans",
+      "parent_id": "gamers"
+    },
+    {
+      "id": "sports_game_fans",
+      "name": "Sports Game Fans",
+      "parent_id": "gamers"
+    },
+    {
+      "id": "light_tv_viewers",
+      "name": "Light TV Viewers",
+      "parent_id": "media_and_entertainment"
+    },
+    {
+      "id": "movie_lovers",
+      "name": "Movie Lovers",
+      "parent_id": "media_and_entertainment"
+    },
+    {
+      "id": "action_and_adventure_movie_fans",
+      "name": "Action & Adventure Movie Fans",
+      "parent_id": "movie_lovers"
+    },
+    {
+      "id": "comedy_movie_fans",
+      "name": "Comedy Movie Fans",
+      "parent_id": "movie_lovers"
+    },
+    {
+      "id": "family_movie_fans",
+      "name": "Family Movie Fans",
+      "parent_id": "movie_lovers"
+    },
+    {
+      "id": "fans_of_new_and_upcoming_movies",
+      "name": "Fans of New & Upcoming Movies",
+      "parent_id": "movie_lovers"
+    },
+    {
+      "id": "horror_movie_fans",
+      "name": "Horror Movie Fans",
+      "parent_id": "movie_lovers"
+    },
+    {
+      "id": "romance_and_drama_movie_fans",
+      "name": "Romance & Drama Movie Fans",
+      "parent_id": "movie_lovers"
+    },
+    {
+      "id": "sci-fi_and_fantasy_movie_fans",
+      "name": "Sci-Fi & Fantasy Movie Fans",
+      "parent_id": "movie_lovers"
+    },
+    {
+      "id": "south_asian_film_fans",
+      "name": "South Asian Film Fans",
+      "parent_id": "movie_lovers"
+    },
+    {
+      "id": "music_lovers",
+      "name": "Music Lovers",
+      "parent_id": "media_and_entertainment"
+    },
+    {
+      "id": "blues_fans",
+      "name": "Blues Fans",
+      "parent_id": "music_lovers"
+    },
+    {
+      "id": "classical_music_enthusiasts",
+      "name": "Classical Music Enthusiasts",
+      "parent_id": "music_lovers"
+    },
+    {
+      "id": "country_music_fans",
+      "name": "Country Music Fans",
+      "parent_id": "music_lovers"
+    },
+    {
+      "id": "electronic_dance_music_fans",
+      "name": "Electronic Dance Music Fans",
+      "parent_id": "music_lovers"
+    },
+    {
+      "id": "folk_and_traditional_music_enthusiasts",
+      "name": "Folk & Traditional Music Enthusiasts",
+      "parent_id": "music_lovers"
+    },
+    {
+      "id": "indie_and_alternative_rock_fans",
+      "name": "Indie & Alternative Rock Fans",
+      "parent_id": "music_lovers"
+    },
+    {
+      "id": "jazz_enthusiasts",
+      "name": "Jazz Enthusiasts",
+      "parent_id": "music_lovers"
+    },
+    {
+      "id": "metalheads",
+      "name": "Metalheads",
+      "parent_id": "music_lovers"
+    },
+    {
+      "id": "pop_music_fans",
+      "name": "Pop Music Fans",
+      "parent_id": "music_lovers"
+    },
+    {
+      "id": "rap_and_hip_hop_fans",
+      "name": "Rap & Hip Hop Fans",
+      "parent_id": "music_lovers"
+    },
+    {
+      "id": "rock_music_fans",
+      "name": "Rock Music Fans",
+      "parent_id": "music_lovers"
+    },
+    {
+      "id": "spanish-language_music_fans",
+      "name": "Spanish-Language Music Fans",
+      "parent_id": "music_lovers"
+    },
+    {
+      "id": "world_music_fans",
+      "name": "World Music Fans",
+      "parent_id": "music_lovers"
+    },
+    {
+      "id": "tv_lovers",
+      "name": "TV Lovers",
+      "parent_id": "media_and_entertainment"
+    },
+    {
+      "id": "documentary_and_nonfiction_tv_fans",
+      "name": "Documentary & nonfiction TV Fans",
+      "parent_id": "tv_lovers"
+    },
+    {
+      "id": "family_television_fans",
+      "name": "Family Television Fans",
+      "parent_id": "tv_lovers"
+    },
+    {
+      "id": "game_reality_and_talk_show_fans",
+      "name": "Game, Reality & Talk Show Fans",
+      "parent_id": "tv_lovers"
+    },
+    {
+      "id": "sci-fi_and_fantasy_tv_fans",
+      "name": "Sci-Fi & Fantasy TV Fans",
+      "parent_id": "tv_lovers"
+    },
+    {
+      "id": "tv_comedy_fans",
+      "name": "TV Comedy Fans",
+      "parent_id": "tv_lovers"
+    },
+    {
+      "id": "tv_drama_fans",
+      "name": "TV Drama Fans",
+      "parent_id": "tv_lovers"
+    },
+    {
+      "id": "news_and_politics",
+      "name": "News & Politics",
+      "parent_id": "affinity_audiences"
+    },
+    {
+      "id": "avid_news_readers",
+      "name": "Avid News Readers",
+      "parent_id": "news_and_politics"
+    },
+    {
+      "id": "avid_business_news_readers",
+      "name": "Avid Business News Readers",
+      "parent_id": "avid_news_readers"
+    },
+    {
+      "id": "avid_local_news_readers",
+      "name": "Avid Local News Readers",
+      "parent_id": "avid_news_readers"
+    },
+    {
+      "id": "avid_political_news_readers",
+      "name": "Avid Political News Readers",
+      "parent_id": "avid_news_readers"
+    },
+    {
+      "id": "avid_world_news_readers",
+      "name": "Avid World News Readers",
+      "parent_id": "avid_news_readers"
+    },
+    {
+      "id": "entertainment_news_enthusiasts",
+      "name": "Entertainment News Enthusiasts",
+      "parent_id": "avid_news_readers"
+    },
+    {
+      "id": "mens_media_fans",
+      "name": "Men's Media Fans",
+      "parent_id": "avid_news_readers"
+    },
+    {
+      "id": "womens_media_fans",
+      "name": "Women's Media Fans",
+      "parent_id": "avid_news_readers"
+    },
+    {
+      "id": "shoppers",
+      "name": "Shoppers",
+      "parent_id": "affinity_audiences"
+    },
+    {
+      "id": "bargain_hunters",
+      "name": "Bargain Hunters",
+      "parent_id": "shoppers"
+    },
+    {
+      "id": "luxury_shoppers",
+      "name": "Luxury Shoppers",
+      "parent_id": "shoppers"
+    },
+    {
+      "id": "shopaholics",
+      "name": "Shopaholics",
+      "parent_id": "shoppers"
+    },
+    {
+      "id": "shoppers_by_store_type",
+      "name": "Shoppers by Store Type",
+      "parent_id": "shoppers"
+    },
+    {
+      "id": "convenience_store_shoppers",
+      "name": "Convenience Store Shoppers",
+      "parent_id": "shoppers_by_store_type"
+    },
+    {
+      "id": "department_store_shoppers",
+      "name": "Department Store Shoppers",
+      "parent_id": "shoppers_by_store_type"
+    },
+    {
+      "id": "grocery_shoppers",
+      "name": "Grocery Shoppers",
+      "parent_id": "shoppers_by_store_type"
+    },
+    {
+      "id": "superstore_shoppers",
+      "name": "Superstore Shoppers",
+      "parent_id": "shoppers_by_store_type"
+    },
+    {
+      "id": "value_shoppers",
+      "name": "Value Shoppers",
+      "parent_id": "shoppers"
+    },
+    {
+      "id": "sports_and_fitness",
+      "name": "Sports & Fitness",
+      "parent_id": "affinity_audiences"
+    },
+    {
+      "id": "health_and_fitness_buffs",
+      "name": "Health & Fitness Buffs",
+      "parent_id": "sports_and_fitness"
+    },
+    {
+      "id": "weightlifters",
+      "name": "Weightlifters",
+      "parent_id": "health_and_fitness_buffs"
+    },
+    {
+      "id": "yoga_lovers",
+      "name": "Yoga Lovers",
+      "parent_id": "health_and_fitness_buffs"
+    },
+    {
+      "id": "sports_fans",
+      "name": "Sports Fans",
+      "parent_id": "sports_and_fitness"
+    },
+    {
+      "id": "american_football_fans",
+      "name": "American Football Fans",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "australian_football_fans",
+      "name": "Australian Football Fans",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "baseball_fans",
+      "name": "Baseball Fans",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "basketball_fans",
+      "name": "Basketball Fans",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "boating_and_sailing_enthusiasts",
+      "name": "Boating & Sailing Enthusiasts",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "cricket_enthusiasts",
+      "name": "Cricket Enthusiasts",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "cycling_enthusiasts",
+      "name": "Cycling Enthusiasts",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "fight_and_wrestling_fans",
+      "name": "Fight & Wrestling Fans",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "golf_enthusiasts",
+      "name": "Golf Enthusiasts",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "hockey_fans",
+      "name": "Hockey Fans",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "motor_sports_enthusiasts",
+      "name": "Motor Sports Enthusiasts",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "olympic_fans",
+      "name": "Olympic fans",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "racquetball_enthusiasts",
+      "name": "Racquetball Enthusiasts",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "rugby_enthusiasts",
+      "name": "Rugby Enthusiasts",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "running_enthusiasts",
+      "name": "Running Enthusiasts",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "skiing_enthusiasts",
+      "name": "Skiing Enthusiasts",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "soccer_fans",
+      "name": "Soccer Fans",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "swimming_enthusiasts",
+      "name": "Swimming Enthusiasts",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "tennis_enthusiasts",
+      "name": "Tennis Enthusiasts",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "water_sports_enthusiasts",
+      "name": "Water Sports Enthusiasts",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "winter_sports_enthusiasts",
+      "name": "Winter Sports Enthusiasts",
+      "parent_id": "sports_fans"
+    },
+    {
+      "id": "technology",
+      "name": "Technology",
+      "parent_id": "affinity_audiences"
+    },
+    {
+      "id": "mobile_enthusiasts",
+      "name": "Mobile Enthusiasts",
+      "parent_id": "technology"
+    },
+    {
+      "id": "social_media_enthusiasts",
+      "name": "Social Media Enthusiasts",
+      "parent_id": "technology"
+    },
+    {
+      "id": "technophiles",
+      "name": "Technophiles",
+      "parent_id": "technology"
+    },
+    {
+      "id": "audiophiles",
+      "name": "Audiophiles",
+      "parent_id": "technophiles"
+    },
+    {
+      "id": "cloud_services_power_users",
+      "name": "Cloud Services Power Users",
+      "parent_id": "technophiles"
+    },
+    {
+      "id": "high-end_computer_aficionados",
+      "name": "High-End Computer Aficionados",
+      "parent_id": "technophiles"
+    },
+    {
+      "id": "home_automation_enthusiasts",
+      "name": "Home Automation Enthusiasts",
+      "parent_id": "technophiles"
+    },
+    {
+      "id": "travel",
+      "name": "Travel",
+      "parent_id": "affinity_audiences"
+    },
+    {
+      "id": "business_travelers",
+      "name": "Business Travelers",
+      "parent_id": "travel"
+    },
+    {
+      "id": "travel_buffs",
+      "name": "Travel Buffs",
+      "parent_id": "travel"
+    },
+    {
+      "id": "beachbound_travelers",
+      "name": "Beachbound Travelers",
+      "parent_id": "travel_buffs"
+    },
+    {
+      "id": "family_vacationers",
+      "name": "Family Vacationers",
+      "parent_id": "travel_buffs"
+    },
+    {
+      "id": "app_categories",
+      "name": "App Categories",
+      "parent_id": null
+    },
+    {
+      "id": "apple_app_store",
+      "name": "Apple App Store",
+      "parent_id": "app_categories"
+    },
+    {
+      "id": "google_play",
+      "name": "Google Play",
+      "parent_id": "app_categories"
+    },
+    {
+      "id": "windows_phone_apps",
+      "name": "Windows Phone Apps",
+      "parent_id": "app_categories"
+    },
+    {
+      "id": "apple_book",
+      "name": "Book",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_business",
+      "name": "Business",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_catalogs",
+      "name": "Catalogs",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_education",
+      "name": "Education",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_entertainment",
+      "name": "Entertainment",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_finance",
+      "name": "Finance",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_food_and_drink",
+      "name": "Food & Drink",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_games",
+      "name": "Games",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_games_action",
+      "name": "Action",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_adventure",
+      "name": "Adventure",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_arcade",
+      "name": "Arcade",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_board",
+      "name": "Board",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_card",
+      "name": "Card",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_casino",
+      "name": "Casino",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_dice",
+      "name": "Dice",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_educational",
+      "name": "Educational",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_family",
+      "name": "Family",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_kids",
+      "name": "Kids",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_music",
+      "name": "Music",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_puzzle",
+      "name": "Puzzle",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_racing",
+      "name": "Racing",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_role_playing",
+      "name": "Role Playing",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_simulation",
+      "name": "Simulation",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_sports",
+      "name": "Sports",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_strategy",
+      "name": "Strategy",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_trivia",
+      "name": "Trivia",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_games_word",
+      "name": "Word",
+      "parent_id": "apple_games"
+    },
+    {
+      "id": "apple_health_and_fitness",
+      "name": "Health & Fitness",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_lifestyle",
+      "name": "Lifestyle",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_magazines_and_newspapers",
+      "name": "Magazines & Newspapers",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_arts_and_photography",
+      "name": "Arts & Photography",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_automotive",
+      "name": "Automotive",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_brides_and_weddings",
+      "name": "Brides & Weddings",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_business_and_investing",
+      "name": "Business & Investing",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_childrens_magazines",
+      "name": "Children's Magazines",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_computers_and_internet",
+      "name": "Computers & Internet",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_cooking_food_and_drink",
+      "name": "Cooking, Food & Drink",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_crafts_and_hobbies",
+      "name": "Crafts & Hobbies",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_electronics_and_audio",
+      "name": "Electronics & Audio",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_entertainment",
+      "name": "Entertainment",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_fashion_and_style",
+      "name": "Fashion & Style",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_health_mind_and_body",
+      "name": "Health, Mind & Body",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_history",
+      "name": "History",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_home_and_garden",
+      "name": "Home & Garden",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_literary_magazines_and_journals",
+      "name": "Literary Magazines & Journals",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_mens_interest",
+      "name": "Men's Interest",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_movies_and_music",
+      "name": "Movies & Music",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_news_and_politics",
+      "name": "News & Politics",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_outdoors_and_nature",
+      "name": "Outdoors & Nature",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_parenting_and_family",
+      "name": "Parenting & Family",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_pets",
+      "name": "Pets",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_professional_and_trade",
+      "name": "Professional & Trade",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_regional_news",
+      "name": "Regional News",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_science",
+      "name": "Science",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_sports_and_leisure",
+      "name": "Sports & Leisure",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_teens",
+      "name": "Teens",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_travel_and_regional",
+      "name": "Travel & Regional",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_magazines_and_newspapers_womens_interest",
+      "name": "Women's Interest",
+      "parent_id": "apple_magazines_and_newspapers"
+    },
+    {
+      "id": "apple_medical",
+      "name": "Medical",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_music",
+      "name": "Music",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_navigation",
+      "name": "Navigation",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_news",
+      "name": "News",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_photo_and_video",
+      "name": "Photo & Video",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_productivity",
+      "name": "Productivity",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_reference",
+      "name": "Reference",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_shopping",
+      "name": "Shopping",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_social_networking",
+      "name": "Social Networking",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_sports",
+      "name": "Sports",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_stickers",
+      "name": "Stickers",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_stickers_animals_and_nature",
+      "name": "Animals & Nature",
+      "parent_id": "apple_stickers"
+    },
+    {
+      "id": "apple_stickers_art",
+      "name": "Art",
+      "parent_id": "apple_stickers"
+    },
+    {
+      "id": "apple_stickers_celebrations",
+      "name": "Celebrations",
+      "parent_id": "apple_stickers"
+    },
+    {
+      "id": "apple_stickers_celebrities",
+      "name": "Celebrities",
+      "parent_id": "apple_stickers"
+    },
+    {
+      "id": "apple_stickers_comics_and_cartoons",
+      "name": "Comics & Cartoons",
+      "parent_id": "apple_stickers"
+    },
+    {
+      "id": "apple_stickers_eating_and_drinking",
+      "name": "Eating & Drinking",
+      "parent_id": "apple_stickers"
+    },
+    {
+      "id": "apple_stickers_emoji_and_expressions",
+      "name": "Emoji & Expressions",
+      "parent_id": "apple_stickers"
+    },
+    {
+      "id": "apple_stickers_fashion",
+      "name": "Fashion",
+      "parent_id": "apple_stickers"
+    },
+    {
+      "id": "apple_stickers_gaming",
+      "name": "Gaming",
+      "parent_id": "apple_stickers"
+    },
+    {
+      "id": "apple_stickers_kids_and_family",
+      "name": "Kids & Family",
+      "parent_id": "apple_stickers"
+    },
+    {
+      "id": "apple_stickers_movies_and_tv",
+      "name": "Movies & TV",
+      "parent_id": "apple_stickers"
+    },
+    {
+      "id": "apple_stickers_music",
+      "name": "Music",
+      "parent_id": "apple_stickers"
+    },
+    {
+      "id": "apple_stickers_people",
+      "name": "People",
+      "parent_id": "apple_stickers"
+    },
+    {
+      "id": "apple_stickers_places_and_objects",
+      "name": "Places & Objects",
+      "parent_id": "apple_stickers"
+    },
+    {
+      "id": "apple_stickers_sports_and_activities",
+      "name": "Sports & Activities",
+      "parent_id": "apple_stickers"
+    },
+    {
+      "id": "apple_travel",
+      "name": "Travel",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_utilities",
+      "name": "Utilities",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "apple_weather",
+      "name": "Weather",
+      "parent_id": "apple_app_store"
+    },
+    {
+      "id": "google_art_and_design",
+      "name": "Art & Design",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_auto_and_vehicles",
+      "name": "Auto & Vehicles",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_beauty",
+      "name": "Beauty",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_books_and_reference",
+      "name": "Books & Reference",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_business",
+      "name": "Business",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_comics",
+      "name": "Comics",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_communication",
+      "name": "Communication",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_dating",
+      "name": "Dating",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_education",
+      "name": "Education",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_entertainment",
+      "name": "Entertainment",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_events",
+      "name": "Events",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_family",
+      "name": "Family",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_family_action_and_adventure",
+      "name": "Action & Adventure",
+      "parent_id": "google_family"
+    },
+    {
+      "id": "google_family_brain_games",
+      "name": "Brain Games",
+      "parent_id": "google_family"
+    },
+    {
+      "id": "google_family_creativity",
+      "name": "Creativity",
+      "parent_id": "google_family"
+    },
+    {
+      "id": "google_family_education",
+      "name": "Education",
+      "parent_id": "google_family"
+    },
+    {
+      "id": "google_family_music_and_video",
+      "name": "Music & Video",
+      "parent_id": "google_family"
+    },
+    {
+      "id": "google_family_pretend_play",
+      "name": "Pretend Play",
+      "parent_id": "google_family"
+    },
+    {
+      "id": "google_finance",
+      "name": "Finance",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_food_and_drink",
+      "name": "Food & Drink",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_games",
+      "name": "Games",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_games_action",
+      "name": "Action",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_adventure",
+      "name": "Adventure",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_arcade",
+      "name": "Arcade",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_board",
+      "name": "Board",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_card",
+      "name": "Card",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_casino",
+      "name": "Casino",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_casual",
+      "name": "Casual",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_educational",
+      "name": "Educational",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_family",
+      "name": "Family",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_music",
+      "name": "Music",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_puzzle",
+      "name": "Puzzle",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_racing",
+      "name": "Racing",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_role_playing",
+      "name": "Role Playing",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_simulation",
+      "name": "Simulation",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_sports",
+      "name": "Sports",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_strategy",
+      "name": "Strategy",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_trivia",
+      "name": "Trivia",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_games_word",
+      "name": "Word",
+      "parent_id": "google_games"
+    },
+    {
+      "id": "google_health_and_fitness",
+      "name": "Health & Fitness",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_house_and_home",
+      "name": "House & Home",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_libraries_and_demo",
+      "name": "Libraries & Demo",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_lifestyle",
+      "name": "Lifestyle",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_maps_and_navigation",
+      "name": "Maps & Navigation",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_medical",
+      "name": "Medical",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_music_and_audio",
+      "name": "Music & Audio",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_news_and_magazines",
+      "name": "News & Magazines",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_parenting",
+      "name": "Parenting",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_personalization",
+      "name": "Personalization",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_photography",
+      "name": "Photography",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_productivity",
+      "name": "Productivity",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_shopping",
+      "name": "Shopping",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_social",
+      "name": "Social",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_sports",
+      "name": "Sports",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_tools",
+      "name": "Tools",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_travel_and_local",
+      "name": "Travel & Local",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_video_players_and_editors",
+      "name": "Video Players & Editors",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "google_weather",
+      "name": "Weather",
+      "parent_id": "google_play"
+    },
+    {
+      "id": "in_market_audiences",
+      "name": "In-Market Audiences",
+      "parent_id": null
+    },
+    {
+      "id": "apparel_and_accessories",
+      "name": "Apparel & Accessories",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "activewear",
+      "name": "Activewear",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "running_apparel",
+      "name": "Running Apparel",
+      "parent_id": "activewear"
+    },
+    {
+      "id": "yoga_apparel",
+      "name": "Yoga Apparel",
+      "parent_id": "activewear"
+    },
+    {
+      "id": "costumes",
+      "name": "Costumes",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "eyewear",
+      "name": "Eyewear",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "eyeglasses_and_contact_lenses",
+      "name": "Eyeglasses & Contact Lenses",
+      "parent_id": "eyewear"
+    },
+    {
+      "id": "sunglasses",
+      "name": "Sunglasses",
+      "parent_id": "eyewear"
+    },
+    {
+      "id": "formal_wear",
+      "name": "Formal Wear",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "bridal_wear",
+      "name": "Bridal Wear",
+      "parent_id": "formal_wear"
+    },
+    {
+      "id": "suits_and_business_attire",
+      "name": "Suits & Business Attire",
+      "parent_id": "formal_wear"
+    },
+    {
+      "id": "hats",
+      "name": "Hats",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "handbags",
+      "name": "Handbags",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "jewelry_and_watches",
+      "name": "Jewelry & Watches",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "fine_jewelry",
+      "name": "Fine Jewelry",
+      "parent_id": "jewelry_and_watches"
+    },
+    {
+      "id": "necklaces",
+      "name": "Necklaces",
+      "parent_id": "fine_jewelry"
+    },
+    {
+      "id": "watches",
+      "name": "Watches",
+      "parent_id": "jewelry_and_watches"
+    },
+    {
+      "id": "wedding_and_engagement_rings",
+      "name": "Wedding & Engagement Rings",
+      "parent_id": "jewelry_and_watches"
+    },
+    {
+      "id": "lingerie",
+      "name": "Lingerie",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "luggage",
+      "name": "Luggage",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "mens_apparel",
+      "name": "Men's Apparel",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "outerwear",
+      "name": "Outerwear",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "pants",
+      "name": "Pants",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "shirts_and_tops",
+      "name": "Shirts & Tops",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "shoes",
+      "name": "Shoes",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "athletic_shoes",
+      "name": "Athletic Shoes",
+      "parent_id": "shoes"
+    },
+    {
+      "id": "boots",
+      "name": "Boots",
+      "parent_id": "shoes"
+    },
+    {
+      "id": "dress_shoes",
+      "name": "Dress Shoes",
+      "parent_id": "shoes"
+    },
+    {
+      "id": "socks",
+      "name": "Socks",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "swimwear",
+      "name": "Swimwear",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "underwear",
+      "name": "Underwear",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "wallets_briefcases_and_leather_goods",
+      "name": "Wallets, Briefcases & Leather Goods",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "womens_apparel",
+      "name": "Women's Apparel",
+      "parent_id": "apparel_and_accessories"
+    },
+    {
+      "id": "arts_and_crafts_supplies",
+      "name": "Arts & Crafts Supplies",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "autos_and_vehicles",
+      "name": "Autos & Vehicles",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "auto_parts_and_accessories",
+      "name": "Auto Parts & Accessories",
+      "parent_id": "autos_and_vehicles"
+    },
+    {
+      "id": "auto_exterior_parts_and_accessories",
+      "name": "Auto Exterior Parts & Accessories",
+      "parent_id": "auto_parts_and_accessories"
+    },
+    {
+      "id": "auto_interior_parts_and_accessories",
+      "name": "Auto Interior Parts & Accessories",
+      "parent_id": "auto_parts_and_accessories"
+    },
+    {
+      "id": "automotive_electronic_components",
+      "name": "Automotive Electronic Components",
+      "parent_id": "auto_parts_and_accessories"
+    },
+    {
+      "id": "car_batteries",
+      "name": "Car Batteries",
+      "parent_id": "auto_parts_and_accessories"
+    },
+    {
+      "id": "car_brakes",
+      "name": "Car Brakes",
+      "parent_id": "auto_parts_and_accessories"
+    },
+    {
+      "id": "engine_and_transmission",
+      "name": "Engine & Transmission",
+      "parent_id": "auto_parts_and_accessories"
+    },
+    {
+      "id": "high_performance_and_aftermarket_auto_parts",
+      "name": "High Performance & Aftermarket Auto Parts",
+      "parent_id": "auto_parts_and_accessories"
+    },
+    {
+      "id": "wheels_and_tires",
+      "name": "Wheels & Tires",
+      "parent_id": "auto_parts_and_accessories"
+    },
+    {
+      "id": "auto_repair_and_maintenance",
+      "name": "Auto Repair & Maintenance",
+      "parent_id": "autos_and_vehicles"
+    },
+    {
+      "id": "brake_service_and_repair",
+      "name": "Brake Service & Repair",
+      "parent_id": "auto_repair_and_maintenance"
+    },
+    {
+      "id": "collision_and_auto_body_repair",
+      "name": "Collision & Auto Body Repair",
+      "parent_id": "auto_repair_and_maintenance"
+    },
+    {
+      "id": "glass_repair_and_replacement",
+      "name": "Glass Repair & Replacement",
+      "parent_id": "auto_repair_and_maintenance"
+    },
+    {
+      "id": "oil_changes",
+      "name": "Oil Changes",
+      "parent_id": "auto_repair_and_maintenance"
+    },
+    {
+      "id": "transmission_repair",
+      "name": "Transmission Repair",
+      "parent_id": "auto_repair_and_maintenance"
+    },
+    {
+      "id": "motor_vehicles",
+      "name": "Motor Vehicles",
+      "parent_id": "autos_and_vehicles"
+    },
+    {
+      "id": "motor_vehicles_by_type",
+      "name": "Motor Vehicles by Type",
+      "parent_id": "motor_vehicles"
+    },
+    {
+      "id": "compact_cars",
+      "name": "Compact Cars",
+      "parent_id": "motor_vehicles_by_type"
+    },
+    {
+      "id": "compact_cars_new",
+      "name": "Compact Cars (New)",
+      "parent_id": "compact_cars"
+    },
+    {
+      "id": "compact_cars_used",
+      "name": "Compact Cars (Used)",
+      "parent_id": "compact_cars"
+    },
+    {
+      "id": "convertibles",
+      "name": "Convertibles",
+      "parent_id": "motor_vehicles_by_type"
+    },
+    {
+      "id": "convertibles_new",
+      "name": "Convertibles (New)",
+      "parent_id": "convertibles"
+    },
+    {
+      "id": "convertibles_used",
+      "name": "Convertibles (Used)",
+      "parent_id": "convertibles"
+    },
+    {
+      "id": "coupes",
+      "name": "Coupes",
+      "parent_id": "motor_vehicles_by_type"
+    },
+    {
+      "id": "coupes_new",
+      "name": "Coupes (New)",
+      "parent_id": "coupes"
+    },
+    {
+      "id": "coupes_used",
+      "name": "Coupes (Used)",
+      "parent_id": "coupes"
+    },
+    {
+      "id": "suvs",
+      "name": "SUVs",
+      "parent_id": "motor_vehicles_by_type"
+    },
+    {
+      "id": "suvs_new",
+      "name": "SUVs (New)",
+      "parent_id": "suvs"
+    },
+    {
+      "id": "suvs_used",
+      "name": "SUVs (Used)",
+      "parent_id": "suvs"
+    },
+    {
+      "id": "sedans",
+      "name": "Sedans",
+      "parent_id": "motor_vehicles_by_type"
+    },
+    {
+      "id": "sedans_new",
+      "name": "Sedans (New)",
+      "parent_id": "sedans"
+    },
+    {
+      "id": "sedans_used",
+      "name": "Sedans (Used)",
+      "parent_id": "sedans"
+    },
+    {
+      "id": "pickup_trucks",
+      "name": "Pickup Trucks",
+      "parent_id": "motor_vehicles_by_type"
+    },
+    {
+      "id": "pickup_trucks_used",
+      "name": "Pickup Trucks (Used)",
+      "parent_id": "pickup_trucks"
+    },
+    {
+      "id": "luxury_vehicles",
+      "name": "Luxury Vehicles",
+      "parent_id": "motor_vehicles_by_type"
+    },
+    {
+      "id": "luxury_vehicles_new",
+      "name": "Luxury Vehicles (New)",
+      "parent_id": "luxury_vehicles"
+    },
+    {
+      "id": "luxury_vehicles_used",
+      "name": "Luxury Vehicles (Used)",
+      "parent_id": "luxury_vehicles"
+    },
+    {
+      "id": "vans_and_minivans",
+      "name": "Vans & Minivans",
+      "parent_id": "motor_vehicles_by_type"
+    },
+    {
+      "id": "vans_and_minivans_new",
+      "name": "Vans & Minivans (New)",
+      "parent_id": "vans_and_minivans"
+    },
+    {
+      "id": "vans_and_minivans_used",
+      "name": "Vans & Minivans (Used)",
+      "parent_id": "vans_and_minivans"
+    },
+    {
+      "id": "vehicles_other",
+      "name": "Vehicles (Other)",
+      "parent_id": "autos_and_vehicles"
+    },
+    {
+      "id": "bicycles_and_accessories",
+      "name": "Bicycles & Accessories",
+      "parent_id": "vehicles_other"
+    },
+    {
+      "id": "boats_and_watercraft",
+      "name": "Boats & Watercraft",
+      "parent_id": "vehicles_other"
+    },
+    {
+      "id": "campers_and_rvs",
+      "name": "Campers & RVs",
+      "parent_id": "vehicles_other"
+    },
+    {
+      "id": "commercial_vehicles",
+      "name": "Commercial Vehicles",
+      "parent_id": "vehicles_other"
+    },
+    {
+      "id": "baby_and_childrens_products",
+      "name": "Baby & Children's Products",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "baby_and_childrens_apparel",
+      "name": "Baby & Children's Apparel",
+      "parent_id": "baby_and_childrens_products"
+    },
+    {
+      "id": "baby_and_toddler_apparel",
+      "name": "Baby & Toddler Apparel",
+      "parent_id": "baby_and_childrens_apparel"
+    },
+    {
+      "id": "childrens_apparel",
+      "name": "Children's Apparel",
+      "parent_id": "baby_and_childrens_apparel"
+    },
+    {
+      "id": "child_car_seats",
+      "name": "Child Car Seats",
+      "parent_id": "baby_and_childrens_products"
+    },
+    {
+      "id": "childcare_and_education",
+      "name": "Childcare & Education",
+      "parent_id": "baby_and_childrens_products"
+    },
+    {
+      "id": "childcare",
+      "name": "Childcare",
+      "parent_id": "childcare_and_education"
+    },
+    {
+      "id": "early_childhood_education",
+      "name": "Early Childhood Education",
+      "parent_id": "childcare_and_education"
+    },
+    {
+      "id": "diapers_and_baby_hygiene_products",
+      "name": "Diapers & Baby Hygiene Products",
+      "parent_id": "baby_and_childrens_products"
+    },
+    {
+      "id": "infant_and_toddler_feeding",
+      "name": "Infant & Toddler Feeding",
+      "parent_id": "baby_and_childrens_products"
+    },
+    {
+      "id": "infant_feeding_supplies",
+      "name": "Infant Feeding Supplies",
+      "parent_id": "infant_and_toddler_feeding"
+    },
+    {
+      "id": "toddler_meals",
+      "name": "Toddler Meals",
+      "parent_id": "infant_and_toddler_feeding"
+    },
+    {
+      "id": "strollers_and_baby_carriages",
+      "name": "Strollers & Baby Carriages",
+      "parent_id": "baby_and_childrens_products"
+    },
+    {
+      "id": "toys_and_games",
+      "name": "Toys & Games",
+      "parent_id": "baby_and_childrens_products"
+    },
+    {
+      "id": "beauty_products_and_services",
+      "name": "Beauty Products & Services",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "bath_and_body_products",
+      "name": "Bath & Body Products",
+      "parent_id": "beauty_products_and_services"
+    },
+    {
+      "id": "body_lotion_and_moisturizers",
+      "name": "Body Lotion & Moisturizers",
+      "parent_id": "bath_and_body_products"
+    },
+    {
+      "id": "hair_care_products",
+      "name": "Hair Care Products",
+      "parent_id": "beauty_products_and_services"
+    },
+    {
+      "id": "hair_color_products",
+      "name": "Hair Color Products",
+      "parent_id": "hair_care_products"
+    },
+    {
+      "id": "shampoo_and_conditioners",
+      "name": "Shampoo & Conditioners",
+      "parent_id": "hair_care_products"
+    },
+    {
+      "id": "makeup_and_cosmetics",
+      "name": "Makeup & Cosmetics",
+      "parent_id": "beauty_products_and_services"
+    },
+    {
+      "id": "eye_makeup",
+      "name": "Eye Makeup",
+      "parent_id": "makeup_and_cosmetics"
+    },
+    {
+      "id": "face_makeup",
+      "name": "Face Makeup",
+      "parent_id": "makeup_and_cosmetics"
+    },
+    {
+      "id": "lip_makeup",
+      "name": "Lip Makeup",
+      "parent_id": "makeup_and_cosmetics"
+    },
+    {
+      "id": "nail_care_products",
+      "name": "Nail Care Products",
+      "parent_id": "makeup_and_cosmetics"
+    },
+    {
+      "id": "perfumes_and_fragrances",
+      "name": "Perfumes & Fragrances",
+      "parent_id": "beauty_products_and_services"
+    },
+    {
+      "id": "skin_care_products",
+      "name": "Skin Care Products",
+      "parent_id": "beauty_products_and_services"
+    },
+    {
+      "id": "anti-aging_skin_care_products",
+      "name": "Anti-Aging Skin Care Products",
+      "parent_id": "skin_care_products"
+    },
+    {
+      "id": "face_lotions_and_moisturizers",
+      "name": "Face Lotions & Moisturizers",
+      "parent_id": "skin_care_products"
+    },
+    {
+      "id": "facial_cleansers_and_makeup_removers",
+      "name": "Facial Cleansers & Makeup Removers",
+      "parent_id": "skin_care_products"
+    },
+    {
+      "id": "spas_and_beauty_services",
+      "name": "Spas & Beauty Services",
+      "parent_id": "beauty_products_and_services"
+    },
+    {
+      "id": "manicures_and_pedicures",
+      "name": "Manicures & Pedicures",
+      "parent_id": "spas_and_beauty_services"
+    },
+    {
+      "id": "tanning_and_sun_care_products",
+      "name": "Tanning & Sun Care Products",
+      "parent_id": "beauty_products_and_services"
+    },
+    {
+      "id": "business_and_industrial_products",
+      "name": "Business & Industrial Products",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "food_service_equipment",
+      "name": "Food Service Equipment",
+      "parent_id": "business_and_industrial_products"
+    },
+    {
+      "id": "material_handling_equipment",
+      "name": "Material Handling Equipment",
+      "parent_id": "business_and_industrial_products"
+    },
+    {
+      "id": "signage",
+      "name": "Signage",
+      "parent_id": "business_and_industrial_products"
+    },
+    {
+      "id": "work_safety_protective_gear",
+      "name": "Work Safety Protective Gear",
+      "parent_id": "business_and_industrial_products"
+    },
+    {
+      "id": "business_services",
+      "name": "Business Services",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "advertising_and_marketing_services",
+      "name": "Advertising & Marketing Services",
+      "parent_id": "business_services"
+    },
+    {
+      "id": "email_marketing_services",
+      "name": "Email Marketing Services",
+      "parent_id": "advertising_and_marketing_services"
+    },
+    {
+      "id": "seo_and_sem_services",
+      "name": "SEO & SEM Services",
+      "parent_id": "advertising_and_marketing_services"
+    },
+    {
+      "id": "business_financial_services",
+      "name": "Business Financial Services",
+      "parent_id": "business_services"
+    },
+    {
+      "id": "business_printing_and_document_services",
+      "name": "Business Printing & Document Services",
+      "parent_id": "business_services"
+    },
+    {
+      "id": "business_technology",
+      "name": "Business Technology",
+      "parent_id": "business_services"
+    },
+    {
+      "id": "enterprise_software",
+      "name": "Enterprise Software",
+      "parent_id": "business_technology"
+    },
+    {
+      "id": "crm_solutions",
+      "name": "CRM Solutions",
+      "parent_id": "enterprise_software"
+    },
+    {
+      "id": "collaboration_and_conferencing_tools",
+      "name": "Collaboration & Conferencing Tools",
+      "parent_id": "enterprise_software"
+    },
+    {
+      "id": "erp_solutions",
+      "name": "ERP Solutions",
+      "parent_id": "enterprise_software"
+    },
+    {
+      "id": "helpdesk_and_customer_support_solutions",
+      "name": "Helpdesk & Customer Support Solutions",
+      "parent_id": "enterprise_software"
+    },
+    {
+      "id": "network_systems_and_services",
+      "name": "Network Systems & Services",
+      "parent_id": "business_technology"
+    },
+    {
+      "id": "hosted_data_and_cloud_storage",
+      "name": "Hosted Data & Cloud Storage",
+      "parent_id": "network_systems_and_services"
+    },
+    {
+      "id": "network_and_enterprise_security",
+      "name": "Network & Enterprise Security",
+      "parent_id": "network_systems_and_services"
+    },
+    {
+      "id": "network_equipment_and_virtualization",
+      "name": "Network Equipment & Virtualization",
+      "parent_id": "network_systems_and_services"
+    },
+    {
+      "id": "network_management",
+      "name": "Network Management",
+      "parent_id": "network_systems_and_services"
+    },
+    {
+      "id": "web_services",
+      "name": "Web Services",
+      "parent_id": "business_technology"
+    },
+    {
+      "id": "domain_registration",
+      "name": "Domain Registration",
+      "parent_id": "web_services"
+    },
+    {
+      "id": "web_design_and_development",
+      "name": "Web Design & Development",
+      "parent_id": "web_services"
+    },
+    {
+      "id": "web_hosting",
+      "name": "Web Hosting",
+      "parent_id": "web_services"
+    },
+    {
+      "id": "corporate_event_planning",
+      "name": "Corporate Event Planning",
+      "parent_id": "business_services"
+    },
+    {
+      "id": "office_supplies",
+      "name": "Office Supplies",
+      "parent_id": "business_services"
+    },
+    {
+      "id": "office_furniture",
+      "name": "Office Furniture",
+      "parent_id": "office_supplies"
+    },
+    {
+      "id": "payment_processing_and_merchant_services",
+      "name": "Payment Processing & Merchant Services",
+      "parent_id": "business_services"
+    },
+    {
+      "id": "payroll_services",
+      "name": "Payroll Services",
+      "parent_id": "business_services"
+    },
+    {
+      "id": "physical_security_and_access_control",
+      "name": "Physical Security & Access Control",
+      "parent_id": "business_services"
+    },
+    {
+      "id": "staffing_and_recruitment_services",
+      "name": "Staffing & Recruitment Services",
+      "parent_id": "business_services"
+    },
+    {
+      "id": "computers_and_peripherals",
+      "name": "Computers & Peripherals",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "computer_accessories_and_components",
+      "name": "Computer Accessories & Components",
+      "parent_id": "computers_and_peripherals"
+    },
+    {
+      "id": "computer_monitors",
+      "name": "Computer Monitors",
+      "parent_id": "computer_accessories_and_components"
+    },
+    {
+      "id": "memory_and_storage",
+      "name": "Memory & Storage",
+      "parent_id": "computer_accessories_and_components"
+    },
+    {
+      "id": "computers",
+      "name": "Computers",
+      "parent_id": "computers_and_peripherals"
+    },
+    {
+      "id": "desktop_computers",
+      "name": "Desktop Computers",
+      "parent_id": "computers"
+    },
+    {
+      "id": "laptops_and_notebooks",
+      "name": "Laptops & Notebooks",
+      "parent_id": "computers"
+    },
+    {
+      "id": "tablets_and_ultraportable_devices",
+      "name": "Tablets & Ultraportable Devices",
+      "parent_id": "computers"
+    },
+    {
+      "id": "printers_scanners_and_faxes",
+      "name": "Printers, Scanners & Faxes",
+      "parent_id": "computers_and_peripherals"
+    },
+    {
+      "id": "consumer_electronics",
+      "name": "Consumer Electronics",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "audio",
+      "name": "Audio",
+      "parent_id": "consumer_electronics"
+    },
+    {
+      "id": "car_audio",
+      "name": "Car Audio",
+      "parent_id": "audio"
+    },
+    {
+      "id": "headphones_and_headsets",
+      "name": "Headphones & Headsets",
+      "parent_id": "audio"
+    },
+    {
+      "id": "pro_musician_and_dj_equipment",
+      "name": "Pro Musician & DJ Equipment",
+      "parent_id": "audio"
+    },
+    {
+      "id": "speakers",
+      "name": "Speakers",
+      "parent_id": "audio"
+    },
+    {
+      "id": "stereo_systems",
+      "name": "Stereo Systems",
+      "parent_id": "audio"
+    },
+    {
+      "id": "batteries",
+      "name": "Batteries",
+      "parent_id": "consumer_electronics"
+    },
+    {
+      "id": "camcorders",
+      "name": "Camcorders",
+      "parent_id": "consumer_electronics"
+    },
+    {
+      "id": "cameras",
+      "name": "Cameras",
+      "parent_id": "consumer_electronics"
+    },
+    {
+      "id": "camera_lenses",
+      "name": "Camera Lenses",
+      "parent_id": "cameras"
+    },
+    {
+      "id": "digital_slrs",
+      "name": "Digital SLRs",
+      "parent_id": "cameras"
+    },
+    {
+      "id": "game_consoles",
+      "name": "Game Consoles",
+      "parent_id": "consumer_electronics"
+    },
+    {
+      "id": "nintendo_consoles",
+      "name": "Nintendo Consoles",
+      "parent_id": "game_consoles"
+    },
+    {
+      "id": "sony_playstation",
+      "name": "Sony PlayStation",
+      "parent_id": "game_consoles"
+    },
+    {
+      "id": "xbox",
+      "name": "Xbox",
+      "parent_id": "game_consoles"
+    },
+    {
+      "id": "gaming_peripherals_and_accessories",
+      "name": "Gaming Peripherals & Accessories",
+      "parent_id": "consumer_electronics"
+    },
+    {
+      "id": "home_theater_systems",
+      "name": "Home Theater Systems",
+      "parent_id": "consumer_electronics"
+    },
+    {
+      "id": "mobile_phone_accessories",
+      "name": "Mobile Phone Accessories",
+      "parent_id": "consumer_electronics"
+    },
+    {
+      "id": "mobile_phones",
+      "name": "Mobile Phones",
+      "parent_id": "consumer_electronics"
+    },
+    {
+      "id": "android_phones",
+      "name": "Android Phones",
+      "parent_id": "mobile_phones"
+    },
+    {
+      "id": "ios_phones",
+      "name": "iOS Phones",
+      "parent_id": "mobile_phones"
+    },
+    {
+      "id": "power_adapters_and_chargers",
+      "name": "Power Adapters & Chargers",
+      "parent_id": "consumer_electronics"
+    },
+    {
+      "id": "televisions",
+      "name": "Televisions",
+      "parent_id": "consumer_electronics"
+    },
+    {
+      "id": "dating_services",
+      "name": "Dating Services",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "education",
+      "name": "Education",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "educational_resources_preschool_and_kindergarten",
+      "name": "Educational Resources (Preschool & Kindergarten)",
+      "parent_id": "education"
+    },
+    {
+      "id": "educational_resources_primary_school",
+      "name": "Educational Resources (Primary School)",
+      "parent_id": "education"
+    },
+    {
+      "id": "educational_resources_secondary_school",
+      "name": "Educational Resources (Secondary School)",
+      "parent_id": "education"
+    },
+    {
+      "id": "foreign_language_study",
+      "name": "Foreign Language Study",
+      "parent_id": "education"
+    },
+    {
+      "id": "open_online_courses",
+      "name": "Open Online Courses",
+      "parent_id": "education"
+    },
+    {
+      "id": "post-secondary_education",
+      "name": "Post-Secondary Education",
+      "parent_id": "education"
+    },
+    {
+      "id": "arts_and_design_education",
+      "name": "Arts & Design Education",
+      "parent_id": "post-secondary_education"
+    },
+    {
+      "id": "business_education",
+      "name": "Business Education",
+      "parent_id": "post-secondary_education"
+    },
+    {
+      "id": "cosmetology_education_and_training",
+      "name": "Cosmetology Education & Training",
+      "parent_id": "post-secondary_education"
+    },
+    {
+      "id": "health_care_education",
+      "name": "Health Care Education",
+      "parent_id": "post-secondary_education"
+    },
+    {
+      "id": "nursing_education",
+      "name": "Nursing Education",
+      "parent_id": "health_care_education"
+    },
+    {
+      "id": "technology_education",
+      "name": "Technology Education",
+      "parent_id": "post-secondary_education"
+    },
+    {
+      "id": "primary_and_secondary_schools_k-12",
+      "name": "Primary & Secondary Schools (K-12)",
+      "parent_id": "education"
+    },
+    {
+      "id": "study_abroad_programs",
+      "name": "Study Abroad Programs",
+      "parent_id": "education"
+    },
+    {
+      "id": "test_preparation_and_tutoring",
+      "name": "Test Preparation & Tutoring",
+      "parent_id": "education"
+    },
+    {
+      "id": "employment",
+      "name": "Employment",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "accounting_and_finance_jobs",
+      "name": "Accounting & Finance Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "agriculture_jobs",
+      "name": "Agriculture Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "career_consulting_services",
+      "name": "Career Consulting Services",
+      "parent_id": "employment"
+    },
+    {
+      "id": "clerical_and_administrative_jobs",
+      "name": "Clerical & Administrative Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "construction_jobs",
+      "name": "Construction Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "education_jobs",
+      "name": "Education Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "executive_and_management_jobs",
+      "name": "Executive & Management Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "government_and_public_sector_jobs",
+      "name": "Government & Public Sector Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "health_and_medical_jobs",
+      "name": "Health & Medical Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "it_and_technical_jobs",
+      "name": "IT & Technical Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "internships",
+      "name": "Internships",
+      "parent_id": "employment"
+    },
+    {
+      "id": "legal_jobs",
+      "name": "Legal Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "leisure_and_hospitality_jobs",
+      "name": "Leisure & Hospitality Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "manufacturing_jobs",
+      "name": "Manufacturing Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "resumes_and_portfolios",
+      "name": "Resumes & Portfolios",
+      "parent_id": "employment"
+    },
+    {
+      "id": "retail_jobs",
+      "name": "Retail Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "sales_and_marketing_jobs",
+      "name": "Sales & Marketing Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "temporary_and_seasonal_jobs",
+      "name": "Temporary & Seasonal Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "transportation_and_utilities_jobs",
+      "name": "Transportation & Utilities Jobs",
+      "parent_id": "employment"
+    },
+    {
+      "id": "event_tickets",
+      "name": "Event Tickets",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "concert_and_music_festival_tickets",
+      "name": "Concert & Music Festival Tickets",
+      "parent_id": "event_tickets"
+    },
+    {
+      "id": "performing_arts_tickets",
+      "name": "Performing Arts Tickets",
+      "parent_id": "event_tickets"
+    },
+    {
+      "id": "broadway_and_theater_tickets",
+      "name": "Broadway & Theater Tickets",
+      "parent_id": "performing_arts_tickets"
+    },
+    {
+      "id": "sports_tickets",
+      "name": "Sports Tickets",
+      "parent_id": "event_tickets"
+    },
+    {
+      "id": "american_football_tickets",
+      "name": "American Football Tickets",
+      "parent_id": "sports_tickets"
+    },
+    {
+      "id": "baseball_tickets",
+      "name": "Baseball Tickets",
+      "parent_id": "sports_tickets"
+    },
+    {
+      "id": "basketball_tickets",
+      "name": "Basketball Tickets",
+      "parent_id": "sports_tickets"
+    },
+    {
+      "id": "hockey_tickets",
+      "name": "Hockey Tickets",
+      "parent_id": "sports_tickets"
+    },
+    {
+      "id": "soccer_tickets",
+      "name": "Soccer Tickets",
+      "parent_id": "sports_tickets"
+    },
+    {
+      "id": "financial_services",
+      "name": "Financial Services",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "banking_services",
+      "name": "Banking Services",
+      "parent_id": "financial_services"
+    },
+    {
+      "id": "debit_and_checking_services",
+      "name": "Debit & Checking Services",
+      "parent_id": "banking_services"
+    },
+    {
+      "id": "savings_accounts",
+      "name": "Savings Accounts",
+      "parent_id": "banking_services"
+    },
+    {
+      "id": "credit_and_lending",
+      "name": "Credit & Lending",
+      "parent_id": "financial_services"
+    },
+    {
+      "id": "auto_loans",
+      "name": "Auto Loans",
+      "parent_id": "credit_and_lending"
+    },
+    {
+      "id": "business_loans",
+      "name": "Business Loans",
+      "parent_id": "credit_and_lending"
+    },
+    {
+      "id": "credit_cards",
+      "name": "Credit Cards",
+      "parent_id": "credit_and_lending"
+    },
+    {
+      "id": "credit_reports_and_monitoring_services",
+      "name": "Credit Reports & Monitoring Services",
+      "parent_id": "credit_and_lending"
+    },
+    {
+      "id": "mortgage",
+      "name": "Mortgage",
+      "parent_id": "credit_and_lending"
+    },
+    {
+      "id": "home_equity_loans",
+      "name": "Home Equity Loans",
+      "parent_id": "mortgage"
+    },
+    {
+      "id": "home_purchase_loans",
+      "name": "Home Purchase Loans",
+      "parent_id": "mortgage"
+    },
+    {
+      "id": "mortgage_refinancing",
+      "name": "Mortgage Refinancing",
+      "parent_id": "mortgage"
+    },
+    {
+      "id": "personal_loans",
+      "name": "Personal Loans",
+      "parent_id": "credit_and_lending"
+    },
+    {
+      "id": "student_loans",
+      "name": "Student Loans",
+      "parent_id": "credit_and_lending"
+    },
+    {
+      "id": "financial_planning",
+      "name": "Financial Planning",
+      "parent_id": "financial_services"
+    },
+    {
+      "id": "estate_planning",
+      "name": "Estate Planning",
+      "parent_id": "financial_planning"
+    },
+    {
+      "id": "retirement_planning",
+      "name": "Retirement Planning",
+      "parent_id": "financial_planning"
+    },
+    {
+      "id": "insurance",
+      "name": "Insurance",
+      "parent_id": "financial_services"
+    },
+    {
+      "id": "auto_insurance",
+      "name": "Auto Insurance",
+      "parent_id": "insurance"
+    },
+    {
+      "id": "health_insurance",
+      "name": "Health Insurance",
+      "parent_id": "insurance"
+    },
+    {
+      "id": "home_insurance",
+      "name": "Home Insurance",
+      "parent_id": "insurance"
+    },
+    {
+      "id": "life_insurance",
+      "name": "Life Insurance",
+      "parent_id": "insurance"
+    },
+    {
+      "id": "travel_insurance",
+      "name": "Travel Insurance",
+      "parent_id": "insurance"
+    },
+    {
+      "id": "investment_services",
+      "name": "Investment Services",
+      "parent_id": "financial_services"
+    },
+    {
+      "id": "tax_preparation_services_and_software",
+      "name": "Tax Preparation Services & Software",
+      "parent_id": "financial_services"
+    },
+    {
+      "id": "food",
+      "name": "Food",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "baked_goods",
+      "name": "Baked Goods",
+      "parent_id": "food"
+    },
+    {
+      "id": "candy_and_chocolate",
+      "name": "Candy & Chocolate",
+      "parent_id": "food"
+    },
+    {
+      "id": "condiments_and_sauces",
+      "name": "Condiments & Sauces",
+      "parent_id": "food"
+    },
+    {
+      "id": "cooking_and_baking_ingredients",
+      "name": "Cooking & Baking Ingredients",
+      "parent_id": "food"
+    },
+    {
+      "id": "dairy_and_eggs",
+      "name": "Dairy & Eggs",
+      "parent_id": "food"
+    },
+    {
+      "id": "fast_food_meals",
+      "name": "Fast Food Meals",
+      "parent_id": "food"
+    },
+    {
+      "id": "grocery_delivery",
+      "name": "Grocery Delivery",
+      "parent_id": "food"
+    },
+    {
+      "id": "pizza",
+      "name": "Pizza",
+      "parent_id": "food"
+    },
+    {
+      "id": "restaurant_delivery_and_takeout",
+      "name": "Restaurant Delivery & Takeout",
+      "parent_id": "food"
+    },
+    {
+      "id": "gifts_and_occasions",
+      "name": "Gifts & Occasions",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "flowers",
+      "name": "Flowers",
+      "parent_id": "gifts_and_occasions"
+    },
+    {
+      "id": "gift_baskets",
+      "name": "Gift Baskets",
+      "parent_id": "gifts_and_occasions"
+    },
+    {
+      "id": "personalized_gifts",
+      "name": "Personalized Gifts",
+      "parent_id": "gifts_and_occasions"
+    },
+    {
+      "id": "wedding_planning",
+      "name": "Wedding Planning",
+      "parent_id": "gifts_and_occasions"
+    },
+    {
+      "id": "holiday_and_seasonal_items",
+      "name": "Holiday & Seasonal Items",
+      "parent_id": "gifts_and_occasions"
+    },
+    {
+      "id": "christmas_items_and_decor",
+      "name": "Christmas Items & Decor",
+      "parent_id": "holiday_and_seasonal_items"
+    },
+    {
+      "id": "halloween_items_and_decor",
+      "name": "Halloween Items & Decor",
+      "parent_id": "holiday_and_seasonal_items"
+    },
+    {
+      "id": "valentines_day_items_and_decor",
+      "name": "Valentine's Day Items & Decor",
+      "parent_id": "holiday_and_seasonal_items"
+    },
+    {
+      "id": "party_supplies_and_planning",
+      "name": "Party Supplies & Planning",
+      "parent_id": "gifts_and_occasions"
+    },
+    {
+      "id": "event_planning_services",
+      "name": "Event Planning Services",
+      "parent_id": "party_supplies_and_planning"
+    },
+    {
+      "id": "party_supplies",
+      "name": "Party Supplies",
+      "parent_id": "party_supplies_and_planning"
+    },
+    {
+      "id": "photo_and_video_services",
+      "name": "Photo & Video Services",
+      "parent_id": "gifts_and_occasions"
+    },
+    {
+      "id": "event_photographers_and_studios",
+      "name": "Event Photographers & Studios",
+      "parent_id": "photo_and_video_services"
+    },
+    {
+      "id": "photo_printing_services",
+      "name": "Photo Printing Services",
+      "parent_id": "photo_and_video_services"
+    },
+    {
+      "id": "home_and_garden",
+      "name": "Home & Garden",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "cookware_and_bakeware",
+      "name": "Cookware & Bakeware",
+      "parent_id": "home_and_garden"
+    },
+    {
+      "id": "home_and_garden_services",
+      "name": "Home & Garden Services",
+      "parent_id": "home_and_garden"
+    },
+    {
+      "id": "architectural_services",
+      "name": "Architectural Services",
+      "parent_id": "home_and_garden_services"
+    },
+    {
+      "id": "carpet_installation",
+      "name": "Carpet Installation",
+      "parent_id": "home_and_garden_services"
+    },
+    {
+      "id": "door_and_window_installation",
+      "name": "Door & Window Installation",
+      "parent_id": "home_and_garden_services"
+    },
+    {
+      "id": "electrician_services",
+      "name": "Electrician Services",
+      "parent_id": "home_and_garden_services"
+    },
+    {
+      "id": "flooring_services",
+      "name": "Flooring Services",
+      "parent_id": "home_and_garden_services"
+    },
+    {
+      "id": "general_contracting_and_remodeling_services",
+      "name": "General Contracting & Remodeling Services",
+      "parent_id": "home_and_garden_services"
+    },
+    {
+      "id": "home_appliances",
+      "name": "Home Appliances",
+      "parent_id": "home_and_garden"
+    },
+    {
+      "id": "microwaves",
+      "name": "Microwaves",
+      "parent_id": "home_appliances"
+    },
+    {
+      "id": "refrigerators",
+      "name": "Refrigerators",
+      "parent_id": "home_appliances"
+    },
+    {
+      "id": "small_appliances",
+      "name": "Small Appliances",
+      "parent_id": "home_appliances"
+    },
+    {
+      "id": "coffee_and_espresso_makers",
+      "name": "Coffee & Espresso Makers",
+      "parent_id": "small_appliances"
+    },
+    {
+      "id": "juicers_and_blenders",
+      "name": "Juicers & Blenders",
+      "parent_id": "small_appliances"
+    },
+    {
+      "id": "mixers",
+      "name": "Mixers",
+      "parent_id": "small_appliances"
+    },
+    {
+      "id": "vacuums",
+      "name": "Vacuums",
+      "parent_id": "home_appliances"
+    },
+    {
+      "id": "washers_and_dryers",
+      "name": "Washers & Dryers",
+      "parent_id": "home_appliances"
+    },
+    {
+      "id": "home_decor",
+      "name": "Home Decor",
+      "parent_id": "home_and_garden"
+    },
+    {
+      "id": "bedding",
+      "name": "Bedding",
+      "parent_id": "home_decor"
+    },
+    {
+      "id": "fireplaces",
+      "name": "Fireplaces",
+      "parent_id": "home_decor"
+    },
+    {
+      "id": "lights_and_fixtures",
+      "name": "Lights & Fixtures",
+      "parent_id": "home_decor"
+    },
+    {
+      "id": "ceiling_light_fixtures",
+      "name": "Ceiling Light Fixtures",
+      "parent_id": "lights_and_fixtures"
+    },
+    {
+      "id": "wall_light_fixtures",
+      "name": "Wall Light Fixtures",
+      "parent_id": "lights_and_fixtures"
+    },
+    {
+      "id": "linens",
+      "name": "Linens",
+      "parent_id": "home_decor"
+    },
+    {
+      "id": "rugs_and_carpets",
+      "name": "Rugs & Carpets",
+      "parent_id": "home_decor"
+    },
+    {
+      "id": "curtains_and_window_treatments",
+      "name": "Curtains & Window Treatments",
+      "parent_id": "home_decor"
+    },
+    {
+      "id": "curtains_and_drapes",
+      "name": "Curtains & Drapes",
+      "parent_id": "curtains_and_window_treatments"
+    },
+    {
+      "id": "window_blinds_and_shades",
+      "name": "Window Blinds & Shades",
+      "parent_id": "curtains_and_window_treatments"
+    },
+    {
+      "id": "home_furnishings",
+      "name": "Home Furnishings",
+      "parent_id": "home_and_garden"
+    },
+    {
+      "id": "bedroom",
+      "name": "Bedroom",
+      "parent_id": "home_furnishings"
+    },
+    {
+      "id": "beds_and_bed_frames",
+      "name": "Beds & Bed Frames",
+      "parent_id": "bedroom"
+    },
+    {
+      "id": "mattresses",
+      "name": "Mattresses",
+      "parent_id": "bedroom"
+    },
+    {
+      "id": "home_office",
+      "name": "Home Office",
+      "parent_id": "home_furnishings"
+    },
+    {
+      "id": "desks",
+      "name": "Desks",
+      "parent_id": "home_office"
+    },
+    {
+      "id": "office_chairs",
+      "name": "Office Chairs",
+      "parent_id": "home_office"
+    },
+    {
+      "id": "home_storage_and_shelving",
+      "name": "Home Storage & Shelving",
+      "parent_id": "home_furnishings"
+    },
+    {
+      "id": "kitchen_and_dining_room",
+      "name": "Kitchen & Dining Room",
+      "parent_id": "home_furnishings"
+    },
+    {
+      "id": "kitchen_and_dining_room_chairs",
+      "name": "Kitchen & Dining Room Chairs",
+      "parent_id": "kitchen_and_dining_room"
+    },
+    {
+      "id": "kitchen_and_dining_room_tables",
+      "name": "Kitchen & Dining Room Tables",
+      "parent_id": "kitchen_and_dining_room"
+    },
+    {
+      "id": "stools",
+      "name": "Stools",
+      "parent_id": "kitchen_and_dining_room"
+    },
+    {
+      "id": "living_room",
+      "name": "Living Room",
+      "parent_id": "home_furnishings"
+    },
+    {
+      "id": "accent_tables",
+      "name": "Accent Tables",
+      "parent_id": "living_room"
+    },
+    {
+      "id": "sofas",
+      "name": "Sofas",
+      "parent_id": "living_room"
+    },
+    {
+      "id": "nursery",
+      "name": "Nursery",
+      "parent_id": "home_furnishings"
+    },
+    {
+      "id": "home_improvement",
+      "name": "Home Improvement",
+      "parent_id": "home_and_garden"
+    },
+    {
+      "id": "flooring",
+      "name": "Flooring",
+      "parent_id": "home_improvement"
+    },
+    {
+      "id": "kitchen_and_bathroom_cabinets",
+      "name": "Kitchen & Bathroom Cabinets",
+      "parent_id": "home_improvement"
+    },
+    {
+      "id": "kitchen_and_bathroom_counters",
+      "name": "Kitchen & Bathroom Counters",
+      "parent_id": "home_improvement"
+    },
+    {
+      "id": "paint",
+      "name": "Paint",
+      "parent_id": "home_improvement"
+    },
+    {
+      "id": "plumbing_fixture_hardware_and_parts",
+      "name": "Plumbing Fixture Hardware & Parts",
+      "parent_id": "home_improvement"
+    },
+    {
+      "id": "plumbing_fixtures",
+      "name": "Plumbing Fixtures",
+      "parent_id": "home_improvement"
+    },
+    {
+      "id": "power_and_electrical_supplies",
+      "name": "Power & Electrical Supplies",
+      "parent_id": "home_improvement"
+    },
+    {
+      "id": "tools",
+      "name": "Tools",
+      "parent_id": "home_improvement"
+    },
+    {
+      "id": "measuring_tools_and_sensors",
+      "name": "Measuring Tools & Sensors",
+      "parent_id": "tools"
+    },
+    {
+      "id": "home_security",
+      "name": "Home Security",
+      "parent_id": "home_improvement"
+    },
+    {
+      "id": "household_supplies",
+      "name": "Household Supplies",
+      "parent_id": "home_and_garden"
+    },
+    {
+      "id": "household_cleaning_supplies",
+      "name": "Household Cleaning Supplies",
+      "parent_id": "household_supplies"
+    },
+    {
+      "id": "pest_control_supplies",
+      "name": "Pest Control Supplies",
+      "parent_id": "household_supplies"
+    },
+    {
+      "id": "kitchen_tools_and_utensils",
+      "name": "Kitchen Tools & Utensils",
+      "parent_id": "home_and_garden"
+    },
+    {
+      "id": "hand_sanitizers",
+      "name": "Hand Sanitizers",
+      "parent_id": "home_and_garden"
+    },
+    {
+      "id": "telecom",
+      "name": "Telecom",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "cable_and_satellite_tv_providers",
+      "name": "Cable & Satellite TV Providers",
+      "parent_id": "telecom"
+    },
+    {
+      "id": "internet_service_providers",
+      "name": "Internet Service Providers",
+      "parent_id": "telecom"
+    },
+    {
+      "id": "mobile_phone_service_providers",
+      "name": "Mobile Phone Service Providers",
+      "parent_id": "telecom"
+    },
+    {
+      "id": "travel",
+      "name": "Travel",
+      "parent_id": "in_market_audiences"
+    },
+    {
+      "id": "air_travel",
+      "name": "Air Travel",
+      "parent_id": "travel"
+    },
+    {
+      "id": "air_travel_by_class",
+      "name": "Air Travel by Class",
+      "parent_id": "air_travel"
+    },
+    {
+      "id": "business_and_first_class",
+      "name": "Business & First Class",
+      "parent_id": "air_travel_by_class"
+    },
+    {
+      "id": "economy_class",
+      "name": "Economy Class",
+      "parent_id": "air_travel_by_class"
+    },
+    {
+      "id": "bus_and_rail_travel",
+      "name": "Bus & Rail Travel",
+      "parent_id": "travel"
+    },
+    {
+      "id": "car_rental",
+      "name": "Car Rental",
+      "parent_id": "travel"
+    },
+    {
+      "id": "economy_compact_and_mid-size_car_rental",
+      "name": "Economy, Compact & Mid-size Car Rental",
+      "parent_id": "car_rental"
+    },
+    {
+      "id": "full-size_and_standard_car_rental",
+      "name": "Full-size & Standard Car Rental",
+      "parent_id": "car_rental"
+    },
+    {
+      "id": "luxury_convertible_and_specialty_car_rental",
+      "name": "Luxury, Convertible & Specialty Car Rental",
+      "parent_id": "car_rental"
+    },
+    {
+      "id": "minivan_and_suv_rental",
+      "name": "Minivan & SUV Rental",
+      "parent_id": "car_rental"
+    },
+    {
+      "id": "cruises",
+      "name": "Cruises",
+      "parent_id": "travel"
+    },
+    {
+      "id": "hotels_and_accommodations",
+      "name": "Hotels & Accommodations",
+      "parent_id": "travel"
+    },
+    {
+      "id": "hotels_by_star_rating",
+      "name": "Hotels by Star Rating",
+      "parent_id": "hotels_and_accommodations"
+    },
+    {
+      "id": "1_and_2_star_hotels",
+      "name": "1 & 2 Star Hotels",
+      "parent_id": "hotels_by_star_rating"
+    },
+    {
+      "id": "3_star_hotels",
+      "name": "3 Star Hotels",
+      "parent_id": "hotels_by_star_rating"
+    },
+    {
+      "id": "4_star_hotels",
+      "name": "4 Star Hotels",
+      "parent_id": "hotels_by_star_rating"
+    },
+    {
+      "id": "5_star_hotels",
+      "name": "5 Star Hotels",
+      "parent_id": "hotels_by_star_rating"
+    },
+    {
+      "id": "vacation_rentals",
+      "name": "Vacation Rentals",
+      "parent_id": "hotels_and_accommodations"
+    },
+    {
+      "id": "sightseeing_tours_and_tourist_attractions",
+      "name": "Sightseeing Tours & Tourist Attractions",
+      "parent_id": "travel"
+    },
+    {
+      "id": "trips_by_destination",
+      "name": "Trips by Destination",
+      "parent_id": "travel"
+    },
+    {
+      "id": "trips_to_asia-pacific",
+      "name": "Trips to Asia-Pacific",
+      "parent_id": "trips_by_destination"
+    },
+    {
+      "id": "trips_to_australia",
+      "name": "Trips to Australia",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_china",
+      "name": "Trips to China",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_hong_kong",
+      "name": "Trips to Hong Kong",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_india",
+      "name": "Trips to India",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_indonesia",
+      "name": "Trips to Indonesia",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_japan",
+      "name": "Trips to Japan",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_malaysia",
+      "name": "Trips to Malaysia",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_nepal",
+      "name": "Trips to Nepal",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_new_zealand",
+      "name": "Trips to New Zealand",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_seoul",
+      "name": "Trips to Seoul",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_singapore",
+      "name": "Trips to Singapore",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_sri_lanka",
+      "name": "Trips to Sri Lanka",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_taipei",
+      "name": "Trips to Taipei",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_thailand",
+      "name": "Trips to Thailand",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_vietnam",
+      "name": "Trips to Vietnam",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_the_philippines",
+      "name": "Trips to the Philippines",
+      "parent_id": "trips_to_asia-pacific"
+    },
+    {
+      "id": "trips_to_europe",
+      "name": "Trips to Europe",
+      "parent_id": "trips_by_destination"
+    },
+    {
+      "id": "trips_to_latin_america",
+      "name": "Trips to Latin America",
+      "parent_id": "trips_by_destination"
+    },
+    {
+      "id": "trips_to_brazil",
+      "name": "Trips to Brazil",
+      "parent_id": "trips_to_latin_america"
+    },
+    {
+      "id": "trips_to_buenos_aires",
+      "name": "Trips to Buenos Aires",
+      "parent_id": "trips_to_latin_america"
+    },
+    {
+      "id": "trips_to_costa_rica",
+      "name": "Trips to Costa Rica",
+      "parent_id": "trips_to_latin_america"
+    },
+    {
+      "id": "trips_to_guatemala",
+      "name": "Trips to Guatemala",
+      "parent_id": "trips_to_latin_america"
+    },
+    {
+      "id": "trips_to_panama",
+      "name": "Trips to Panama",
+      "parent_id": "trips_to_latin_america"
+    },
+    {
+      "id": "trips_to_santiago",
+      "name": "Trips to Santiago",
+      "parent_id": "trips_to_latin_america"
+    },
+    {
+      "id": "trips_to_the_caribbean",
+      "name": "Trips to the Caribbean",
+      "parent_id": "trips_to_latin_america"
+    },
+    {
+      "id": "trips_to_aruba",
+      "name": "Trips to Aruba",
+      "parent_id": "trips_to_the_caribbean"
+    },
+    {
+      "id": "trips_to_puerto_rico",
+      "name": "Trips to Puerto Rico",
+      "parent_id": "trips_to_the_caribbean"
+    },
+    {
+      "id": "trips_to_the_dominican_republic",
+      "name": "Trips to the Dominican Republic",
+      "parent_id": "trips_to_the_caribbean"
+    },
+    {
+      "id": "trips_to_the_middle_east_and_africa",
+      "name": "Trips to the Middle East & Africa",
+      "parent_id": "trips_by_destination"
+    },
+    {
+      "id": "trips_to_north_america",
+      "name": "Trips to North America",
+      "parent_id": "trips_by_destination"
+    },
+    {
+      "id": "trips_to_canada",
+      "name": "Trips to Canada",
+      "parent_id": "trips_to_north_america"
+    },
+    {
+      "id": "trips_to_the_us",
+      "name": "Trips to the US",
+      "parent_id": "trips_to_north_america"
+    }
+  ]

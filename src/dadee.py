@@ -15,13 +15,37 @@ from sentence_transformers import SentenceTransformer
 
 class DADEEProcessor:
     def __init__(self, 
-                 data_path: str = "../data/",
-                 metadata_path: str = "../metadata/attribute_metadata.json",
+                 data_path: str = None,
+                 metadata_path: str = None,
                  similarity_threshold: float = 0.6,
                  min_cluster_size: int = 2):
         """初始化DADEE處理器"""
-        self.data_path = data_path
-        self.metadata_path = metadata_path
+        # 自動偵測正確的路徑
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(current_dir)  # 假設 src/ 在專案根目錄下
+        
+        if data_path is None:
+            # 嘗試找到 data 目錄
+            if os.path.exists(os.path.join(project_root, "data")):
+                self.data_path = os.path.join(project_root, "data") + "/"
+            elif os.path.exists("data"):
+                self.data_path = "data/"
+            else:
+                self.data_path = "../data/"
+        else:
+            self.data_path = data_path
+            
+        if metadata_path is None:
+            # 嘗試找到 metadata 目錄
+            if os.path.exists(os.path.join(project_root, "metadata", "attribute_metadata.json")):
+                self.metadata_path = os.path.join(project_root, "metadata", "attribute_metadata.json")
+            elif os.path.exists("metadata/attribute_metadata.json"):
+                self.metadata_path = "metadata/attribute_metadata.json"
+            else:
+                self.metadata_path = "../metadata/attribute_metadata.json"
+        else:
+            self.metadata_path = metadata_path
+            
         self.similarity_threshold = similarity_threshold
         self.min_cluster_size = min_cluster_size
         
@@ -97,9 +121,34 @@ class DADEEProcessor:
         print(f"總共提取了 {len(all_meta_tags)} 個Meta-Tags")
         return all_meta_tags
     
-    def extract_meta_tags_from_records(self, records_path: str = "../state/user_metatags_records.json") -> List[str]:
+    def extract_meta_tags_from_records(self, records_path: str = None) -> List[str]:
         """從用戶Meta-Tag記錄中提取所有Meta-Tags（新版主要方法）"""
         all_meta_tags = []
+        
+        # 如果沒有指定路徑，自動偵測
+        if records_path is None:
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            project_root = os.path.dirname(current_dir)
+            
+            # 嘗試不同的可能路徑
+            possible_paths = [
+                os.path.join(project_root, "state", "user_metatags_records.json"),
+                "state/user_metatags_records.json",
+                "../state/user_metatags_records.json"
+            ]
+            
+            records_path = None
+            for path in possible_paths:
+                if os.path.exists(path):
+                    records_path = path
+                    break
+            
+            if records_path is None:
+                print("❌ 找不到Meta-Tag記錄文件，嘗試過的路徑：")
+                for path in possible_paths:
+                    print(f"  - {path}")
+                print("⚠️  請先運行main.py處理一些用戶內容以生成記錄")
+                return []
         
         try:
             with open(records_path, 'r', encoding='utf-8') as f:
@@ -149,8 +198,30 @@ class DADEEProcessor:
             print(f"❌ 讀取Meta-Tag記錄時發生錯誤: {e}")
             return []
     
-    def analyze_user_metatag_trends(self, records_path: str = "../state/user_metatags_records.json") -> Dict:
+    def analyze_user_metatag_trends(self, records_path: str = None) -> Dict:
         """分析用戶Meta-Tag趨勢和分佈"""
+        # 如果沒有指定路徑，自動偵測
+        if records_path is None:
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            project_root = os.path.dirname(current_dir)
+            
+            # 嘗試不同的可能路徑
+            possible_paths = [
+                os.path.join(project_root, "state", "user_metatags_records.json"),
+                "state/user_metatags_records.json",
+                "../state/user_metatags_records.json"
+            ]
+            
+            records_path = None
+            for path in possible_paths:
+                if os.path.exists(path):
+                    records_path = path
+                    break
+            
+            if records_path is None:
+                print("❌ 找不到Meta-Tag記錄文件進行趨勢分析")
+                return {}
+        
         try:
             with open(records_path, 'r', encoding='utf-8') as f:
                 records = json.load(f)
@@ -384,14 +455,14 @@ class DADEEProcessor:
         else:
             return "Emerging Life Dimension"
     
-    def run_evolution_analysis(self, use_records: bool = True) -> Dict:
+    def run_evolution_analysis(self, use_records: bool = True, records_path: str = None) -> Dict:
         """執行完整的維度演進分析"""
         print("\n=== DADEE 維度演進分析 ===")
         
         # 1. 數據聚合
         if use_records:
             print("步驟1: 從用戶Meta-Tag記錄中提取資料...")
-            all_meta_tags = self.extract_meta_tags_from_records()
+            all_meta_tags = self.extract_meta_tags_from_records(records_path)
             
             if not all_meta_tags:
                 print("⚠️  沒有找到Meta-Tag記錄，嘗試從舊版文件讀取...")

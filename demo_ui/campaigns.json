@@ -1,0 +1,21 @@
+{
+  "nike_vaporfly": {
+    "advertiser": "Nike",
+    "goal": "推廣最新款 Vaporfly 跑鞋",
+    "tags": ["Running Enthusiasts", "Athletic Shoes", "Health & Fitness Buffs"],
+    "tag_ids": ["running_enthusiasts", "athletic_shoes", "health_and_fitness_buffs"]
+  },
+  "aws_cloud": {
+    "advertiser": "Amazon Web Services (AWS)",
+    "goal": "吸引企業開發者使用其雲端服務",
+    "tags": ["Enterprise Software", "Business Technology", "Cloud Services Power Users"],
+    "tag_ids": ["enterprise_software", "business_technology", "cloud_services_power_users"]
+  },
+  "headspace_meditation": {
+    "advertiser": "Headspace (冥想 App)",
+    "goal": "尋找對正念、冥想感興趣的用戶",
+    "tags": ["Yoga Lovers", "Health & Fitness", "Health & Fitness Buffs"],
+    "tag_ids": ["yoga_lovers", "google_health_and_fitness", "health_and_fitness_buffs"]
+  }
+}
+

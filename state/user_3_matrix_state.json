@@ -1,0 +1,27 @@
+{
+  "0008": {
+    "stored_value_decimal": 128,
+    "last_updated_timestamp": "2025-08-02T10:54:14.311548+00:00",
+    "update_count": 1
+  },
+  "0099": {
+    "stored_value_decimal": 128,
+    "last_updated_timestamp": "2025-08-02T10:54:14.311548+00:00",
+    "update_count": 1
+  },
+  "0032": {
+    "stored_value_decimal": 128,
+    "last_updated_timestamp": "2025-08-02T10:54:14.311548+00:00",
+    "update_count": 1
+  },
+  "0071": {
+    "stored_value_decimal": 128,
+    "last_updated_timestamp": "2025-08-02T10:54:14.311548+00:00",
+    "update_count": 1
+  },
+  "SP088": {
+    "stored_value_decimal": 128,
+    "last_updated_timestamp": "2025-08-02T10:54:14.311548+00:00",
+    "update_count": 1
+  }
+}

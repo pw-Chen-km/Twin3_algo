@@ -1,58 +1,1346 @@
 {
-  "0071": {
-    "attribute_name": "Social Achievements",
-    "definition": "Measures accomplishments achieved in a social or professional context, like completing a project or receiving an award.",
-    "attribute_meta_tags": ["achievement", "success", "complete", "finish task", "award", "accomplishment", "project", "leadership", "team work"],
-    "encoding_rules": "Score is based on the significance of the achievement. 0 for no achievement, 255 for a major life accomplishment.",
-    "ai_parsing_guidelines": "Focus on verbs indicating completion and nouns related to projects, goals, and recognition."
+  "0000": {
+    "attribute_name": "Humanity Index",
+    "definition": "衡量用戶身份的真實性與可信度，顯示用戶是否為真實人類而非機器人或偽造身份。",
+    "attribute_meta_tags": ["humanity", "authenticity", "real user", "not a bot", "verification", "trustworthiness", "kyc", "identity"],
+    "encoding_rules": "評分標準反映用戶身份的真實性。0分代表高度懷疑為機器人或偽造帳戶；255分代表通過多重驗證，確認為真實、可信的人類用戶。中間值根據驗證層級和行為一致性評定。",
+    "ai_parsing_guidelines": "Analyze user activity patterns, account verification status (e.g., email, phone, KYC), and interaction consistency. Look for bot-like behavior such as repetitive actions or non-human response times."
   },
-  "0048": {
-    "attribute_name": "Leadership Ability",
-    "definition": "Evaluates one's capacity to guide, influence, and motivate others in various contexts.",
-    "attribute_meta_tags": ["leadership", "guide", "mentor", "influence", "team leader", "manage", "supervise", "coordinate"],
-    "encoding_rules": "Score reflects leadership experience and impact. 0 for no leadership experience, 255 for exceptional leadership skills.",
-    "ai_parsing_guidelines": "Look for actions involving guiding others, taking charge, or managing teams and projects."
+  "0001": {
+    "attribute_name": "Physical Fitness Score",
+    "definition": "衡量用戶整體身體健康水平，基於運動和生理數據。",
+    "attribute_meta_tags": ["fitness", "health", "exercise", "physical activity", "well-being", "workout", "cardio", "strength"],
+    "encoding_rules": "分數基於用戶的運動頻率、強度、持續時間及相關生理指標（如心率、攝氧量）。0分代表幾乎無運動習慣；255分代表專業運動員水平的健康狀態。中間值根據活動數據綜合評估。",
+    "ai_parsing_guidelines": "Extract data from health apps, wearables, and user logs regarding exercise frequency, duration, type (cardio, strength), and intensity. Correlate with physiological data like heart rate and sleep patterns."
+  },
+  "0002": {
+    "attribute_name": "Click Speed",
+    "definition": "衡量用戶反應速度與手眼協調能力。",
+    "attribute_meta_tags": ["click speed", "reaction time", "reflex", "hand-eye coordination", "user interface interaction", "gaming"],
+    "encoding_rules": "分數根據用戶在互動介面上的平均反應時間計算。0分代表反應非常慢；255分代表極快且精準的反應速度。分數與反應時間成反比。",
+    "ai_parsing_guidelines": "Measure latency between stimulus presentation and user response (click/tap) in interactive tasks. Analyze patterns for consistency and precision."
+  },
+  "0003": {
+    "attribute_name": "Earth Coordinates",
+    "definition": "記錄用戶的常駐地理位置。",
+    "attribute_meta_tags": ["location", "geolocation", "residence", "gps", "geography", "country", "city"],
+    "encoding_rules": "分數反映用戶位置數據的穩定性和可驗證性。0分代表無有效位置或使用代理；255分代表長期穩定且已驗證的常駐地理位置。",
+    "ai_parsing_guidelines": "Parse GPS data, IP address location, and user-provided address information. Prioritize stable and consistent location data over erratic or masked data."
+  },
+  "0004": {
+    "attribute_name": "Body Mass Index (BMI)",
+    "definition": "衡量體重與身高的比例，反映身體組成。",
+    "attribute_meta_tags": ["bmi", "health", "weight", "height", "body composition", "fitness"],
+    "encoding_rules": "分數根據世界衛生組織的BMI標準範圍進行評分。0分代表極端過輕或過重；255分代表位於最健康的理想BMI範圍內。分數呈現常態分佈，以健康範圍為中心。",
+    "ai_parsing_guidelines": "Calculate BMI from user-provided or wearable-synced height and weight data. Map the result to a normalized 0-255 scale where the healthy range gets the highest scores."
+  },
+  "0005": {
+    "attribute_name": "Visual Acuity",
+    "definition": "衡量視力水平，與物理感知相關。",
+    "attribute_meta_tags": ["vision", "eyesight", "visual acuity", "perception", "sensory", "health"],
+    "encoding_rules": "分數基於標準視力測試結果（如Snellen chart）。0分代表視力嚴重受損；255分代表遠超正常標準的優異視力。中間值對應標準視力範圍。",
+    "ai_parsing_guidelines": "Look for user-inputted vision test results, prescription details, or interactions with vision-related accessibility features. Score based on standard acuity measurements (e.g., 20/20)."
+  },
+  "0006": {
+    "attribute_name": "Hearing Ability",
+    "definition": "衡量聽力水平，與物理感知相關。",
+    "attribute_meta_tags": ["hearing", "auditory", "hearing ability", "perception", "sensory", "health", "decibel"],
+    "encoding_rules": "分數基於聽力測試（audiogram）結果，評估不同頻率的聽力閾值。0分代表嚴重聽力損失；255分代表在所有頻率上都具有極佳的聽力。",
+    "ai_parsing_guidelines": "Analyze results from online hearing tests, user-reported hearing aid usage, or volume setting preferences. Score based on decibel hearing thresholds across frequencies."
+  },
+  "0007": {
+    "attribute_name": "Sleep Patterns",
+    "definition": "記錄睡眠時間和模式，與身體恢復相關。",
+    "attribute_meta_tags": ["sleep", "sleep patterns", "rest", "recovery", "health", "circadian rhythm", "insomnia"],
+    "encoding_rules": "分數評估睡眠的規律性、總時長和品質（如深度睡眠比例）。0分代表嚴重睡眠不足或極不規律；255分代表持續擁有高質量且規律的充足睡眠。",
+    "ai_parsing_guidelines": "Extract sleep duration, sleep stages (light, deep, REM), and consistency from wearable devices or user-logged sleep diaries. Prioritize regular sleep schedules and sufficient deep sleep."
   },
   "0008": {
     "attribute_name": "Dietary Habits",
-    "definition": "Tracks eating patterns, food preferences, and nutritional choices.",
-    "attribute_meta_tags": ["food", "eat", "meal", "restaurant", "cooking", "diet", "nutrition", "breakfast", "lunch", "dinner"],
-    "encoding_rules": "Score based on dietary diversity and healthiness. 0 for poor eating habits, 255 for excellent nutritional choices.",
-    "ai_parsing_guidelines": "Identify mentions of specific foods, meals, restaurants, or cooking activities."
+    "definition": "記錄飲食偏好和習慣，與身體營養相關。",
+    "attribute_meta_tags": ["diet", "nutrition", "eating habits", "food", "health", "calories", "macros"],
+    "encoding_rules": "分數根據飲食的均衡性、營養多樣性和健康程度評分。0分代表極不健康的飲食習慣（如高糖、高脂）；255分代表營養均衡、多樣化且規律的健康飲食。",
+    "ai_parsing_guidelines": "Analyze food logs, grocery lists, or discussions about meals. Identify food groups, nutritional balance (macros/micros), and adherence to healthy eating principles."
+  },
+  "0009": {
+    "attribute_name": "Heart Rate Variability (HRV)",
+    "definition": "衡量心臟健康與壓力水平的指標。",
+    "attribute_meta_tags": ["hrv", "heart rate", "health", "stress", "recovery", "autonomic nervous system"],
+    "encoding_rules": "分數與HRV值成正比。0分代表HRV極低，可能表示壓力過大或健康不佳；255分代表極高的HRV，反映良好的心血管健康和壓力適應能力。",
+    "ai_parsing_guidelines": "Parse HRV data (e.g., rMSSD) from wearables like smartwatches or fitness trackers. Higher and more stable HRV values result in higher scores."
+  },
+  "000A": {
+    "attribute_name": "Physical Reaction Time",
+    "definition": "衡量身體對刺激的反應速度，與協調性相關。",
+    "attribute_meta_tags": ["reaction time", "reflex", "coordination", "agility", "physical response"],
+    "encoding_rules": "分數與反應時間成反比。0分代表反應速度非常慢；255分代表對物理刺激（如視覺、聽覺）有近乎即時的反應。",
+    "ai_parsing_guidelines": "Measure latency between a physical or digital stimulus and a corresponding physical action. Analyze data from reaction-based games or tests."
+  },
+  "000B": {
+    "attribute_name": "Blood Pressure",
+    "definition": "記錄收縮壓和舒張壓，反映心血管健康狀況。",
+    "attribute_meta_tags": ["blood pressure", "health", "cardiovascular", "hypertension", "systolic", "diastolic"],
+    "encoding_rules": "分數基於血壓讀數與理想範圍（如120/80 mmHg）的接近程度。0分代表嚴重高血壓或低血壓；255分代表持續維持在最優健康範圍內。",
+    "ai_parsing_guidelines": "Extract systolic and diastolic blood pressure readings from user logs or connected health devices. Score based on proximity to medically accepted optimal ranges."
+  },
+  "000C": {
+    "attribute_name": "Glucose Level",
+    "definition": "記錄空腹血糖水平，與代謝健康相關。",
+    "attribute_meta_tags": ["glucose", "blood sugar", "metabolism", "diabetes", "health", "insulin"],
+    "encoding_rules": "分數基於空腹血糖值與正常範圍的符合度。0分代表血糖水平極高或極低；255分代表血糖水平持續穩定在健康的正常範圍內。",
+    "ai_parsing_guidelines": "Parse fasting blood glucose readings from user inputs or integrated medical devices. Higher scores are given for values within the healthy, non-diabetic range."
+  },
+  "000D": {
+    "attribute_name": "Cholesterol Level",
+    "definition": "記錄總膽固醇水平，與心血管健康相關。",
+    "attribute_meta_tags": ["cholesterol", "hdl", "ldl", "health", "cardiovascular", "lipids"],
+    "encoding_rules": "分數根據總膽固醇、LDL（壞膽固醇）和HDL（好膽固醇）的綜合水平評估。0分代表極不健康的膽固醇水平；255分代表所有指標均處於最佳健康範圍。",
+    "ai_parsing_guidelines": "Analyze lipid panel data from user-provided lab results. Score based on low LDL, high HDL, and a healthy total cholesterol level."
+  },
+  "000E": {
+    "attribute_name": "Immune System Strength",
+    "definition": "衡量免疫系統的強度，與身體抵抗力相關。",
+    "attribute_meta_tags": ["immune system", "immunity", "health", "resistance", "illness", "wellness"],
+    "encoding_rules": "分數綜合評估生病頻率、恢復速度及相關生物指標。0分代表免疫力低下，頻繁生病；255分代表免疫系統非常強健，極少生病且恢復快。",
+    "ai_parsing_guidelines": "Infer from user logs about frequency of illness (e.g., cold, flu), vaccination history, and lifestyle factors like diet and sleep that influence immunity."
+  },
+  "000F": {
+    "attribute_name": "Skin Health",
+    "definition": "記錄皮膚的健康狀況與外觀和身體健康相關。",
+    "attribute_meta_tags": ["skin health", "dermatology", "complexion", "skincare", "appearance", "health"],
+    "encoding_rules": "分數基於皮膚的光滑度、水分、彈性和無瑕疵程度。0分代表皮膚問題嚴重（如痤瘡、乾燥）；255分代表皮膚狀態極佳。",
+    "ai_parsing_guidelines": "Analyze user-uploaded images (with consent) for skin condition, or parse text for mentions of skincare routines, skin issues, and dermatology visits."
+  },
+  "0010": {
+    "attribute_name": "Physical Endurance",
+    "definition": "衡量用戶在體力活動中的耐力水平，反映持續運動能力。",
+    "attribute_meta_tags": ["endurance", "stamina", "fitness", "cardio", "aerobic", "running", "sports"],
+    "encoding_rules": "分數基於用戶能持續進行中高強度有氧運動的時間。0分代表耐力極差；255分代表能長時間（如數小時）維持高強度運動的菁英運動員水平。",
+    "ai_parsing_guidelines": "Extract data from long-duration activities like running, cycling, or swimming from fitness trackers. Focus on sustained heart rate and duration."
+  },
+  "0011": {
+    "attribute_name": "Flexibility",
+    "definition": "衡量用戶關節和肌肉柔韌性，與身體靈活性相關。",
+    "attribute_meta_tags": ["flexibility", "mobility", "stretching", "yoga", "range of motion", "fitness"],
+    "encoding_rules": "分數評估主要關節的活動範圍（Range of Motion）。0分代表身體非常僵硬；255分代表體操運動員級別的柔韌性。",
+    "ai_parsing_guidelines": "Identify participation in activities like yoga, pilates, or stretching routines. Look for mentions of flexibility tests like the 'sit and reach' test."
+  },
+  "0012": {
+    "attribute_name": "Strength Level",
+    "definition": "衡量用戶的肌肉力量，反映身體力量表現。",
+    "attribute_meta_tags": ["strength", "power", "fitness", "weightlifting", "muscle", "gym"],
+    "encoding_rules": "分數基於標準力量測試（如臥推、深蹲的最大重量）的表現。0分代表力量水平遠低於平均；255分代表專業力量運動員的水平。",
+    "ai_parsing_guidelines": "Analyze workout logs for weightlifting data, including exercises, weights, sets, and reps. Score based on calculated one-rep max (1RM) relative to body weight."
+  },
+  "0013": {
+    "attribute_name": "Coordination",
+    "definition": "衡量用戶的身體協調能力，與運動表現相關。",
+    "attribute_meta_tags": ["coordination", "motor skills", "balance", "agility", "sports", "dexterity"],
+    "encoding_rules": "分數評估用戶完成複雜動作的流暢度和準確性。0分代表協調性差；255分代表在需要高度協調的活動（如舞蹈、雜耍）中表現出色。",
+    "ai_parsing_guidelines": "Infer from participation in sports or activities requiring fine motor control and complex movements (e.g., dancing, martial arts, playing musical instruments)."
+  },
+  "0014": {
+    "attribute_name": "Balance",
+    "definition": "衡量用戶維持身體平衡的能力，與穩定性相關。",
+    "attribute_meta_tags": ["balance", "stability", "coordination", "posture", "fitness", "yoga"],
+    "encoding_rules": "分數基於單腳站立時間等平衡測試的結果。0分代表平衡能力差，難以維持穩定；255分代表即使在不穩定表面上也能保持極佳的平衡。",
+    "ai_parsing_guidelines": "Look for mentions of activities requiring good balance, such as yoga, gymnastics, skateboarding, or slacklining. Analyze data from balance board exercises."
+  },
+  "0015": {
+    "attribute_name": "Agility",
+    "definition": "衡量用戶的快速反應和移動能力，與身體靈活性相關。",
+    "attribute_meta_tags": ["agility", "quickness", "reflex", "coordination", "sports", "fitness"],
+    "encoding_rules": "分數基於標準敏捷性測試（如折返跑）的完成時間。0分代表敏捷性差；255分代表在需要快速改變方向的運動中具有頂尖的敏捷性。",
+    "ai_parsing_guidelines": "Analyze performance in sports like tennis, basketball, or soccer. Look for data from agility drills or reaction-based training apps."
+  },
+  "0016": {
+    "attribute_name": "Stamina",
+    "definition": "衡量用戶在長時間活動中的體能持續性，反映長期運動能力。",
+    "attribute_meta_tags": ["stamina", "endurance", "persistence", "fitness", "long-duration", "marathon"],
+    "encoding_rules": "與Endurance類似，但更強調長時間、多日的持續能力。0分代表體能極易耗盡；255分代表能完成超長距離耐力賽事（如超級馬拉松）的體能。",
+    "ai_parsing_guidelines": "Focus on multi-hour or multi-day physical events. Analyze logs from hiking, long-distance running/cycling, or tournaments to assess sustained energy levels."
+  },
+  "0017": {
+    "attribute_name": "Oxygen Saturation (SpO2)",
+    "definition": "記錄血液中的氧氣水平，與呼吸健康相關。",
+    "attribute_meta_tags": ["spo2", "oxygen saturation", "respiratory health", "breathing", "health", "blood oxygen"],
+    "encoding_rules": "分數基於SpO2百分比。0分代表嚴重缺氧；255分代表血氧飽和度持續維持在99%-100%的最佳水平。",
+    "ai_parsing_guidelines": "Extract SpO2 readings from modern wearables or medical devices. Scores below 95% receive lower ratings, while consistently high levels score well."
+  },
+  "0018": {
+    "attribute_name": "Body Temperature",
+    "definition": "記錄用戶的體溫，反映身體健康狀態。",
+    "attribute_meta_tags": ["body temperature", "fever", "health", "thermometer", "wellness"],
+    "encoding_rules": "分數基於體溫與正常範圍（約36.1°C至37.2°C）的接近程度。0分代表體溫異常（過高或過低）；255分代表體溫持續穩定在健康的正常範圍內。",
+    "ai_parsing_guidelines": "Parse body temperature data from smart thermometers or user logs. Deviations from the normal range (e.g., fever) result in lower scores."
+  },
+  "0019": {
+    "attribute_name": "Pain Tolerance",
+    "definition": "衡量用戶對疼痛的耐受程度，與身體耐受力相關。",
+    "attribute_meta_tags": ["pain tolerance", "endurance", "resilience", "sensitivity", "health"],
+    "encoding_rules": "分數基於用戶對疼痛刺激的主觀報告或生理反應。0分代表對疼痛極其敏感；255分代表具有非常高的疼痛耐受力。",
+    "ai_parsing_guidelines": "Infer from descriptions of injuries, intense workouts, or medical procedures. Look for keywords related to pain levels and coping mechanisms."
+  },
+  "001A": {
+    "attribute_name": "Injury History",
+    "definition": "記錄用戶的過去傷病記錄，反映身體健康狀況。",
+    "attribute_meta_tags": ["injury", "health history", "medical record", "recovery", "sports injury", "rehabilitation"],
+    "encoding_rules": "分數與傷病的嚴重性和頻率成反比。0分代表有嚴重或慢性的傷病史；255分代表幾乎沒有或只有輕微的傷病史。",
+    "ai_parsing_guidelines": "Identify mentions of past or current injuries, surgeries, or chronic conditions. Analyze context for severity, frequency, and recovery status."
+  },
+  "001B": {
+    "attribute_name": "Recovery Rate",
+    "definition": "衡量用戶從身體勞累或傷病中恢復的速度，與身體恢復能力相關。",
+    "attribute_meta_tags": ["recovery", "resilience", "healing", "fitness", "rest", "health"],
+    "encoding_rules": "分數基於從高強度運動或輕微傷病中恢復到正常狀態所需的時間。0分代表恢復非常緩慢；255分代表恢復速度極快。",
+    "ai_parsing_guidelines": "Analyze data such as resting heart rate trends after exercise, HRV, and sleep quality. Look for user logs about 'feeling recovered' or soreness duration."
+  },
+  "001C": {
+    "attribute_name": "Metabolic Rate",
+    "definition": "衡量用戶的基礎代謝率，與能量消耗和健康相關。",
+    "attribute_meta_tags": ["metabolism", "bmr", "tdee", "health", "energy expenditure", "calories"],
+    "encoding_rules": "分數基於計算出的基礎代謝率（BMR）並結合活動水平。0分代表代謝率異常緩慢；255分代表與健康體魄相符的高效代謝率。",
+    "ai_parsing_guidelines": "Calculate BMR using standard formulas (e.g., Mifflin-St Jeor) based on user's age, gender, weight, and height. Adjust score based on activity level."
+  },
+  "001D": {
+    "attribute_name": "Hydration Level",
+    "definition": "記錄用戶的身體水分含量，與健康和體能相關。",
+    "attribute_meta_tags": ["hydration", "water intake", "health", "fitness", "fluids", "wellness"],
+    "encoding_rules": "分數基於每日飲水量與推薦攝入量的比較。0分代表嚴重缺水；255分代表持續保持最佳的水分補充狀態。",
+    "ai_parsing_guidelines": "Track water intake from user logs or connected smart bottles. Compare daily consumption against recommended levels based on body weight and activity."
+  },
+  "001E": {
+    "attribute_name": "Bone Density",
+    "definition": "衡量用戶的骨骼強度，與身體結構健康相關。",
+    "attribute_meta_tags": ["bone density", "osteoporosis", "health", "skeletal health", "calcium", "strength"],
+    "encoding_rules": "分數基於骨密度掃描（DEXA）的T-score。0分代表骨質疏鬆；255分代表遠高於同齡人平均水平的強健骨骼。",
+    "ai_parsing_guidelines": "Look for mentions of bone density tests, diagnoses like osteoporosis, or dietary habits related to calcium and Vitamin D intake."
+  },
+  "001F": {
+    "attribute_name": "Muscle Mass",
+    "definition": "記錄用戶的肌肉質量，反映身體組成和力量。",
+    "attribute_meta_tags": ["muscle mass", "body composition", "fitness", "strength", "lean mass", "bodybuilding"],
+    "encoding_rules": "分數基於肌肉量佔總體重的百分比。0分代表肌肉量極低；255分代表專業健美運動員水平的肌肉量。",
+    "ai_parsing_guidelines": "Extract muscle mass percentage from smart scales or body composition analyzers. Correlate with strength training logs."
+  },
+  "0020": {
+    "attribute_name": "Fat Percentage",
+    "definition": "衡量用戶的體脂百分比，與身體組成和健康相關。",
+    "attribute_meta_tags": ["body fat", "fat percentage", "body composition", "health", "fitness", "lean"],
+    "encoding_rules": "分數與體脂率成反比，但以健康範圍為最佳。0分代表極高或極低的危險體脂率；255分代表處於運動員或非常健康的理想體脂範圍內。",
+    "ai_parsing_guidelines": "Parse body fat percentage data from smart scales or user input. Score based on healthy ranges for the user's gender and age."
+  },
+  "0021": {
+    "attribute_name": "Cardiovascular Health",
+    "definition": "衡量心血管系統的整體健康水平，基於心率和血壓數據。",
+    "attribute_meta_tags": ["cardiovascular", "heart health", "blood pressure", "resting heart rate", "vo2 max", "fitness"],
+    "encoding_rules": "綜合評估靜息心率、血壓、膽固醇和VO2 Max等指標。0分代表心血管健康狀況差；255分代表所有指標均顯示為極佳的心血管健康。",
+    "ai_parsing_guidelines": "Synthesize data from multiple attributes like Blood Pressure, Cholesterol, HRV, and resting heart rate. A consistently low resting heart rate and ideal BP/cholesterol levels yield a high score."
+  },
+  "0022": {
+    "attribute_name": "Respiratory Health",
+    "definition": "衡量呼吸系統的健康狀況，基於肺功能和氧氣攝取數據。",
+    "attribute_meta_tags": ["respiratory", "lung health", "breathing", "vo2 max", "spo2", "asthma"],
+    "encoding_rules": "綜合評估VO2 Max、SpO2和有無呼吸系統疾病。0分代表呼吸系統功能不佳；255分代表卓越的肺活量和攝氧效率。",
+    "ai_parsing_guidelines": "Combine SpO2 data with VO2 max estimates from fitness trackers. Look for mentions of conditions like asthma or smoking habits which would lower the score."
+  },
+  "0023": {
+    "attribute_name": "Neurological Health",
+    "definition": "衡量神經系統的健康水平，基於反應速度和協調數據。",
+    "attribute_meta_tags": ["neurological", "nervous system", "reaction time", "coordination", "balance", "cognitive function"],
+    "encoding_rules": "綜合評估反應時間、協調性、平衡感和認知測試結果。0分代表神經系統反應遲緩；255分代表反應迅速、協調性極佳的神經系統功能。",
+    "ai_parsing_guidelines": "Synthesize scores from Reaction Time, Coordination, and Balance. Incorporate results from cognitive games or tests measuring memory and focus."
+  },
+  "0024": {
+    "attribute_name": "Digestive Health",
+    "definition": "衡量消化系統的健康狀況，基於飲食和排泄數據。",
+    "attribute_meta_tags": ["digestive health", "gut health", "digestion", "nutrition", "diet", "stomach"],
+    "encoding_rules": "分數基於飲食規律性、纖維攝取量和有無消化問題報告。0分代表有慢性消化問題；255分代表消化系統功能良好且穩定。",
+    "ai_parsing_guidelines": "Analyze diet logs for fiber intake and food diversity. Look for user mentions of digestive issues like bloating, indigestion, or food intolerances."
+  },
+  "0025": {
+    "attribute_name": "Liver Function",
+    "definition": "記錄肝臟功能的健康指標，與代謝和毒素處理相關。",
+    "attribute_meta_tags": ["liver function", "health", "metabolism", "detox", "alt", "ast", "alcohol"],
+    "encoding_rules": "分數基於肝功能測試（如ALT, AST）結果。0分代表肝功能指數異常；255分代表肝功能指數在健康的正常範圍內。",
+    "ai_parsing_guidelines": "Parse data from user-provided lab results for liver enzymes. Infer from lifestyle choices, such as alcohol consumption, which impact liver health."
+  },
+  "0026": {
+    "attribute_name": "Kidney Function",
+    "definition": "記錄腎臟功能的健康指標，與排泄和水分平衡相關。",
+    "attribute_meta_tags": ["kidney function", "health", "hydration", "urine", "egfr", "creatinine"],
+    "encoding_rules": "分數基於腎功能測試（如eGFR）結果。0分代表腎功能顯著下降；255分代表腎功能處於最佳狀態。",
+    "ai_parsing_guidelines": "Analyze lab results for creatinine and eGFR values. Correlate with hydration levels and blood pressure data."
+  },
+  "0027": {
+    "attribute_name": "Hormonal Balance",
+    "definition": "衡量激素水平的平衡狀況，與身體調節相關。",
+    "attribute_meta_tags": ["hormones", "endocrine system", "health", "thyroid", "testosterone", "estrogen"],
+    "encoding_rules": "分數基於相關激素水平測試結果與正常範圍的符合度。0分代表激素嚴重失衡；255分代表關鍵激素水平處於健康平衡狀態。",
+    "ai_parsing_guidelines": "Look for user-provided hormone panel results (e.g., thyroid, testosterone). Infer from symptoms related to hormonal imbalances, such as fatigue or mood swings."
+  },
+  "0028": {
+    "attribute_name": "Vision Health",
+    "definition": "衡量視覺系統的整體健康，基於視力和其他視覺數據。",
+    "attribute_meta_tags": ["vision health", "eye health", "visual acuity", "glaucoma", "macular degeneration"],
+    "encoding_rules": "綜合評估視力敏銳度、眼壓及有無眼部疾病。0分代表有嚴重的視覺健康問題；255分代表整體視覺系統非常健康。",
+    "ai_parsing_guidelines": "Synthesize Visual Acuity score with user mentions of regular eye exams, eye pressure readings, and diagnoses of eye conditions."
+  },
+  "0029": {
+    "attribute_name": "Hearing Health",
+    "definition": "衡量聽力系統的整體健康，基於聽力測試數據。",
+    "attribute_meta_tags": ["hearing health", "auditory health", "hearing ability", "tinnitus", "ear health"],
+    "encoding_rules": "綜合評估聽力能力及有無耳鳴等聽力問題。0分代表有嚴重的聽力健康問題；255分代表整體聽力系統非常健康。",
+    "ai_parsing_guidelines": "Combine Hearing Ability score with user reports about conditions like tinnitus or exposure to loud noise, and usage of hearing protection."
+  },
+  "002A": {
+    "attribute_name": "Sensory Sensitivity",
+    "definition": "衡量感官對刺激的敏感程度，與感知能力相關。",
+    "attribute_meta_tags": ["sensory sensitivity", "perception", "senses", "highly sensitive person", "hsp"],
+    "encoding_rules": "這是一個中性指標。分數代表敏感度的高低，而非好壞。0分代表感官遲鈍；255分代表對多種感官刺激（光、聲、觸）極度敏感。",
+    "ai_parsing_guidelines": "Look for mentions of being a 'Highly Sensitive Person' (HSP), or descriptions of being easily overwhelmed by sensory input."
+  },
+  "002B": {
+    "attribute_name": "Physical Sensitivity",
+    "definition": "衡量身體對環境或傷害的敏感程度，與健康相關。",
+    "attribute_meta_tags": ["physical sensitivity", "allergies", "environmental sensitivity", "health", "immune response"],
+    "encoding_rules": "分數反映身體對外界刺激（如過敏原）的反應強度。0分代表無明顯敏感反應；255分代表對多種物質有強烈的過敏或其他敏感反應。",
+    "ai_parsing_guidelines": "Identify mentions of allergies, skin reactions, or sensitivity to chemicals, foods, or environmental factors."
+  },
+  "002C": {
+    "attribute_name": "Pain Sensitivity",
+    "definition": "衡量用戶對疼痛的敏感程度，與神經健康相關。",
+    "attribute_meta_tags": ["pain sensitivity", "pain threshold", "nociception", "health", "neurological"],
+    "encoding_rules": "分數與疼痛閾值成反比。0分代表疼痛閾值很高（不敏感）；255分代表疼痛閾值很低（對疼痛非常敏感）。",
+    "ai_parsing_guidelines": "Analyze descriptions of how the user experiences pain. Contrast with Pain Tolerance, which measures endurance of pain."
+  },
+  "002D": {
+    "attribute_name": "Temperature Sensitivity",
+    "definition": "衡量用戶對溫度的敏感程度，與身體調節相關。",
+    "attribute_meta_tags": ["temperature sensitivity", "thermoregulation", "cold intolerance", "heat intolerance", "health"],
+    "encoding_rules": "分數代表對溫度變化的敏感程度。0分代表對溫度變化不敏感；255分代表對輕微的溫度變化就有強烈反應（怕冷或怕熱）。",
+    "ai_parsing_guidelines": "Look for phrases like 'always cold,' 'can't stand the heat,' or frequent comments on ambient temperature."
+  },
+  "002E": {
+    "attribute_name": "Light Sensitivity",
+    "definition": "衡量用戶對光的敏感程度，與視覺健康相關。",
+    "attribute_meta_tags": ["light sensitivity", "photophobia", "vision", "migraine", "eye health"],
+    "encoding_rules": "分數代表對光的敏感程度。0分代表對強光不敏感；255分代表有畏光症狀，對正常光線也感到不適。",
+    "ai_parsing_guidelines": "Identify mentions of photophobia, needing to wear sunglasses indoors, or light being a trigger for migraines or discomfort."
+  },
+  "002F": {
+    "attribute_name": "Sound Sensitivity",
+    "definition": "衡量用戶對聲音的敏感程度，與聽力健康相關。",
+    "attribute_meta_tags": ["sound sensitivity", "hyperacusis", "misophonia", "hearing", "sensory"],
+    "encoding_rules": "分數代表對聲音的敏感程度。0分代表對聲音不敏感；255分代表對特定或一般聲音有極端反應（如聽覺過敏、恐音症）。",
+    "ai_parsing_guidelines": "Look for descriptions of being easily startled by sounds, annoyance at common noises (e.g., chewing), or diagnoses like hyperacusis."
+  },
+  "0030": {
+    "attribute_name": "Touch Sensitivity",
+    "definition": "衡量用戶對觸覺的敏感程度，與神經健康相關。",
+    "attribute_meta_tags": ["touch sensitivity", "tactile", "sensory", "haptic", "neurological"],
+    "encoding_rules": "分數代表對觸覺刺激的敏感度。0分代表觸覺遲鈍；255分代表對輕微觸碰有強烈反應，可能對某些材質或觸感感到不適。",
+    "ai_parsing_guidelines": "Analyze mentions of sensitivity to clothing tags, specific fabrics, or light touch. Note preferences for or aversion to physical contact."
+  },
+  "0031": {
+    "attribute_name": "Smell Sensitivity",
+    "definition": "衡量用戶對氣味的敏感程度，與嗅覺健康相關。",
+    "attribute_meta_tags": ["smell sensitivity", "olfactory", "hyperosmia", "sense of smell", "fragrance"],
+    "encoding_rules": "分數代表嗅覺的靈敏度。0分代表嗅覺不靈敏；255分代表嗅覺極其靈敏，能察覺到微弱的氣味。",
+    "ai_parsing_guidelines": "Look for comments on faint smells, strong reactions to perfumes or chemical odors, or mentions of a 'keen sense of smell'."
   },
   "0032": {
-    "attribute_name": "Creative Expression",
-    "definition": "Measures involvement in artistic and creative activities.",
-    "attribute_meta_tags": ["art", "creative", "design", "music", "painting", "writing", "photography", "artistic", "imagination"],
-    "encoding_rules": "Score reflects creative output and artistic engagement. 0 for no creative activities, 255 for professional artistic work.",
-    "ai_parsing_guidelines": "Focus on artistic verbs and creative nouns, including any form of artistic expression."
+    "attribute_name": "Taste Sensitivity",
+    "definition": "衡量用戶對味道的敏感程度，與味覺健康相關。",
+    "attribute_meta_tags": ["taste sensitivity", "gustatory", "supertaster", "flavor", "palate"],
+    "encoding_rules": "分數代表味覺的靈敏度。0分代表味覺遲鈍；255分代表味覺超常，能分辨出食物中複雜細微的味道。",
+    "ai_parsing_guidelines": "Identify descriptions of being a 'supertaster' or a picky eater due to sensitivity to certain tastes (e.g., bitterness). Look for detailed flavor descriptions in food reviews."
   },
-  "0156": {
-    "attribute_name": "Physical Fitness",
-    "definition": "Tracks physical activity levels and fitness-related behaviors.",
-    "attribute_meta_tags": ["exercise", "workout", "fitness", "sport", "running", "gym", "physical", "training", "health"],
-    "encoding_rules": "Score based on physical activity frequency and intensity. 0 for sedentary lifestyle, 255 for athlete-level fitness.",
-    "ai_parsing_guidelines": "Look for physical activities, exercise routines, sports participation, and fitness-related content."
+  "0033": {
+    "attribute_name": "Physical Activity Level",
+    "definition": "衡量用戶的日常身體活動頻率，與健康和體能相關。",
+    "attribute_meta_tags": ["activity level", "sedentary", "active", "lifestyle", "steps", "fitness"],
+    "encoding_rules": "分數基於每日步數、活動時間等指標。0分代表久坐不動的生活方式；255分代表每天都進行大量身體活動的極度活躍生活方式。",
+    "ai_parsing_guidelines": "Analyze daily step counts, active minutes, and stand hours from fitness trackers. Classify lifestyle from sedentary to very active."
   },
-  "SP088": {
-    "attribute_name": "Social Responsibility",
-    "definition": "Measures engagement with social causes and community responsibility.",
-    "attribute_meta_tags": ["volunteer", "charity", "community", "social cause", "helping others", "donation", "civic duty"],
-    "encoding_rules": "Score reflects level of social engagement and community contribution. 0 for no social involvement, 255 for dedicated social activism.",
-    "ai_parsing_guidelines": "Identify activities related to helping others, community service, or social causes."
+  "0034": {
+    "attribute_name": "Exercise Frequency",
+    "definition": "記錄用戶參與運動的頻率，與身體健康相關。",
+    "attribute_meta_tags": ["exercise frequency", "workout schedule", "routine", "fitness", "consistency"],
+    "encoding_rules": "分數基於每週進行結構化運動的次數。0分代表從不運動；255分代表每週運動6-7天。",
+    "ai_parsing_guidelines": "Count the number of logged workout sessions per week. Look for patterns and consistency in the user's exercise schedule."
   },
-  "0099": {
-    "attribute_name": "Learning Orientation",
-    "definition": "Evaluates commitment to continuous learning and skill development.",
-    "attribute_meta_tags": ["learn", "study", "education", "course", "skill", "knowledge", "research", "book", "training"],
-    "encoding_rules": "Score based on learning activities and educational engagement. 0 for no learning pursuits, 255 for dedicated lifelong learner.",
-    "ai_parsing_guidelines": "Focus on educational activities, skill acquisition, and knowledge-seeking behaviors."
+  "0035": {
+    "attribute_name": "Sport Participation",
+    "definition": "衡量用戶參與特定運動的程度，反映運動興趣和技能。",
+    "attribute_meta_tags": ["sports", "athletics", "team sports", "individual sports", "hobby", "competition"],
+    "encoding_rules": "分數評估參與運動的規律性、投入程度和競技水平。0分代表不參與任何運動；255分代表專業或半專業水平的運動員。",
+    "ai_parsing_guidelines": "Identify mentions of specific sports, team memberships, training schedules, and participation in competitions or races."
   },
-  "0203": {
-    "attribute_name": "Technology Adoption",
-    "definition": "Tracks engagement with technology and digital tools.",
-    "attribute_meta_tags": ["technology", "digital", "app", "software", "computer", "internet", "AI", "programming", "tech"],
-    "encoding_rules": "Score reflects technology usage and adoption. 0 for technology avoidance, 255 for cutting-edge technology adoption.",
-    "ai_parsing_guidelines": "Look for mentions of digital tools, software usage, or technology-related activities."
+  "0036": {
+    "attribute_name": "Fitness Goals",
+    "definition": "記錄用戶設定的健身目標清晰度和實現進展，與健康相關。",
+    "attribute_meta_tags": ["fitness goals", "health objectives", "weight loss", "muscle gain", "training plan", "motivation"],
+    "encoding_rules": "分數基於目標的明確性（SMART原則）和達成進度。0分代表沒有或模糊的目標；255分代表設定了清晰、可行的目標並持續取得進展。",
+    "ai_parsing_guidelines": "Look for explicit statements of fitness goals (e.g., 'run a 5k,' 'lose 10kg'). Track progress towards these goals through logged activities and measurements."
+  },
+  "0037": {
+    "attribute_name": "Health Awareness",
+    "definition": "衡量用戶對自身健康的關注程度，反映健康管理能力。",
+    "attribute_meta_tags": ["health awareness", "wellness", "preventive care", "health literacy", "self-monitoring"],
+    "encoding_rules": "分數基於用戶主動追蹤健康數據、尋求健康資訊和進行預防性檢查的行為。0分代表對健康漠不關心；255分代表極度關注並積極管理自身健康。",
+    "ai_parsing_guidelines": "Analyze frequency of health data logging, searches for health-related topics, and mentions of doctor visits or regular check-ups."
+  },
+  "0038": {
+    "attribute_name": "Nutrition Awareness",
+    "definition": "衡量用戶對營養知識的了解程度，與飲食健康相關。",
+    "attribute_meta_tags": ["nutrition awareness", "diet", "macros", "micros", "healthy eating", "food literacy"],
+    "encoding_rules": "分數評估用戶對宏量營養素、微量營養素和健康飲食原則的理解程度。0分代表幾乎沒有營養知識；255分代表具備專業級的營養知識。",
+    "ai_parsing_guidelines": "Look for use of specific nutritional terms (e.g., 'macros,' 'ketosis,' 'intermittent fasting'), tracking of calories/macros, and discussions about food labels."
+  },
+  "0039": {
+    "attribute_name": "Wellness Practices",
+    "definition": "記錄用戶參與健康實踐(如瑜伽)的頻率，與整體健康相關。",
+    "attribute_meta_tags": ["wellness", "yoga", "meditation", "mindfulness", "holistic health", "self-care"],
+    "encoding_rules": "分數基於參與整體健康活動（如瑜伽、冥想、水療）的頻率和規律性。0分代表不參與；255分代表將這些實踐作為每日例行公事。",
+    "ai_parsing_guidelines": "Identify mentions and logs of activities such as yoga classes, meditation sessions, spa visits, and other self-care routines."
+  },
+  "003A": {
+    "attribute_name": "Physical Limitations",
+    "definition": "記錄用戶的身體限制或殘疾情況，反映健康狀況。",
+    "attribute_meta_tags": ["disability", "physical limitation", "chronic condition", "mobility aid", "accessibility"],
+    "encoding_rules": "分數反映限制的嚴重程度。0分代表沒有身體限制；255分代表存在嚴重影響日常活動的身體限制。",
+    "ai_parsing_guidelines": "Look for mentions of disabilities, chronic pain, use of mobility aids (e.g., wheelchair, cane), or needs related to accessibility. Handle this data with high sensitivity."
+  },
+  "003B": {
+    "attribute_name": "Mobility",
+    "definition": "衡量用戶的移動能力，與身體功能相關。",
+    "attribute_meta_tags": ["mobility", "movement", "flexibility", "range of motion", "physical function"],
+    "encoding_rules": "分數評估用戶自由、無痛地移動身體的能力。0分代表移動能力嚴重受限；255分代表具有極佳的活動能力和關節靈活性。",
+    "ai_parsing_guidelines": "Analyze data related to daily movement, flexibility routines, and gait analysis from advanced wearables. Contrast with Physical Limitations."
+  },
+  "003C": {
+    "attribute_name": "Posture",
+    "definition": "記錄用戶的站姿或坐姿健康狀況，與身體結構相關。",
+    "attribute_meta_tags": ["posture", "spine health", "ergonomics", "back pain", "body alignment"],
+    "encoding_rules": "分數基於姿勢的健康程度。0分代表不良姿勢導致相關問題（如背痛）；255分代表持續保持理想的、符合人體工學的姿勢。",
+    "ai_parsing_guidelines": "Infer from mentions of back pain, ergonomic chairs, or posture correctors. Analyze data from posture-tracking sensors if available."
+  },
+  "003D": {
+    "attribute_name": "Joint Health",
+    "definition": "衡量關節的健康狀況，與身體靈活性和耐久性相關。",
+    "attribute_meta_tags": ["joint health", "arthritis", "mobility", "flexibility", "joint pain"],
+    "encoding_rules": "分數與關節的健康狀況成正比。0分代表患有嚴重的關節疾病（如關節炎）；255分代表關節靈活、無痛且功能完好。",
+    "ai_parsing_guidelines": "Look for mentions of joint pain, stiffness, or conditions like arthritis. Note participation in joint-friendly exercises like swimming."
+  },
+  "003E": {
+    "attribute_name": "Tendon Health",
+    "definition": "衡量肌腱的健康狀況，與身體運動能力相關。",
+    "attribute_meta_tags": ["tendon health", "tendinitis", "connective tissue", "sports injury", "recovery"],
+    "encoding_rules": "分數與肌腱的健康狀況成正比。0分代表有慢性肌腱問題（如肌腱炎）；255分代表肌腱強健且富有彈性。",
+    "ai_parsing_guidelines": "Identify mentions of conditions like tendinitis, carpal tunnel syndrome, or other repetitive strain injuries."
+  },
+  "003F": {
+    "attribute_name": "DIY Skills",
+    "definition": "衡量用戶的手工製作或DIY技能，反映實用能力。",
+    "attribute_meta_tags": ["diy", "craftsmanship", "woodworking", "home improvement", "making", "repair"],
+    "encoding_rules": "分數基於DIY項目的複雜度、完成度和技能多樣性。0分代表沒有DIY技能；255分代表能夠完成複雜項目的大師級工匠。",
+    "ai_parsing_guidelines": "Analyze text and images related to hobbies like woodworking, electronics, sewing, or home renovation projects. Look for discussions in DIY forums or communities."
+  },
+    "0040": {
+      "attribute_name": "Social Frequency",
+      "definition": "衡量用戶在社交平台上的互動頻率，反映社交活動的活躍程度。",
+      "attribute_meta_tags": ["social media", "activity", "frequency", "posts", "comments", "likes", "interaction"],
+      "encoding_rules": "分數根據用戶在社交平台上的日均互動次數（發文、評論、按讚等）評定。0分代表幾乎無任何社交互動；255分代表極高頻率的每日互動，是社交平台的重度使用者。",
+      "ai_parsing_guidelines": "Analyze social media data for the number of posts, comments, shares, and likes per day. Higher frequency and consistent engagement lead to a higher score."
+    },
+    "0041": {
+      "attribute_name": "Social Media Influencer",
+      "definition": "衡量用戶在社交媒體中的影響力大小，基於粉絲數、互動率和內容傳播力。",
+      "attribute_meta_tags": ["influencer", "social media", "followers", "engagement rate", "reach", "content creator", "klout"],
+      "encoding_rules": "分數綜合評估粉絲數量、互動率（按讚、評論比例）和內容分享數。0分代表無影響力；255分代表在特定領域具有頂級影響力的意見領袖。",
+      "ai_parsing_guidelines": "Extract follower counts, calculate engagement rates (likes/comments per follower), and track content shares/retweets. A high score requires both a large audience and high engagement."
+    },
+    "0042": {
+      "attribute_name": "Relationship Network",
+      "definition": "衡量社交關係的廣度和深度，反映用戶人際網絡的規模和質量。",
+      "attribute_meta_tags": ["network", "connections", "friends", "contacts", "social graph", "community"],
+      "encoding_rules": "分數評估社交網絡的節點數量（廣度）和互動的緊密程度（深度）。0分代表社交網絡稀疏；255分代表擁有龐大且緊密互動的高質量人際網絡。",
+      "ai_parsing_guidelines": "Analyze contact lists, friend counts on social media, and communication frequency with different individuals. Identify distinct clusters (family, work, hobbies) to assess network diversity."
+    },
+    "0043": {
+      "attribute_name": "Family Bonding",
+      "definition": "衡量與家庭成員的親密度，反映家庭互動的強度。",
+      "attribute_meta_tags": ["family", "bonding", "relationship", "kinship", "parents", "siblings", "intimacy"],
+      "encoding_rules": "分數基於與家庭成員的互動頻率、情感支持的表達和共同活動的參與度。0分代表家庭關係疏遠；255分代表家庭關係極度親密且互動頻繁。",
+      "ai_parsing_guidelines": "Look for communications (texts, calls) with contacts identified as family. Analyze content for positive sentiment, mentions of shared activities, and supportive language."
+    },
+    "0044": {
+      "attribute_name": "Friendship Level",
+      "definition": "衡量與朋友的親密度，反映社交圈中的友誼質量。",
+      "attribute_meta_tags": ["friendship", "friends", "relationship", "social circle", "best friend", "companionship"],
+      "encoding_rules": "分數評估核心朋友圈的規模、互動頻率和情感深度。0分代表缺乏親密朋友；255分代表擁有穩固、高質量且互信的友誼關係。",
+      "ai_parsing_guidelines": "Identify frequent, reciprocal interactions with non-family contacts. Analyze conversation content for personal disclosures, shared interests, and long-term consistency."
+    },
+    "0045": {
+      "attribute_name": "Colleagues Relationship",
+      "definition": "衡量與同事的關係質量，反映工作社交的親密度。",
+      "attribute_meta_tags": ["colleagues", "workplace", "professional network", "teamwork", "coworkers"],
+      "encoding_rules": "分數基於與同事的合作順暢度、溝通頻率和工作外的社交互動。0分代表與同事關係不佳或無交流；255分代表與同事關係融洽，合作無間。",
+      "ai_parsing_guidelines": "Analyze professional communication channels (e.g., Slack, Teams) for positive and collaborative interactions. Note mentions of after-work social events with colleagues."
+    },
+    "0046": {
+      "attribute_name": "Romantic Relationship",
+      "definition": "衡量浪漫關係的穩定性和親密度，反映情感聯繫的強度。",
+      "attribute_meta_tags": ["romance", "relationship", "partner", "dating", "love", "marriage", "intimacy"],
+      "encoding_rules": "分數評估關係的穩定性、情感表達的頻率和承諾程度。0分代表單身或不穩定的關係；255分代表處於非常穩定、親密且互相支持的長期浪漫關係中。",
+      "ai_parsing_guidelines": "Identify a primary romantic partner through communication patterns. Analyze sentiment, frequency of contact, and keywords related to commitment and shared future plans. Handle with high sensitivity."
+    },
+    "0047": {
+      "attribute_name": "Social Skills",
+      "definition": "衡量用戶的社交溝通和互動能力，反映社交能力的強度。",
+      "attribute_meta_tags": ["social skills", "communication", "interpersonal skills", "charisma", "etiquette", "networking"],
+      "encoding_rules": "分數基於對話的流暢度、溝通的清晰度及在社交場合的得體表現。0分代表社交技能欠佳；255分代表具備出色的溝通技巧和社交智慧。",
+      "ai_parsing_guidelines": "Analyze conversation transcripts for clarity, turn-taking, active listening markers (e.g., asking questions), and positive sentiment. Assess ability to navigate diverse social scenarios."
+    },
+    "0048": {
+      "attribute_name": "Leadership Ability",
+      "definition": "衡量用戶領導他人的能力，反映社交領導潛力。",
+      "attribute_meta_tags": ["leadership", "guide", "mentor", "influence", "team leader", "manage", "supervise", "coordinate"],
+      "encoding_rules": "分數反映領導經驗和影響力。0分代表無領導經驗；255分代表具備卓越的領導技能，能有效激勵和指導大型團隊。",
+      "ai_parsing_guidelines": "Look for actions involving guiding others, taking charge, or managing teams and projects. Identify job titles or roles with leadership responsibilities."
+    },
+    "0049": {
+      "attribute_name": "Team Collaboration",
+      "definition": "衡量用戶在團隊中的合作能力，反映團隊協作的效率。",
+      "attribute_meta_tags": ["teamwork", "collaboration", "cooperation", "team player", "project management"],
+      "encoding_rules": "分數基於在團隊項目中的貢獻度、溝通效率和支持他人的行為。0分代表難以合作；255分代表是團隊中不可或缺的高效合作者。",
+      "ai_parsing_guidelines": "Analyze project communication for collaborative language ('we', 'our team'), supportive interactions, and successful completion of group tasks."
+    },
+    "004A": {
+      "attribute_name": "Conflict Resolution",
+      "definition": "衡量用戶解決衝突的能力，反映社交應變能力。",
+      "attribute_meta_tags": ["conflict resolution", "negotiation", "mediation", "problem-solving", "diplomacy"],
+      "encoding_rules": "分數評估用戶在處理分歧時的策略和效果。0分代表逃避或激化衝突；255分代表能嫻熟地運用溝通和協商技巧，達成雙贏的解決方案。",
+      "ai_parsing_guidelines": "Identify discussions involving disagreement or conflict. Analyze the user's responses for de-escalation techniques, empathy, and solution-oriented language."
+    },
+    "004B": {
+      "attribute_name": "Empathy Level",
+      "definition": "衡量用戶理解他人情感的能力，反映社交情感的深度。",
+      "attribute_meta_tags": ["empathy", "compassion", "understanding", "emotional intelligence", "perspective-taking"],
+      "encoding_rules": "分數基於用戶在對話中識別和回應他人情緒的能力。0分代表缺乏同理心；255分代表能深刻地感知並恰當回應他人的情感狀態。",
+      "ai_parsing_guidelines": "Analyze language for phrases that acknowledge others' feelings ('I understand you feel...', 'That must be difficult'). Look for actions that demonstrate compassion and support."
+    },
+    "004C": {
+      "attribute_name": "Humor Sense",
+      "definition": "衡量用戶的幽默感程度，反映社交個性的輕鬆特質。",
+      "attribute_meta_tags": ["humor", "comedy", "jokes", "wit", "sarcasm", "funny"],
+      "encoding_rules": "分數評估用戶理解和使用幽默的能力，以及他人對其幽默的正面反應。0分代表缺乏幽默感；255分代表風趣幽默，善於用幽默化解氛圍。",
+      "ai_parsing_guidelines": "Identify use of jokes, witty remarks, and sarcasm. Analyze the reactions of others (e.g., 'lol', 'haha', positive emojis) to gauge the effectiveness of the humor."
+    },
+    "004D": {
+      "attribute_name": "Extroversion",
+      "definition": "衡量用戶的外向性格特質，反映社交偏好的活躍程度。",
+      "attribute_meta_tags": ["extroversion", "introversion", "personality", "sociable", "outgoing", "big five"],
+      "encoding_rules": "分數基於從社交活動中獲取能量的傾向。0分代表極度內向；255分代表極度外向，熱衷於社交互動。",
+      "ai_parsing_guidelines": "Assess the frequency of social participation, preference for group activities, and expressive communication style. High scores indicate a tendency to be outgoing and talkative."
+    },
+    "004E": {
+      "attribute_name": "Openness",
+      "definition": "衡量用戶對新事物的開放程度，反映社交個性的包容性。",
+      "attribute_meta_tags": ["openness to experience", "curiosity", "creativity", "imagination", "adventurous", "big five"],
+      "encoding_rules": "分數評估用戶對新思想、新經驗和藝術的接納程度。0分代表思想保守，偏好常規；255分代表極具好奇心和創造力，樂於探索未知。",
+      "ai_parsing_guidelines": "Look for engagement with diverse topics, interest in arts and culture, and willingness to try new things or consider unconventional ideas."
+    },
+    "004F": {
+      "attribute_name": "Agreeableness",
+      "definition": "衡量用戶的友善和合作程度，反映社交個性的和諧性。",
+      "attribute_meta_tags": ["agreeableness", "cooperative", "friendly", "compassionate", "kind", "big five"],
+      "encoding_rules": "分數基於用戶在社交互動中的合作性、同情心和利他行為。0分代表好鬥和多疑；255分代表非常友善、樂於助人且富於同情心。",
+      "ai_parsing_guidelines": "Analyze communication for polite, supportive, and cooperative language. Low scores are associated with argumentative or critical tones."
+    },
+    "0050": {
+      "attribute_name": "Neuroticism",
+      "definition": "衡量用戶的情緒穩定性，反映社交個性的情緒波動程度。",
+      "attribute_meta_tags": ["neuroticism", "emotional stability", "anxiety", "moodiness", "stress", "big five"],
+      "encoding_rules": "分數與情緒穩定性成反比。0分代表情緒非常穩定、沉著；255分代表情緒波動大，易感到焦慮和壓力。",
+      "ai_parsing_guidelines": "Analyze text for frequent expression of negative emotions like anxiety, sadness, anger, and worry. High emotional stability (low neuroticism) is shown by a calm and resilient tone."
+    },
+    "0051": {
+      "attribute_name": "Conscientiousness",
+      "definition": "衡量用戶的責任感和組織性，反映社交個性的責任程度。",
+      "attribute_meta_tags": ["conscientiousness", "organized", "responsible", "disciplined", "dependable", "big five"],
+      "encoding_rules": "分數基於用戶的自律性、條理性和對責任的承諾。0分代表衝動且缺乏條理；255分代表極度自律、可靠且有組織。",
+      "ai_parsing_guidelines": "Look for evidence of planning, goal-setting, and reliable follow-through on commitments. Analyze structured data like to-do lists and calendar usage."
+    },
+    "0052": {
+      "attribute_name": "Social Anxiety",
+      "definition": "衡量用戶在社交場合的焦慮感，反映社交心理的壓力程度。",
+      "attribute_meta_tags": ["social anxiety", "shyness", "public speaking", "stress", "phobia"],
+      "encoding_rules": "分數與社交焦慮程度成正比。0分代表在社交中自信、放鬆；255分代表在社交場合感到極度的焦慮和恐懼。",
+      "ai_parsing_guidelines": "Identify expressions of fear, worry, or discomfort related to social situations, meeting new people, or public speaking."
+    },
+    "0053": {
+      "attribute_name": "Public Expression",
+      "definition": "衡量用戶公開表達意見的傾向，反映社交行為的自信程度。",
+      "attribute_meta_tags": ["public speaking", "expression", "opinion", "assertiveness", "confidence", "advocacy"],
+      "encoding_rules": "分數基於用戶在公開場合（如社交媒體、論壇）發表個人觀點的頻率和自信度。0分代表從不公開發言；255分代表頻繁且自信地表達觀點。",
+      "ai_parsing_guidelines": "Analyze the frequency and content of public posts, comments on news articles, or participation in online debates. Score higher for well-articulated, assertive expressions."
+    },
+    "0054": {
+      "attribute_name": "Social Participation",
+      "definition": "衡量用戶參與社交活動的頻率，反映社交行為的活躍度。",
+      "attribute_meta_tags": ["social events", "participation", "activities", "meetups", "parties", "community"],
+      "encoding_rules": "分數基於參與線下或線上社交活動的頻率。0分代表幾乎不參與任何社交活動；255分代表頻繁參加各類社交聚會和活動。",
+      "ai_parsing_guidelines": "Look for mentions of attending parties, concerts, meetups, workshops, or other group events. Analyze calendar data for social appointments."
+    },
+    "0055": {
+      "attribute_name": "Volunteer Activity",
+      "definition": "衡量用戶參與志願服務的頻率，反映社交責任感。",
+      "attribute_meta_tags": ["volunteering", "charity", "social responsibility", "non-profit", "community service", "altruism"],
+      "encoding_rules": "分數基於參與志願服務的時長和頻率。0分代表從未參與；255分代表長期且定期地投入大量時間於志願服務。",
+      "ai_parsing_guidelines": "Identify mentions of working with charities, non-profits, or engaging in community service. Look for keywords related to volunteering and helping others."
+    },
+    "0056": {
+      "attribute_name": "Community Involvement",
+      "definition": "衡量用戶參與社區活動的頻率，反映社交責任和融入度。",
+      "attribute_meta_tags": ["community", "neighborhood", "local events", "civic engagement", "involvement"],
+      "encoding_rules": "分數評估用戶對所屬社區公共事務的參與程度。0分代表與社區脫節；255分代表深度參與社區建設和活動的活躍成員。",
+      "ai_parsing_guidelines": "Look for participation in local groups, neighborhood associations, or community events. Analyze discussions about local issues."
+    },
+    "0057": {
+      "attribute_name": "Cultural Participation",
+      "definition": "衡量用戶參與文化活動的頻率，反映文化興趣和參與度。",
+      "attribute_meta_tags": ["culture", "arts", "museum", "theater", "concerts", "exhibitions", "heritage"],
+      "encoding_rules": "分數基於參觀博物館、觀看演出、參加文化節日等活動的頻率。0分代表幾乎不參與文化活動；255分代表是文化藝術活動的熱心參與者。",
+      "ai_parsing_guidelines": "Identify check-ins, posts, or discussions about visiting museums, theaters, art galleries, and attending cultural festivals or concerts."
+    },
+    "0058": {
+      "attribute_name": "Political Involvement",
+      "definition": "衡量用戶參與政治活動的頻率，反映政治興趣和參與度。",
+      "attribute_meta_tags": ["politics", "civic engagement", "voting", "activism", "political party", "government"],
+      "encoding_rules": "分數評估用戶對政治事務的關注和參與程度，如投票、參與集會、討論政治等。0分代表對政治冷感；255分代表高度活躍的政治參與者。",
+      "ai_parsing_guidelines": "Analyze sharing of political news, participation in political discussions, mentions of voting, or involvement with political campaigns or activist groups."
+    },
+    "0059": {
+      "attribute_name": "Religious Involvement",
+      "definition": "衡量用戶參與宗教活動的頻率，反映宗教信仰的實踐程度。",
+      "attribute_meta_tags": ["religion", "spirituality", "faith", "church", "worship", "prayer", "community"],
+      "encoding_rules": "分數基於參加宗教儀式、團體活動的頻率。0分代表無宗教活動；255分代表深度參與宗教社群的活躍信徒。",
+      "ai_parsing_guidelines": "Look for mentions of attending services at churches, mosques, temples, etc., or participation in religious groups and events. Handle with sensitivity."
+    },
+    "005A": {
+      "attribute_name": "Interest Group Participation",
+      "definition": "衡量用戶參與興趣小組的頻率，反映興趣參與度。",
+      "attribute_meta_tags": ["hobbies", "interest groups", "clubs", "meetups", "communities", "leisure"],
+      "encoding_rules": "分數基於參加線上或線下興趣小組（如讀書會、登山社）的頻率和活躍度。0分代表不參加任何興趣小組；255分代表是多個興趣小組的核心活躍成員。",
+      "ai_parsing_guidelines": "Identify membership and activity in groups related to specific hobbies (e.g., photography club, book club, gaming guild)."
+    },
+    "005B": {
+      "attribute_name": "Trust Level",
+      "definition": "衡量用戶對他人的信任程度，反映社交心理的信任感。",
+      "attribute_meta_tags": ["trust", "faith in others", "cynicism", "social psychology", "gullibility"],
+      "encoding_rules": "分數評估用戶普遍的信任傾向。0分代表極度多疑和不信任他人；255分代表對人性抱持普遍的高度信任。",
+      "ai_parsing_guidelines": "Analyze language for expressions of trust versus suspicion towards others. Look for cynical or cautionary statements versus open and accepting ones."
+    },
+    "005C": {
+      "attribute_name": "Social Support",
+      "definition": "衡量用戶從社交網絡獲得的支持強度，反映社交資源的豐富度。",
+      "attribute_meta_tags": ["social support", "support system", "network", "friends", "family", "community"],
+      "encoding_rules": "分數評估用戶在需要時能夠獲得的情感、訊息和實質性支持的程度。0分代表缺乏社會支持網絡；255分代表擁有強大且可靠的社會支持系統。",
+      "ai_parsing_guidelines": "Assess the quality and quantity of supportive interactions. Analyze how others respond to the user's posts about challenges or requests for help."
+    },
+    "005D": {
+      "attribute_name": "Social Isolation",
+      "definition": "衡量用戶的社交孤立感，反映社交心理的孤獨程度。",
+      "attribute_meta_tags": ["loneliness", "social isolation", "solitude", "aloneness", "mental health"],
+      "encoding_rules": "分數與社交孤立感成正比。0分代表社交融入度高，無孤獨感；255分代表感到與社會嚴重脫節，體驗到強烈的孤獨感。",
+      "ai_parsing_guidelines": "Look for expressions of loneliness, feeling left out, or a lack of meaningful connections. Contrast with objective measures of social activity."
+    },
+    "005E": {
+      "attribute_name": "Social Focus",
+      "definition": "衡量用戶社交互動的焦點，反映社交行為的優先方向。",
+      "attribute_meta_tags": ["social focus", "career", "family", "hobbies", "relationships", "priorities"],
+      "encoding_rules": "分數用於分類，而非評級。例如，可以將分數範圍對應到不同焦點：0-50家庭，51-100事業，101-150興趣等。255分代表在各方面都非常均衡。",
+      "ai_parsing_guidelines": "Analyze the topics of conversation and the people the user interacts with most. Categorize the primary focus of their social energy (e.g., professional networking, family events, hobby groups)."
+    },
+    "005F": {
+      "attribute_name": "Social Motivation",
+      "definition": "衡量用戶參與社交的動機強度，反映社交心理的驅動力。",
+      "attribute_meta_tags": ["social motivation", "drive", "ambition", "need for affiliation", "social goals"],
+      "encoding_rules": "分數評估用戶尋求社交互動的內在驅動力。0分代表社交動機弱，偏好獨處；255分代表有強烈的社交需求和動機。",
+      "ai_parsing_guidelines": "Infer from the user's proactivity in initiating social contact and organizing events. High motivation is shown by frequent efforts to connect with others."
+    },
+    "0060": {
+      "attribute_name": "Social Style",
+      "definition": "衡量用戶的社交行為風格，反映主動或被動的社交傾向。",
+      "attribute_meta_tags": ["social style", "active", "passive", "initiative", "responsive", "behavior"],
+      "encoding_rules": "分數範圍代表從被動到主動的光譜。0分代表在社交中極度被動，總是等待他人發起；255分代表極度主動，總是社交活動的發起者。",
+      "ai_parsing_guidelines": "Analyze conversations to determine if the user is more likely to initiate contact (active) or primarily respond to others (passive)."
+    },
+    "0061": {
+      "attribute_name": "Social Role",
+      "definition": "衡量用戶在社交中的角色，反映領導者、追隨者或協調者的地位。",
+      "attribute_meta_tags": ["social role", "leader", "follower", "organizer", "influencer", "team dynamics"],
+      "encoding_rules": "這是一個分類屬性。分數可以對應不同角色：0-85追隨者，86-170協調者，171-255領導者。評分基於用戶在群體中的行為模式。",
+      "ai_parsing_guidelines": "Identify patterns of behavior in group settings. Does the user typically direct the conversation (leader), support others' ideas (follower), or facilitate communication (coordinator)?"
+    },
+    "0062": {
+      "attribute_name": "Social Preference",
+      "definition": "衡量用戶的社交活動偏好，反映群聚或獨處的傾向。",
+      "attribute_meta_tags": ["social preference", "group size", "one-on-one", "large groups", "introversion", "extroversion"],
+      "encoding_rules": "分數範圍代表偏好的群體規模。0分代表極度偏好一對一的深入交流；255分代表極度偏好大型團體聚會。",
+      "ai_parsing_guidelines": "Analyze the types of social events the user talks about positively. Note preferences for small, intimate gatherings versus large parties or events."
+    },
+    "0063": {
+      "attribute_name": "Social Adaptability",
+      "definition": "衡量用戶適應新社交環境的能力，反映社交靈活性。",
+      "attribute_meta_tags": ["adaptability", "social flexibility", "new environments", "chameleon", "social chameleon"],
+      "encoding_rules": "分數評估用戶融入不同社交圈和應對變化的能力。0分代表難以適應新環境；255分代表能輕鬆自如地融入任何社交場合。",
+      "ai_parsing_guidelines": "Look for experiences of moving to new cities, starting new jobs, or joining new communities. Analyze how quickly the user forms new connections in these situations."
+    },
+    "0064": {
+      "attribute_name": "Social Innovation",
+      "definition": "衡量用戶在社交中的創新能力，反映社交創造力。",
+      "attribute_meta_tags": ["social innovation", "creativity", "networking", "event planning", "community building"],
+      "encoding_rules": "分數評估用戶提出新穎社交方式或創建新社群的能力。0分代表遵循傳統社交模式；255分代表在社交方面極具創意，是新趨勢的引領者。",
+      "ai_parsing_guidelines": "Identify instances where the user has created a new group, organized a unique type of event, or introduced a novel way for people to connect."
+    },
+    "0065": {
+      "attribute_name": "Social Learning",
+      "definition": "衡量用戶從社交中學習的能力，反映社交智慧。",
+      "attribute_meta_tags": ["social learning", "observational learning", "social cues", "adaption", "wisdom"],
+      "encoding_rules": "分數基於用戶從觀察他人互動中學習並調整自身行為的能力。0分代表難以從社交經驗中學習；255分代表能快速學習並掌握社交規範和技巧。",
+      "ai_parsing_guidelines": "Look for evidence of the user changing their behavior or opinion based on social feedback or observing others' experiences."
+    },
+    "0066": {
+      "attribute_name": "Social Memory",
+      "definition": "衡量用戶記住社交細節的能力，反映社交記憶力。",
+      "attribute_meta_tags": ["social memory", "memory", "names", "faces", "details", "rapport"],
+      "encoding_rules": "分數評估用戶記住他人姓名、背景和對話細節的能力。0分代表社交記憶差；255分代表能記住大量社交細節，有助於建立良好關係。",
+      "ai_parsing_guidelines": "Analyze conversations for instances where the user recalls specific details from previous interactions, such as remembering someone's birthday or a story they told."
+    },
+    "0067": {
+      "attribute_name": "Social Perception",
+      "definition": "衡量用戶感知社交線索的能力，反映社交敏感性。",
+      "attribute_meta_tags": ["social perception", "social cues", "body language", "tone of voice", "subtext", "intuition"],
+      "encoding_rules": "分數基於用戶解讀非語言信號和言外之意的準確性。0分代表對社交線索不敏感；255分代表能敏銳地捕捉到微小的社交信號。",
+      "ai_parsing_guidelines": "Infer from the user's ability to correctly interpret sarcasm, irony, and emotional undertones in text-based communication."
+    },
+    "0068": {
+      "attribute_name": "Social Response",
+      "definition": "衡量用戶對社交刺激的反應速度，反映社交敏捷性。",
+      "attribute_meta_tags": ["social response", "quick-witted", "repartee", "timing", "social agility"],
+      "encoding_rules": "分數評估用戶在對話中快速且得體地回應的能力。0分代表反應遲緩或不當；255分代表反應迅速、機智且恰到好處。",
+      "ai_parsing_guidelines": "Analyze response times in real-time chats and the wit or appropriateness of the user's replies in fast-paced conversations."
+    },
+    "0069": {
+      "attribute_name": "Social Expression",
+      "definition": "衡量用戶表達社交情感的能力，反映社交自信和表達力。",
+      "attribute_meta_tags": ["social expression", "emotional expression", "communication", "assertiveness", "vulnerability"],
+      "encoding_rules": "分數基於用戶清晰、恰當地表達自身情感和想法的能力。0分代表情感表達壓抑或困難；255分代表能自如、真誠地表達豐富的情感。",
+      "ai_parsing_guidelines": "Look for clear 'I feel...' statements and other forms of emotional disclosure. Assess the richness of emotional vocabulary used."
+    },
+    "006A": {
+      "attribute_name": "Social Control",
+      "definition": "衡量用戶控制社交情境的能力，反映社交領導力和影響力。",
+      "attribute_meta_tags": ["social control", "influence", "persuasion", "leadership", "charisma", "manipulation"],
+      "encoding_rules": "分數評估用戶引導對話走向和影響他人行為的能力。0分代表在社交中易受他人影響；255分代表能主導社交互動，具有強大的影響力。",
+      "ai_parsing_guidelines": "Analyze conversations to see if the user successfully steers topics, persuades others to their point of view, or resolves group indecision."
+    },
+    "006B": {
+      "attribute_name": "Social Creativity",
+      "definition": "衡量用戶在社交中的創造力，反映提出新想法或創意互動的能力。",
+      "attribute_meta_tags": ["social creativity", "ideas", "brainstorming", "icebreakers", "event planning"],
+      "encoding_rules": "分數基於用戶在社交場合提出有趣話題、活動或解決方案的能力。0分代表缺乏社交創意；255分代表總能為社交互動帶來新穎和有趣的元素。",
+      "ai_parsing_guidelines": "Identify suggestions for new activities, creative conversation starters, or unique solutions to group problems."
+    },
+    "006C": {
+      "attribute_name": "Social Intelligence",
+      "definition": "衡量用戶的社交智慧水平，反映理解和應對社交情境的能力。",
+      "attribute_meta_tags": ["social intelligence", "sq", "emotional intelligence", "social skills", "wisdom"],
+      "encoding_rules": "綜合評估多項社交技能（如感知、溝通、同理心）的總分。0分代表社交智慧低下；255分代表具備卓越的社交智慧，能輕鬆駕馭複雜的社交環境。",
+      "ai_parsing_guidelines": "Synthesize scores from related attributes like Empathy, Social Perception, and Conflict Resolution. High SQ is the ability to achieve one's goals while maintaining positive relationships."
+    },
+    "006D": {
+      "attribute_name": "Social Emotion",
+      "definition": "衡量用戶在社交中的情緒強度，反映社交情感的豐富程度。",
+      "attribute_meta_tags": ["social emotion", "affect", "emotional intensity", "passion", "expressiveness"],
+      "encoding_rules": "分數評估用戶在社交互動中體驗和表達情緒的強度。0分代表情感平淡、內斂；255分代表情感體驗深刻且表達強烈。",
+      "ai_parsing_guidelines": "Analyze the intensity of emotional language and emoji usage in social contexts. Differentiate between positive (e.g., excitement, joy) and negative (e.g., outrage, despair) intensity."
+    },
+    "006E": {
+      "attribute_name": "Social Health",
+      "definition": "衡量用戶的社交健康整體指數，反映社交生活的健康程度。",
+      "attribute_meta_tags": ["social health", "well-being", "relationships", "social life", "connectedness"],
+      "encoding_rules": "綜合評估社交網絡的質量、社交滿意度和社交支持等多方面指標。0分代表社交健康狀況堪憂；255分代表擁有非常健康、平衡且令人滿意的社交生活。",
+      "ai_parsing_guidelines": "Create a composite score from attributes like Relationship Network, Social Support, and Social Satisfaction. Low scores in Social Isolation or Social Anxiety will negatively impact the score."
+    },
+    "006F": {
+      "attribute_name": "Social Satisfaction",
+      "definition": "衡量用戶對社交生活的滿意程度，反映社交心理的幸福感。",
+      "attribute_meta_tags": ["social satisfaction", "happiness", "fulfillment", "quality of life", "social well-being"],
+      "encoding_rules": "分數基於用戶對其社交關係和活動的主觀滿意度。0分代表對社交生活極不滿意；255分代表感到非常滿意和幸福。",
+      "ai_parsing_guidelines": "Look for direct expressions of satisfaction or dissatisfaction with the user's social life, friendships, and community involvement."
+    },
+    "0070": {
+      "attribute_name": "Social Goals",
+      "definition": "衡量用戶社交目標的明確度，反映社交心理的目標導向性。",
+      "attribute_meta_tags": ["social goals", "objectives", "ambition", "networking goals", "relationship goals"],
+      "encoding_rules": "分數基於用戶是否設定以及多大程度上設定了清晰的社交目標（如擴展人脈、尋找伴侶）。0分代表無社交目標；255分代表有非常明確且可執行的社交目標。",
+      "ai_parsing_guidelines": "Identify statements about desired social outcomes, such as 'I want to make more friends,' 'I'm looking to network with people in my field,' or 'I'm searching for a partner.'"
+    },
+    "0071": {
+      "attribute_name": "Social Achievements",
+      "definition": "衡量用戶的社交成就感，反映社交心理的成就滿意度。",
+      "attribute_meta_tags": ["achievement", "success", "milestone", "award", "recognition", "social status"],
+      "encoding_rules": "分數基於用戶在社交領域取得的成就，如建立重要關係、組織成功活動或獲得社群認可。0分代表無社交成就；255分代表取得了顯著的社交成就。",
+      "ai_parsing_guidelines": "Look for mentions of achieving social milestones (e.g., getting married, organizing a successful event), receiving awards from a community, or being recognized as a leader."
+    },
+    "0072": {
+      "attribute_name": "Social Challenges",
+      "definition": "衡量用戶面臨的社交挑戰，反映社交心理的壓力程度。",
+      "attribute_meta_tags": ["social challenges", "obstacles", "difficulties", "conflicts", "stress"],
+      "encoding_rules": "分數與面臨的社交挑戰的嚴重程度成正比。0分代表社交生活一帆風順；255分代表正經歷重大的社交困難或衝突。",
+      "ai_parsing_guidelines": "Identify discussions about ongoing conflicts, difficulties in making friends, challenges at work with colleagues, or other social struggles."
+    },
+    "0073": {
+      "attribute_name": "Social Resources",
+      "definition": "衡量用戶可用的社交資源，反映社交網絡的豐富度。",
+      "attribute_meta_tags": ["social resources", "network", "connections", "social capital", "support system"],
+      "encoding_rules": "分數評估用戶社交網絡中可以為其提供幫助（如資訊、機會、支持）的資源數量和質量。0分代表缺乏社交資源；255分代表擁有極其豐富和高價值的社交資源。",
+      "ai_parsing_guidelines": "Analyze the user's network for influential contacts, access to diverse information, and the willingness of others to provide assistance. This is a measure of the network's utility."
+    },
+    "0074": {
+      "attribute_name": "Social Support Received",
+      "definition": "衡量用戶從社交網絡獲得的支持程度，反映社交支援的質量。",
+      "attribute_meta_tags": ["social support", "received support", "help", "advice", "emotional support"],
+      "encoding_rules": "分數基於用戶實際從他人那裡獲得的情感支持和實質幫助的頻率和質量。0分代表很少或沒有獲得支持；255分代表頻繁地從社交網絡中獲得高質量的支持。",
+      "ai_parsing_guidelines": "This is the counterpart to Social Support. Analyze interactions to see actual instances of others providing help, advice, or comfort to the user."
+    },
+    "0075": {
+      "attribute_name": "Social Pressure",
+      "definition": "衡量用戶面臨的社交壓力程度，反映社交心理的壓力負擔。",
+      "attribute_meta_tags": ["social pressure", "peer pressure", "conformity", "expectations", "stress"],
+      "encoding_rules": "分數與感受到的社交壓力成正比。0分代表無社交壓力；255分代表感受到來自同儕、家庭或社會的巨大壓力，要求其遵守特定規範或期望。",
+      "ai_parsing_guidelines": "Look for expressions of feeling forced to act a certain way, conform to group norms against one's will, or meet others' expectations."
+    },
+    "0076": {
+      "attribute_name": "Social Balance",
+      "definition": "衡量用戶社交與個人生活的平衡程度，反映社交心理的和諧性。",
+      "attribute_meta_tags": ["work-life balance", "social balance", "solitude", "personal time", "harmony"],
+      "encoding_rules": "分數評估用戶在社交活動和個人獨處時間之間的平衡狀態。0分或255分代表極端失衡（極度孤立或過度社交），中間值128分代表理想的平衡狀態。",
+      "ai_parsing_guidelines": "Analyze discussions about needing 'me time' versus feeling lonely. A balanced score reflects satisfaction with both social and solitary activities."
+    },
+    "0077": {
+      "attribute_name": "Language Proficiency",
+      "definition": "衡量用戶掌握語言的數量和流利程度，反映社交能力。",
+      "attribute_meta_tags": ["language", "bilingual", "multilingual", "polyglot", "fluency", "communication"],
+      "encoding_rules": "分數基於掌握的語言數量和每種語言的流利等級。0分代表只會一種語言且不流利；255分代表精通多種語言。",
+      "ai_parsing_guidelines": "Identify the languages used by the user and assess fluency based on grammar, vocabulary, and idiomatic expression. Look for self-reported proficiency levels (e.g., 'fluent in Spanish')."
+    },
+    "0078": {
+      "attribute_name": "Cross-Cultural Communication",
+      "definition": "衡量用戶的跨文化交流能力，反映社交多元性。",
+      "attribute_meta_tags": ["cross-cultural", "multicultural", "diversity", "international", "global communication"],
+      "encoding_rules": "分數評估用戶與不同文化背景人士有效溝通的能力。0分代表缺乏跨文化交流經驗；255分代表具備出色的跨文化溝通技巧和豐富經驗。",
+      "ai_parsing_guidelines": "Analyze interactions with people from different countries or cultural backgrounds. Look for awareness of cultural norms and an adaptive communication style."
+    },
+    "0079": {
+      "attribute_name": "Social Etiquette",
+      "definition": "衡量用戶掌握社交禮儀的程度，反映社交規範的遵循度。",
+      "attribute_meta_tags": ["etiquette", "manners", "politeness", "social norms", "protocol"],
+      "encoding_rules": "分數基於用戶在社交場合中對禮儀規範的遵守程度。0分代表頻繁違反社交禮儀；255分代表言行舉止完美符合社交禮儀。",
+      "ai_parsing_guidelines": "Assess the use of polite language ('please,' 'thank you'), appropriate forms of address, and adherence to conversational norms."
+    },
+    "007A": {
+      "attribute_name": "Online Etiquette",
+      "definition": "衡量用戶掌握網絡社交禮儀的程度，反映數位社交規範的遵循度。",
+      "attribute_meta_tags": ["netiquette", "online etiquette", "digital citizenship", "cyberbullying", "trolling"],
+      "encoding_rules": "分數基於用戶在網絡互動中的禮儀表現。0分代表有網絡暴力或引戰等不良行為；255分代表是網絡社區的模範公民。",
+      "ai_parsing_guidelines": "Analyze online behavior for trolling, flaming, spamming, or cyberbullying. Positive scores are given for respectful, constructive, and on-topic communication."
+    },
+    "007B": {
+      "attribute_name": "Referral Persuasion",
+      "definition": "衡量用戶推薦說服他人的能力，反映社交影響力。",
+      "attribute_meta_tags": ["persuasion", "influence", "referral", "word-of-mouth", "sales", "advocacy"],
+      "encoding_rules": "分數基於用戶成功說服他人採納其推薦（產品、服務、觀點）的比率和效果。0分代表無說服力；255分代表其推薦具有極高的轉化率。",
+      "ai_parsing_guidelines": "Look for instances where the user recommends something and others act on that recommendation. Analyze persuasive language and follow-up comments indicating conversion."
+    },
+    "007C": {
+      "attribute_name": "Community Leader",
+      "definition": "衡量用戶在社區中的領導角色，反映社交地位。",
+      "attribute_meta_tags": ["community leader", "organizer", "moderator", "administrator", "leadership"],
+      "encoding_rules": "分數基於用戶在線上或線下社群中擔任的正式或非正式領導職位。0分代表普通成員；255分代表是大型社群的創始人或核心領導者。",
+      "ai_parsing_guidelines": "Identify roles such as 'admin,' 'moderator,' or 'organizer' in online groups. Look for evidence of leading community initiatives or being a go-to person for advice."
+    },
+    "007D": {
+      "attribute_name": "Social Media Engagement",
+      "definition": "衡量用戶在社交媒體上的參與度，反映數位社交活躍程度。",
+      "attribute_meta_tags": ["social media", "engagement", "likes", "comments", "shares", "activity"],
+      "encoding_rules": "與Social Frequency類似，但更側重於與他人內容的互動，而非僅僅是發布。0分代表只看不互動（潛水）；255分代表與他人內容有大量深入的互動。",
+      "ai_parsing_guidelines": "Calculate the ratio of a user's comments/likes/shares to their own posts. A high score indicates a user who actively engages with others' content."
+    },
+    "007E": {
+      "attribute_name": "Field Leader",
+      "definition": "衡量用戶在特定領域的領導地位，反映專業社交影響力。",
+      "attribute_meta_tags": ["thought leader", "expert", "influencer", "professional network", "authority"],
+      "encoding_rules": "分數基於用戶在特定專業或興趣領域被認可為權威或意見領袖的程度。0分代表無專業影響力；255分代表是該領域公認的頂尖專家。",
+      "ai_parsing_guidelines": "Look for evidence of being cited by others, speaking at conferences, publishing authoritative content, or having a large following of peers in a specific field."
+    },
+    "007F": {
+      "attribute_name": "Empathy Evangelist",
+      "definition": "衡量用戶推廣同理心的能力，反映社交情感的影響力。",
+      "attribute_meta_tags": ["empathy", "advocacy", "compassion", "emotional intelligence", "evangelist"],
+      "encoding_rules": "分數基於用戶不僅自身具備同理心，還積極倡導和影響他人提升同理心的行為。0分代表不關心；255分代表是推廣同理心和情感智慧的積極倡導者。",
+      "ai_parsing_guidelines": "Identify not only empathetic behavior but also meta-communication about the importance of empathy, sharing articles on the topic, or encouraging others to be more understanding."
+    },
+    "0080": {
+      "attribute_name": "Internet OG Sharing",
+      "definition": "衡量用戶在互聯網上的分享行為，反映數位足跡的活躍度。",
+      "attribute_meta_tags": ["sharing", "content creation", "social media", "digital footprint", "og", "early adopter"],
+      "encoding_rules": "分數評估用戶在網路上原創分享的頻率和影響力，特別是早期、引領性的內容。0分代表無分享行為；255分代表是互聯網早期內容分享的深度參與者和引領者。",
+      "ai_parsing_guidelines": "Analyze the user's public posting history. Look for high frequency of original content sharing. Give higher scores for accounts with a long history and content that is widely shared or commented on."
+    },
+    "0081": {
+      "attribute_name": "Digital Literacy",
+      "definition": "衡量用戶理解和使用數位技術的能力，反映數位能力。",
+      "attribute_meta_tags": ["digital literacy", "tech savvy", "computer skills", "internet skills", "digital competence"],
+      "encoding_rules": "分數基於用戶對軟硬件、網絡工具和數位概念的掌握程度。0分代表數位新手；255分代表能熟練運用多種數位工具解決複雜問題的專家。",
+      "ai_parsing_guidelines": "Assess the user's vocabulary and understanding in discussions about software, hardware, and online services. Look for evidence of problem-solving using digital tools."
+    },
+    "0082": {
+      "attribute_name": "Stock Investment Winner",
+      "definition": "衡量用戶在股票投資中的成功率，反映數位金融能力。",
+      "attribute_meta_tags": ["stock market", "investing", "trading", "portfolio", "finance", "winner", "profit"],
+      "encoding_rules": "分數基於用戶自報的投資回報率（ROI）和交易策略的成熟度。0分代表投資虧損或無經驗；255分代表持續獲得遠超市場平均回報的頂尖投資者。",
+      "ai_parsing_guidelines": "Analyze discussions about stock portfolios, trading strategies, and market analysis. Look for claims of profit/loss and the sophistication of the investment rationale."
+    },
+    "0083": {
+      "attribute_name": "Game Achiever",
+      "definition": "衡量用戶在遊戲中的成就水平，反映數位娛樂能力。",
+      "attribute_meta_tags": ["gaming", "achievements", "trophies", "high score", "esports", "gamer"],
+      "encoding_rules": "分數基於獲得的遊戲內成就數量、難度以及在排行榜上的名次。0分代表休閒玩家或無成就；255分代表在多款遊戲中達成頂級成就的菁英玩家。",
+      "ai_parsing_guidelines": "Scan gaming profiles (e.g., Steam, PlayStation Network) for achievement data. Look for mentions of completing difficult challenges or ranking highly in competitive games."
+    },
+    "0084": {
+      "attribute_name": "Texas Hold’em Hero",
+      "definition": "衡量用戶在德州撲克遊戲中的技能，反映數位娛樂能力。",
+      "attribute_meta_tags": ["texas hold'em", "poker", "card games", "gaming", "strategy", "online poker"],
+      "encoding_rules": "分數基於線上德州撲克的勝率、盈利和段位等級。0分代表新手；255分代表達到職業選手水平的線上撲克高手。",
+      "ai_parsing_guidelines": "Analyze game statistics from online poker platforms. Look for high win rates, positive earnings history, and discussions demonstrating deep strategic understanding of the game."
+    },
+    "0085": {
+      "attribute_name": "Mahjong Hero",
+      "definition": "衡量用戶在麻將遊戲中的技能，反映數位娛樂能力。",
+      "attribute_meta_tags": ["mahjong", "tile game", "gaming", "strategy", "online mahjong"],
+      "encoding_rules": "分數基於線上麻將遊戲的段位、勝率和番數記錄。0分代表新手；255分代表精通各種規則和策略的線上麻將大師。",
+      "ai_parsing_guidelines": "Look for high rankings and win rates on digital mahjong platforms. Analyze discussions for knowledge of complex hands (yakuman) and defensive/offensive strategies."
+    },
+    "0086": {
+      "attribute_name": "Game Skill Hero",
+      "definition": "衡量用戶在一般遊戲中的整體技能，反映數位娛樂能力。",
+      "attribute_meta_tags": ["gaming", "gamer", "skill", "esports", "multiplayer", "strategy", "reflexes"],
+      "encoding_rules": "綜合評估用戶在不同類型遊戲（如FPS, MOBA, RTS）中的技能水平。0分代表休閒玩家；255分代表在多種競技性遊戲中都表現出色的全能型高手。",
+      "ai_parsing_guidelines": "Synthesize data from various gaming achievements and rankings. A high score requires demonstrated skill across multiple competitive genres, not just one."
+    },
+    "0087": {
+      "attribute_name": "Cybersecurity Awareness",
+      "definition": "衡量用戶對網絡安全的意識程度，反映數位安全知識。",
+      "attribute_meta_tags": ["cybersecurity", "information security", "privacy", "phishing", "malware", "awareness"],
+      "encoding_rules": "分數基於用戶對網絡威脅的理解和防範措施的知識。0分代表安全意識薄弱；255分代表具備專業級的網絡安全知識和高度警覺性。",
+      "ai_parsing_guidelines": "Analyze discussions about cybersecurity topics. Look for mentions of using password managers, recognizing phishing attempts, and understanding concepts like encryption and VPNs."
+    },
+    "0088": {
+      "attribute_name": "Programming Level",
+      "definition": "衡量用戶的編程技能水平，反映數位技術能力。",
+      "attribute_meta_tags": ["programming", "coding", "software development", "developer", "python", "javascript", "github"],
+      "encoding_rules": "分數基於掌握的程式語言數量、熟練度以及開發項目的複雜性。0分代表無編程經驗；255分代表能架構和開發複雜系統的資深工程師。",
+      "ai_parsing_guidelines": "Scan GitHub/GitLab profiles for project contributions, code quality, and languages used. Analyze posts on platforms like Stack Overflow or technical blogs."
+    },
+    "0089": {
+      "attribute_name": "Chain Adaptability",
+      "definition": "衡量用戶對區塊鏈技術的適應能力，反映數位技術能力。",
+      "attribute_meta_tags": ["blockchain", "crypto", "web3", "adaptability", "new technology", "early adopter"],
+      "encoding_rules": "分數評估用戶學習和使用不同區塊鏈平台（如以太坊、Solana）的能力和速度。0分代表不了解或不願嘗試；255分代表能快速適應並在多個鏈上生態中活躍。",
+      "ai_parsing_guidelines": "Look for wallet addresses showing activity across multiple blockchain networks. Analyze discussions comparing different chains or explaining how to use new platforms."
+    },
+    "008A": {
+      "attribute_name": "Virtual Reality Experience",
+      "definition": "衡量用戶使用虛擬現實（VR）的頻率和水平，反映數位娛樂能力。",
+      "attribute_meta_tags": ["vr", "virtual reality", "oculus", "vive", "metaverse", "gaming"],
+      "encoding_rules": "分數基於擁有VR設備、使用時長和在VR應用中的熟練度。0分代表無VR經驗；255分代表每日在VR中進行複雜互動的重度使用者。",
+      "ai_parsing_guidelines": "Identify mentions of owning VR headsets (e.g., Quest, Vive), specific VR games or applications, and total hours played or used."
+    },
+    "008B": {
+      "attribute_name": "Augmented Reality Proficiency",
+      "definition": "衡量用戶使用增強現實（AR）的熟練程度，反映數位技術能力。",
+      "attribute_meta_tags": ["ar", "augmented reality", "ar filters", "pokemon go", "mobile technology"],
+      "encoding_rules": "分數基於使用AR應用的頻率和創作AR內容的能力。0分代表很少使用；255分代表不僅頻繁使用AR應用，還能開發或設計AR體驗。",
+      "ai_parsing_guidelines": "Look for frequent use of AR-heavy apps (e.g., Snapchat filters, Pokémon Go, IKEA Place) and any discussion of using AR development kits (ARKit, ARCore)."
+    },
+    "008C": {
+      "attribute_name": "Digital Content Consumption",
+      "definition": "衡量用戶消費數位內容（如視頻、文章）的頻率，反映數位參與度。",
+      "attribute_meta_tags": ["content consumption", "youtube", "netflix", "streaming", "reading", "media"],
+      "encoding_rules": "分數基於每日投入在消費數位內容上的時間。0分代表消費極少；255分代表每日花費大量時間在各種平台上消費多種類型的數位內容。",
+      "ai_parsing_guidelines": "Analyze screen time data, watch/read history from platforms like YouTube, Netflix, and news aggregators, and subscriptions to content services."
+    },
+    "008D": {
+      "attribute_name": "Digital Marketing Skills",
+      "definition": "衡量用戶的數位行銷能力，反映數位商業能力。",
+      "attribute_meta_tags": ["digital marketing", "seo", "sem", "social media marketing", "content marketing", "analytics"],
+      "encoding_rules": "分數基於對數位行銷工具和策略的掌握程度及相關項目的成功案例。0分代表無經驗；255分代表能策劃並執行大型成功數位行銷活動的專家。",
+      "ai_parsing_guidelines": "Look for professional profiles (e.g., LinkedIn) mentioning digital marketing roles. Analyze discussions for proficient use of marketing jargon and concepts (e.g., SEO, CPC, ROI)."
+    },
+    "008E": {
+      "attribute_name": "Online Learning Engagement",
+      "definition": "衡量用戶參與線上學習的頻率和深度，反映數位教育能力。",
+      "attribute_meta_tags": ["online learning", "elearning", "mooc", "coursera", "udemy", "education", "self-improvement"],
+      "encoding_rules": "分數基於完成的線上課程數量、獲得的證書以及學習的持續性。0分代表不參與線上學習；255分代表是終身學習者，已完成大量深度線上課程。",
+      "ai_parsing_guidelines": "Identify profiles on platforms like Coursera, edX, or Udemy. Look for mentions of completed courses, earned certificates, and ongoing learning activities."
+    },
+    "008F": {
+      "attribute_name": "Cloud Computing Usage",
+      "definition": "衡量用戶使用雲端運算服務的頻率，反映數位技術能力。",
+      "attribute_meta_tags": ["cloud computing", "aws", "azure", "gcp", "saas", "iaas", "paas"],
+      "encoding_rules": "分數基於對雲端服務的依賴程度和使用深度。0分代表不使用雲端服務；255分代表深度使用雲端平台進行開發、數據存儲和計算等複雜操作。",
+      "ai_parsing_guidelines": "Analyze technical discussions for mentions of cloud services (AWS, Google Cloud, etc.). Look for evidence of using cloud infrastructure for projects beyond simple file storage."
+    },
+    "0090": {
+      "attribute_name": "Digital Content Creation",
+      "definition": "衡量用戶創作數位內容的頻率和質量，反映數位創作能力。",
+      "attribute_meta_tags": ["content creator", "youtuber", "blogger", "podcaster", "influencer", "creativity"],
+      "encoding_rules": "分數基於創作內容的頻率、原創性和觀眾反饋（觀看數、按讚數）。0分代表純粹的消費者；255分代表是高產且受歡迎的全職內容創作者。",
+      "ai_parsing_guidelines": "Identify user's channels/blogs/profiles on platforms like YouTube, TikTok, Medium, etc. Assess audience size, engagement metrics, and posting consistency."
+    },
+    "0091": {
+      "attribute_name": "E-Commerce Expertise",
+      "definition": "衡量用戶在電子商務操作中的專長，反映數位消費能力。",
+      "attribute_meta_tags": ["ecommerce", "online shopping", "dropshipping", "amazon fba", "shopify", "sales"],
+      "encoding_rules": "分數基於作為賣家在電商平台的運營經驗和銷售業績。0分代表無經驗；255分代表成功運營大型電商店鋪的專家。",
+      "ai_parsing_guidelines": "Look for mentions of running an online store, using platforms like Shopify or Amazon FBA, and discussions about inventory, logistics, and online sales strategies."
+    },
+    "0092": {
+      "attribute_name": "User Experience Empathy",
+      "definition": "衡量用戶對數位用戶體驗的同理心，反映數位設計能力。",
+      "attribute_meta_tags": ["ux", "ui", "user experience", "design thinking", "empathy", "human-computer interaction"],
+      "encoding_rules": "分數評估用戶從使用者角度思考和評估數位產品的能力。0分代表缺乏使用者視角；255分代表具備專業UX研究員的同理心和洞察力。",
+      "ai_parsing_guidelines": "Analyze product feedback, app reviews, or design discussions. Look for comments that focus on usability, accessibility, and the user's emotional response, rather than just features."
+    },
+    "0093": {
+      "attribute_name": "Engineering Developer",
+      "definition": "衡量用戶的工程開發技能，反映數位技術能力。",
+      "attribute_meta_tags": ["software engineer", "developer", "backend", "frontend", "full stack", "coding", "devops"],
+      "encoding_rules": "綜合評估用戶在軟體工程領域的深度和廣度。0分代表無工程經驗；255分代表在多個技術棧中都有深入實踐的資深架構師或首席工程師。",
+      "ai_parsing_guidelines": "A holistic score based on Programming Level, Cloud Computing Usage, and contributions to complex, large-scale software projects. Look for senior job titles and architectural discussions."
+    },
+    "0094": {
+      "attribute_name": "Digital Devices Developer",
+      "definition": "衡量用戶的數位設備開發能力，反映數位技術能力。",
+      "attribute_meta_tags": ["hardware", "iot", "embedded systems", "arduino", "raspberry pi", "robotics"],
+      "encoding_rules": "分數基於用戶在物聯網（IoT）、嵌入式系統或其它硬體設備上的開發經驗。0分代表純軟體開發者；255分代表能設計並開發數位硬體設備的專家。",
+      "ai_parsing_guidelines": "Look for projects or discussions involving hardware platforms like Arduino or Raspberry Pi, IoT protocols, or custom electronics design."
+    },
+    "0095": {
+      "attribute_name": "Metaverse Navigator",
+      "definition": "衡量用戶在元宇宙中的導航能力，反映數位娛樂能力。",
+      "attribute_meta_tags": ["metaverse", "virtual worlds", "decentraland", "sandbox", "vrchat", "avatar"],
+      "encoding_rules": "分數基於用戶在主流元宇宙平台上的活躍度和資產擁有量。0分代表未曾進入元宇宙；255分代表是在元宇宙中擁有土地、資產並深度參與社群的核心玩家。",
+      "ai_parsing_guidelines": "Identify activity in platforms like Decentraland, The Sandbox, or VRChat. Look for mentions of owning virtual land (LANDs), wearables, and participation in metaverse events."
+    },
+    "0096": {
+      "attribute_name": "AI Trainer",
+      "definition": "衡量用戶培訓 AI 模型的技能，反映數位技術能力。",
+      "attribute_meta_tags": ["ai", "machine learning", "deep learning", "tensorflow", "pytorch", "data science", "model training"],
+      "encoding_rules": "分數基於用戶在機器學習領域的知識和實踐經驗，特別是模型訓練和調優。0分代表無AI經驗；255分代表能獨立訓練和部署高性能AI模型的專家。",
+      "ai_parsing_guidelines": "Analyze GitHub projects using ML frameworks (e.g., TensorFlow, PyTorch). Look for participation in Kaggle competitions or discussions about data preprocessing, model architecture, and hyperparameter tuning."
+    },
+    "0097": {
+      "attribute_name": "Oxer Data Complete Level",
+      "definition": "衡量用戶數據填寫的完整性，反映數位參與程度。",
+      "attribute_meta_tags": ["profile completion", "data integrity", "user data", "completeness"],
+      "encoding_rules": "分數與用戶在平台個人資料中填寫的欄位百分比成正比。0分代表只填寫了最基礎的必填項；255分代表所有可選和必選欄位都已完整填寫。",
+      "ai_parsing_guidelines": "Calculate the percentage of filled fields in the user's profile on the platform. Higher completion rates receive higher scores."
+    },
+    "0098": {
+      "attribute_name": "Oxer Referral Score",
+      "definition": "衡量用戶推薦他人成功的分數，反映數位參與影響力。",
+      "attribute_meta_tags": ["referral", "invitation", "network effect", "growth", "advocacy"],
+      "encoding_rules": "分數基於成功推薦並註冊的新用戶數量。0分代表無成功推薦；255分代表推薦了大量活躍新用戶的超級推廣者。",
+      "ai_parsing_guidelines": "Track the number of new user sign-ups attributed to the user's unique referral code or link. Higher scores are given for a larger number of successful referrals."
+    },
+    "0099": {
+      "attribute_name": "Web3 Knowledge Level",
+      "definition": "衡量用戶對 Web3 技術的理解能力，反映數位能力。",
+      "attribute_meta_tags": ["web3", "blockchain", "decentralization", "crypto", "dapp", "tokenomics"],
+      "encoding_rules": "綜合評估用戶對Web3核心概念（如去中心化、代幣經濟學）的理解深度。0分代表不了解；255分代表對Web3有系統性且深刻的理解。",
+      "ai_parsing_guidelines": "Analyze the user's explanations and discussions of Web3 topics. Look for accurate use of terminology and a nuanced understanding of the concepts beyond surface-level buzzwords."
+    },
+    "009A": {
+      "attribute_name": "Blockchain Understanding",
+      "definition": "衡量用戶對區塊鏈技術的理解程度，反映數位能力。",
+      "attribute_meta_tags": ["blockchain", "distributed ledger", "consensus mechanism", "smart contract", "cryptography"],
+      "encoding_rules": "分數評估用戶對區塊鏈底層技術原理的理解程度。0分代表只聽過名字；255分代表能深入解釋共識機制、加密算法等核心技術細節。",
+      "ai_parsing_guidelines": "Differentiate from general Web3 knowledge. Look for discussions about technical specifics like proof-of-work vs. proof-of-stake, hash functions, or smart contract execution."
+    },
+    "009B": {
+      "attribute_name": "Cryptocurrency Trader",
+      "definition": "衡量用戶在加密貨幣交易中的頻率，反映數位金融參與度。",
+      "attribute_meta_tags": ["crypto trading", "bitcoin", "ethereum", "altcoin", "exchange", "defi", "day trading"],
+      "encoding_rules": "分數基於交易的頻率和資金量。0分代表只持有不動；255分代表每日進行多次交易的高頻交易者。",
+      "ai_parsing_guidelines": "Analyze on-chain transaction history for frequency of trades on decentralized exchanges (DEXs). Look for discussions about technical analysis, market sentiment, and trading strategies."
+    },
+    "009C": {
+      "attribute_name": "DAO Participation",
+      "definition": "衡量用戶參與去中心化自治組織（DAO）的頻率，反映數位參與度。",
+      "attribute_meta_tags": ["dao", "decentralized autonomous organization", "governance", "voting", "proposal", "web3"],
+      "encoding_rules": "分數基於參與DAO治理的活躍度，如投票次數和提案數量。0分代表只是成員但從不參與；255分代表是多個DAO的核心貢獻者，頻繁投票和提案。",
+      "ai_parsing_guidelines": "Analyze blockchain data for participation in governance votes (e.g., via Snapshot). Look for discussions in DAO forums or Discord channels."
+    },
+    "009D": {
+      "attribute_name": "NFT Curator",
+      "definition": "衡量用戶參與 NFT 策展或收藏的頻率，反映數位資產參與度。",
+      "attribute_meta_tags": ["nft", "non-fungible token", "crypto art", "collectible", "opensea", "curation"],
+      "encoding_rules": "分數基於收藏NFT的數量、質量和策展活動。0分代表未曾擁有NFT；255分代表是知名收藏家或策展人，擁有大量高品質NFT。",
+      "ai_parsing_guidelines": "Analyze NFT holdings in the user's wallet address on platforms like OpenSea. Look for creation of collections or well-regarded lists of curated art."
+    },
+    "009E": {
+      "attribute_name": "Crypto Wealth",
+      "definition": "衡量用戶持有的加密資產總量，反映數位金融財富。",
+      "attribute_meta_tags": ["crypto", "wealth", "portfolio", "net worth", "bitcoin", "ethereum", "assets"],
+      "encoding_rules": "分數基於其公開錢包地址中加密資產的總價值。0分代表資產極少；255分代表是擁有巨額加密資產的鯨魚用戶。",
+      "ai_parsing_guidelines": "Analyze the total value of tokens and NFTs held in the user's public blockchain addresses. Handle this data with extreme sensitivity and focus on orders of magnitude."
+    },
+    "009F": {
+      "attribute_name": "Gas Contributor",
+      "definition": "衡量用戶在區塊鏈交易中的Gas費貢獻，反映數位參與程度。",
+      "attribute_meta_tags": ["gas fee", "ethereum", "transaction fee", "on-chain activity", "blockchain"],
+      "encoding_rules": "分數與用戶在區塊鏈上累計支付的Gas費用總量成正比。0分代表無鏈上交易；255分代表因極高頻的鏈上互動而支付了大量Gas費。",
+      "ai_parsing_guidelines": "Analyze the user's entire on-chain transaction history and sum the total gas fees paid across all transactions."
+    },
+    "00A0": {
+      "attribute_name": "Airdrop Diamond Hand",
+      "definition": "衡量用戶持有空投代幣的穩定性，反映數位金融心理。",
+      "attribute_meta_tags": ["airdrop", "diamond hands", "hodl", "crypto", "token", "long-term"],
+      "encoding_rules": "分數基於收到空投代幣後持有的時間比例。0分代表收到後立即賣出（紙手）；255分代表長期持有絕大部分空投，是堅定的鑽石手。",
+      "ai_parsing_guidelines": "Track tokens received via airdrops to the user's wallet. Calculate the percentage of those tokens that are still held versus those that were sold or transferred out."
+    },
+    "00A1": {
+      "attribute_name": "Web3 Social Networking",
+      "definition": "衡量用戶在 Web3 社交網絡中的參與度，反映數位社交能力。",
+      "attribute_meta_tags": ["web3 social", "decentralized social", "lens protocol", "farcaster", "cyberconnect"],
+      "encoding_rules": "分數基於在去中心化社交平台上的活躍度（發文、互動）。0分代表未使用；255分代表是Web3社交平台的早期採用者和重度用戶。",
+      "ai_parsing_guidelines": "Look for profiles and activity on platforms like Lens Protocol or Farcaster. Analyze the frequency of posts, comments, and interactions."
+    },
+    "00A2": {
+      "attribute_name": "Blockchain Profit Exploring",
+      "definition": "衡量用戶探索區塊鏈利潤的頻率，反映數位金融能力。",
+      "attribute_meta_tags": ["yield farming", "staking", "liquidity mining", "defi", "passive income", "crypto"],
+      "encoding_rules": "分數基於用戶參與各種DeFi協議以獲取收益的頻率和多樣性。0分代表只持有，不探索；255分代表積極在多個協議中進行流動性挖礦、質押等操作。",
+      "ai_parsing_guidelines": "Analyze on-chain transactions for interactions with DeFi protocols, such as providing liquidity to pools, staking tokens, or borrowing/lending."
+    },
+    "00A3": {
+      "attribute_name": "Meme Coin Digger",
+      "definition": "衡量用戶參與迷因幣交易或活動的頻率，反映數位金融參與度。",
+      "attribute_meta_tags": ["memecoin", "dogecoin", "shiba inu", "pepe", "altcoin", "high risk", "crypto"],
+      "encoding_rules": "分數與參與Meme幣交易的頻率和資金比例成正比。0分代表從不接觸Meme幣；255分代表是頻繁交易各種Meme幣的資深玩家。",
+      "ai_parsing_guidelines": "Scan wallet holdings and transaction history for tokens classified as memecoins. Analyze discussions for participation in memecoin communities."
+    },
+    "00A4": {
+      "attribute_name": "Crypto Winners",
+      "definition": "衡量用戶在加密交易中的成功率，反映數位金融能力。",
+      "attribute_meta_tags": ["crypto", "trading", "profit", "roi", "winner", "finance", "investment"],
+      "encoding_rules": "分數基於鏈上交易數據分析出的已實現利潤。0分代表虧損；255分代表通過交易實現了極高回報的成功交易者。",
+      "ai_parsing_guidelines": "Analyze on-chain transaction history to calculate realized profit and loss from token swaps. This requires tracking buy/sell prices and averaging costs."
+    },
+    "00A5": {
+      "attribute_name": "Smart Contract Explorer",
+      "definition": "衡量用戶探索智能合約的頻率，反映數位技術能力。",
+      "attribute_meta_tags": ["smart contract", "etherscan", "solidity", "blockchain", "developer", "dapp"],
+      "encoding_rules": "分數基於用戶與各種不同智能合約直接互動的頻率和多樣性。0分代表只通過前端介面互動；255分代表頻繁在區塊鏈瀏覽器上直接讀取或調用合約函數。",
+      "ai_parsing_guidelines": "Analyze transaction history for interactions with a wide variety of smart contracts, beyond simple token transfers. Look for discussions about reading or debugging contracts on Etherscan."
+    },
+    "00A6": {
+      "attribute_name": "DeSoc Participation",
+      "definition": "衡量用戶在去中心化社交（DeSoc）中的參與度，反映數位社交能力。",
+      "attribute_meta_tags": ["desoc", "decentralized social", "web3 social", "sbt", "poap", "identity"],
+      "encoding_rules": "綜合評估用戶在Web3社交圖譜和身份協議中的參與度。0分代表無參與；255分代表深度參與DeSoc生態建設，擁有豐富的鏈上身份證明。",
+      "ai_parsing_guidelines": "Synthesize data from Web3 Social Networking and look for ownership of Soulbound Tokens (SBTs), POAPs, and other on-chain identity markers."
+    },
+    "00A7": {
+      "attribute_name": "Web3 Development Skills",
+      "definition": "衡量用戶的 Web3 開發能力，反映數位技術能力。",
+      "attribute_meta_tags": ["web3 developer", "solidity", "rust", "smart contract", "dapp", "ethers.js", "hardhat"],
+      "encoding_rules": "分數基於用戶開發和部署智能合約及DApp的經驗。0分代表無Web3開發經驗；255分代表是能獨立開發安全、高效DApp的資深Web3工程師。",
+      "ai_parsing_guidelines": "Analyze GitHub for smart contract repositories (Solidity, Rust). Look for deployment of contracts on mainnet or testnets and contributions to Web3 open-source projects."
+    },
+    "00A8": {
+      "attribute_name": "Web3 Testimonials",
+      "definition": "衡量用戶在 Web3 參與中的見證頻率，反映數位參與度。",
+      "attribute_meta_tags": ["poap", "sbt", "on-chain attendance", "testimonial", "credential", "web3"],
+      "encoding_rules": "分數基於用戶錢包中持有的POAP（出席證明協議）和其他類似的鏈上憑證數量。0分代表無憑證；255分代表收集了大量POAP，是Web3活動的積極參與者。",
+      "ai_parsing_guidelines": "Scan the user's wallet for POAP tokens and other non-transferable NFTs that signify attendance or achievement."
+    },
+    "00A9": {
+      "attribute_name": "Oxer Outer Score",
+      "definition": "衡量外部對用戶的評分，反映數位參與的聲譽。",
+      "attribute_meta_tags": ["reputation", "credit score", "social credit", "trust", "external validation"],
+      "encoding_rules": "分數基於從合作夥伴或第三方數據源獲取的用戶信譽評分。0分代表信譽低；255分代表在多個外部系統中都擁有極高的信譽評分。",
+      "ai_parsing_guidelines": "Integrate with third-party reputation APIs or data sources to pull in external scores related to the user's digital identity."
+    },
+    "00AA": {
+      "attribute_name": "DAO Leader",
+      "definition": "衡量用戶在 DAO 中的領導角色，反映數位參與的影響力。",
+      "attribute_meta_tags": ["dao", "leadership", "governance", "community leader", "delegate", "steward"],
+      "encoding_rules": "分數基於在DAO中擔任的領導職位（如核心貢獻者、多簽名錢包持有人）。0分代表普通成員；255分代表是一個或多個大型DAO的公認領導者。",
+      "ai_parsing_guidelines": "Identify formal roles within DAOs from governance forums or proposals. Look for users who are delegated a large amount of voting power from others."
+    },
+    "00AB": {
+      "attribute_name": "Referral Persuasion Skills",
+      "definition": "衡量用戶的推薦說服能力，反映數位參與的影響力。",
+      "attribute_meta_tags": ["referral", "persuasion", "influence", "marketing", "growth hacking"],
+      "encoding_rules": "分數基於推薦的轉化率（點擊/註冊）。0分代表推薦無人響應；255分代表其推薦鏈接擁有極高的轉化效率。",
+      "ai_parsing_guidelines": "Analyze referral link data, tracking not just successful sign-ups (like in Oxer Referral Score) but the click-through rate and conversion percentage of the links shared."
+    },
+    "00AC": {
+      "attribute_name": "Communication Skills",
+      "definition": "衡量用戶的線上溝通能力，反映數位社交能力。",
+      "attribute_meta_tags": ["communication", "writing", "clarity", "persuasion", "interpersonal skills", "online"],
+      "encoding_rules": "分數評估用戶線上書面溝通的清晰度、邏輯性和說服力。0分代表溝通混亂、難以理解；255分代表具備專業作家級別的清晰、有力的線上溝通能力。",
+      "ai_parsing_guidelines": "Perform linguistic analysis on the user's written content (posts, comments, articles). Assess grammar, vocabulary, structure, and the ability to convey complex ideas clearly."
+    },
+    "00AD": {
+      "attribute_name": "Social Media Influencer",
+      "definition": "衡量用戶在社交媒體中的影響力，反映數位社交影響力。",
+      "attribute_meta_tags": ["influencer", "social media", "followers", "engagement", "content creator", "klout"],
+      "encoding_rules": "此分數專注於Web2社交平台（如Instagram, Twitter）的影響力。0分代表無影響力；255分代表是擁有大量粉絲和高互動率的知名影響者。",
+      "ai_parsing_guidelines": "Extract follower counts and engagement metrics from traditional social media platforms. High scores require both a large audience and high interaction rates."
+    },
+    "00AE": {
+      "attribute_name": "Field Leader",
+      "definition": "衡量用戶在特定領域的領導地位，反映數位參與的專業影響力。",
+      "attribute_meta_tags": ["thought leader", "expert", "authority", "specialist", "professional network"],
+      "encoding_rules": "分數基於用戶在特定數位領域（如AI、網絡安全、UX設計）的專業權威性。0分代表新手；255分代表是該領域公認的頂尖專家或思想領袖。",
+      "ai_parsing_guidelines": "Look for evidence of professional authority like technical publications, conference talks, or being frequently cited or referenced by peers in a specific digital field."
+    },
+    "00AF": {
+      "attribute_name": "Research Impactor",
+      "definition": "衡量用戶在研究領域的影響力，反映數位參與的學術影響。",
+      "attribute_meta_tags": ["research", "academia", "citations", "h-index", "publications", "science"],
+      "encoding_rules": "分數基於其學術論文的發表數量和被引用次數（如H-index）。0分代表無學術發表；255分代表是在其領域有重大影響的高被引科學家。",
+      "ai_parsing_guidelines": "Query academic databases like Google Scholar or Scopus for the user's publication record, citation counts, and H-index."
+    },
+    "00B0": {
+      "attribute_name": "Empathy Evangelist",
+      "definition": "衡量用戶推廣數位同理心的能力，反映數位社交情感影響力。",
+      "attribute_meta_tags": ["empathy", "digital citizenship", "advocacy", "compassion", "online community"],
+      "encoding_rules": "分數基於用戶在線上社群中倡導同理心、友善溝通和包容性的行為。0分代表對此無貢獻；255分代表是積極推動建立健康數位社區的倡導者。",
+      "ai_parsing_guidelines": "Identify meta-communication about the importance of empathy in online interactions. Look for actions like de-escalating conflicts or defending others from online harassment."
+    },
+    "00B1": {
+      "attribute_name": "Trend Setter",
+      "definition": "衡量用戶在數位領域引領趨勢的能力，反映數位參與的創新性。",
+      "attribute_meta_tags": ["trendsetter", "early adopter", "innovator", "influencer", "visionary", "futurist"],
+      "encoding_rules": "分數評估用戶採納和推廣新技術、新平台或新文化的行為有多早。0分代表跟隨者；255分代表是能夠預見並引領下一個數位趨勢的先驅。",
+      "ai_parsing_guidelines": "Analyze the adoption timeline of new technologies or platforms. High scores are given to users who are consistently among the first to use and evangelize what later becomes popular."
+    },
+    "00B2": {
+      "attribute_name": "Web3 Community Leader",
+      "definition": "衡量用戶在 Web3 社群中的領導角色，反映數位參與的影響力。",
+      "attribute_meta_tags": ["web3", "community leader", "dao", "moderator", "influencer", "crypto community"],
+      "encoding_rules": "綜合評估用戶在Web3社群中的影響力，包括DAO領導、社群管理和內容引導。0分代表普通參與者；255分代表是Web3生態中公認的社群領袖。",
+      "ai_parsing_guidelines": "Synthesize scores from DAO Leader and Field Leader within a Web3 context. Look for roles like Discord/Telegram moderator or organizer of Web3 meetups."
+    },
+    "00B3": {
+      "attribute_name": "Blockchain Profit Index",
+      "definition": "衡量用戶在區塊鏈相關活動中的利潤總體表現，反映數位金融能力。",
+      "attribute_meta_tags": ["crypto", "profit", "roi", "defi", "trading", "investment", "blockchain"],
+      "encoding_rules": "綜合評估來自交易、流動性挖礦、質押等多種鏈上活動的總體投資回報。0分代表總體虧損；255分代表在區塊鏈領域獲得了極高的綜合收益。",
+      "ai_parsing_guidelines": "Create a composite score based on Crypto Winners and profits from DeFi activities identified in Blockchain Profit Exploring. This reflects overall financial success in the ecosystem."
+    },
+    "00B4": {
+      "attribute_name": "Meme Coin Participation",
+      "definition": "衡量用戶參與迷因幣活動的頻率，反映數位金融參與度。",
+      "attribute_meta_tags": ["memecoin", "dogecoin", "shiba inu", "community", "crypto", "trading"],
+      "encoding_rules": "此屬性評估參與的廣度，而非僅僅是交易。0分代表不參與；255分代表不僅交易Meme幣，還深度參與其社群文化和活動。",
+      "ai_parsing_guidelines": "Combine transaction data from Meme Coin Digger with analysis of participation in memecoin-specific social media groups, Discord channels, and community events."
+    },
+    "00B5": {
+      "attribute_name": "Crypto OG Level",
+      "definition": "衡量用戶在加密貨幣領域的原生經驗水平，反映數位金融專業度。",
+      "attribute_meta_tags": ["crypto og", "bitcoin", "ethereum", "early adopter", "veteran", "cypherpunk"],
+      "encoding_rules": "分數基於進入加密領域的時間。0分代表近期加入；255分代表是在2013年或更早之前就參與比特幣或其它加密貨幣的骨灰級元老。",
+      "ai_parsing_guidelines": "Analyze the date of the first transaction on the user's oldest known wallet address. The earlier the date, the higher the score."
+    },
+    "00B6": {
+      "attribute_name": "Web3 Activation Level",
+      "definition": "衡量用戶在 Web3 生態中的活躍程度，反映數位參與度。",
+      "attribute_meta_tags": ["web3", "activity", "on-chain", "transactions", "dapp usage", "engagement"],
+      "encoding_rules": "綜合評估用戶鏈上交易的頻率、互動合約的數量和參與的DApp種類。0分代表不活躍；255分代表每日在Web3生態中進行多樣化操作的重度活躍用戶。",
+      "ai_parsing_guidelines": "Create a composite score based on Gas Contributor, Smart Contract Explorer, and DAPP Proficiency to reflect overall on-chain activity."
+    },
+    "00B7": {
+      "attribute_name": "Blockchain Engineering",
+      "definition": "衡量用戶的區塊鏈工程技能，反映數位技術能力。",
+      "attribute_meta_tags": ["blockchain", "engineering", "solidity", "rust", "dapp", "protocol developer"],
+      "encoding_rules": "此屬性專注於協議層級或複雜DApp的工程能力。0分代表無相關經驗；255分代表具備開發公鏈、L2或複雜DeFi協議能力的頂級區塊鏈工程師。",
+      "ai_parsing_guidelines": "Differentiate from Web3 Development Skills. Look for contributions to core blockchain infrastructure projects, complex protocol development, and deep understanding of cryptography and consensus algorithms."
+    },
+    "00B8": {
+      "attribute_name": "DAPP Proficiency",
+      "definition": "衡量用戶使用去中心化應用（DApp）的熟練程度，反映數位能力。",
+      "attribute_meta_tags": ["dapp", "defi", "gamefi", "web3", "user skills", "proficiency"],
+      "encoding_rules": "分數評估用戶與多樣化DApp互動的廣度和深度。0分代表只會基礎操作（如Swap）；255分代表能熟練使用各種複雜DApp（如衍生品協議、鏈遊）的高級用戶。",
+      "ai_parsing_guidelines": "Analyze the variety and complexity of smart contracts the user interacts with. Frequent usage of complex DeFi, GameFi, or other specialized DApps results in a higher score."
+    },
+    "00B9": {
+      "attribute_name": "DAO Participation Index",
+      "definition": "衡量用戶在 DAO 中的整體參與指數，反映數位參與影響力。",
+      "attribute_meta_tags": ["dao", "governance", "participation", "voting power", "influence", "community"],
+      "encoding_rules": "綜合評估用戶的投票頻率、提案貢獻和被委託的投票權重。0分代表無影響力；255分代表在DAO治理中具有舉足輕重影響力的關鍵人物。",
+      "ai_parsing_guidelines": "Create a composite score based on DAO Participation frequency, proposal success rate, and the amount of governance tokens delegated to the user by others."
+    },
+    "00BA": {
+      "attribute_name": "NFT Participation",
+      "definition": "衡量用戶參與 NFT 活動的頻率，反映數位資產參與度。",
+      "attribute_meta_tags": ["nft", "minting", "trading", "collecting", "flipping", "opensea"],
+      "encoding_rules": "綜合評估用戶在NFT領域的各類活動，包括鑄造、交易、持有。0分代表不參與；255分代表每日都進行NFT鑄造或交易的活躍參與者。",
+      "ai_parsing_guidelines": "Analyze the frequency of NFT-related transactions (mint, buy, sell) in the user's wallet, not just the value of holdings (as in NFT Curator)."
+    },
+    "00BB": {
+      "attribute_name": "DeFi Participation",
+      "definition": "衡量用戶參與去中心化金融（DeFi）的頻率，反映數位金融參與度。",
+      "attribute_meta_tags": ["defi", "decentralized finance", "yield farming", "staking", "lending", "dex"],
+      "encoding_rules": "綜合評估用戶參與DeFi活動的廣度和頻率。0分代表不參與；255分代表是活躍在多個DeFi協議中的資深「農民」。",
+      "ai_parsing_guidelines": "Synthesize data from Blockchain Profit Exploring, looking at the number of different DeFi protocols interacted with and the frequency of those interactions."
+    },
+    "00BC": {
+      "attribute_name": "Digital Privacy Awareness",
+      "definition": "衡量用戶對數位隱私的關注程度，反映數位安全意識。",
+      "attribute_meta_tags": ["privacy", "digital privacy", "gdpr", "surveillance", "data protection", "anonymity"],
+      "encoding_rules": "分數基於用戶對隱私議題的討論和採取的保護措施。0分代表不在乎隱私；255分代表是隱私的堅定倡導者，並使用多種工具保護個人數據。",
+      "ai_parsing_guidelines": "Look for discussions about privacy laws (like GDPR), use of privacy-focused tools (e.g., Signal, Tor, VPNs), and concerns about data collection by tech companies."
+    },
+    "00BD": {
+      "attribute_name": "Data Security Practices",
+      "definition": "衡量用戶採取數據安全措施的頻率，反映數位安全行為。",
+      "attribute_meta_tags": ["data security", "cybersecurity", "best practices", "encryption", "backups", "infosec"],
+      "encoding_rules": "分數評估用戶在日常數位生活中採納安全實踐的程度。0分代表安全習慣差；255分代表嚴格遵守數據備份、加密和訪問控制等安全最佳實踐。",
+      "ai_parsing_guidelines": "Infer from discussions about backing up data, using encrypted storage, and managing permissions for apps and services."
+    },
+    "00BE": {
+      "attribute_name": "Password Strength",
+      "definition": "衡量用戶使用的密碼安全程度，反映數位安全水平。",
+      "attribute_meta_tags": ["password", "password security", "password manager", "authentication", "cybersecurity"],
+      "encoding_rules": "分數基於用戶自報的密碼創建和管理習慣。0分代表使用弱密碼且重複使用；255分代表為每個服務使用由密碼管理器生成的唯一強密碼。",
+      "ai_parsing_guidelines": "Analyze user's self-reported password habits. Look for mentions of using password managers (e.g., 1Password, Bitwarden), and advice given to others about creating strong passwords."
+    },
+    "00BF": {
+      "attribute_name": "Two-Factor Authentication",
+      "definition": "衡量用戶使用雙重驗證的頻率，反映數位安全行為。",
+      "attribute_meta_tags": ["2fa", "two-factor authentication", "mfa", "multi-factor authentication", "security", "authentication"],
+      "encoding_rules": "分數基於啟用2FA的服務的覆蓋率。0分代表從不使用2FA；255分代表在所有支持的關鍵服務上都啟用了2FA。",
+      "ai_parsing_guidelines": "Look for user statements about enabling 2FA on their accounts or discussions about different 2FA methods (e.g., authenticator app vs. SMS)."
+    }
   }
-} 

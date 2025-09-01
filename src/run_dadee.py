@@ -18,7 +18,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description='DADEE 維度演進分析')
     parser.add_argument('--use-files', action='store_true', help='使用舊版journey文件而非Meta-Tag記錄')
     parser.add_argument('--trend-analysis', action='store_true', help='執行用戶趨勢分析')
-    parser.add_argument('--records-path', type=str, default='../state/user_metatags_records.json', help='指定Meta-Tag記錄文件路徑')
+    parser.add_argument('--records-path', type=str, default=None, help='指定Meta-Tag記錄文件路徑（默認自動偵測）')
     
     return parser.parse_args()
 
@@ -52,7 +52,11 @@ def main():
     else:
         print("📄 使用傳統journey文件作為數據源")
     
-    analysis_results = dadee.run_evolution_analysis(use_records=use_records)
+    # 傳遞記錄路徑給DADEE處理器（如果有指定的話）
+    analysis_results = dadee.run_evolution_analysis(
+        use_records=use_records, 
+        records_path=args.records_path
+    )
     
     # 顯示結果
     print(f"\n=== 分析結果 ===")

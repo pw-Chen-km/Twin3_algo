@@ -1,34 +1,34 @@
 {
   "0071": {
-    "stored_value_decimal": 164,
-    "last_updated_timestamp": "2025-07-24T10:02:50.500248+00:00"
+    "stored_value_decimal": 143,
+    "last_updated_timestamp": "2025-07-27T13:12:05.433095+00:00"
   },
   "0048": {
-    "stored_value_decimal": 153,
+    "stored_value_decimal": 0,
     "last_updated_timestamp": "2025-07-24T09:55:14.812047+00:00"
   },
   "0008": {
-    "stored_value_decimal": 131,
+    "stored_value_decimal": 0,
     "last_updated_timestamp": "2025-07-24T10:02:50.500248+00:00"
   },
   "0032": {
-    "stored_value_decimal": 34,
-    "last_updated_timestamp": "2025-07-24T10:02:50.500248+00:00"
+    "stored_value_decimal": 50,
+    "last_updated_timestamp": "2025-07-27T13:12:05.433095+00:00"
   },
   "0156": {
-    "stored_value_decimal": 114,
+    "stored_value_decimal": 0,
     "last_updated_timestamp": "2025-07-24T10:02:50.500248+00:00"
   },
   "SP088": {
-    "stored_value_decimal": 0,
-    "last_updated_timestamp": "2025-01-16T14:00:00Z"
+    "stored_value_decimal": 51,
+    "last_updated_timestamp": "2025-07-27T13:12:05.433095+00:00"
   },
   "0099": {
-    "stored_value_decimal": 113,
-    "last_updated_timestamp": "2025-07-24T10:02:50.500248+00:00"
+    "stored_value_decimal": 101,
+    "last_updated_timestamp": "2025-07-27T13:12:05.433095+00:00"
   },
   "0203": {
-    "stored_value_decimal": 26,
-    "last_updated_timestamp": "2025-07-24T09:20:04.917433+00:00"
+    "stored_value_decimal": 48,
+    "last_updated_timestamp": "2025-07-27T13:12:05.433095+00:00"
   }
 }
