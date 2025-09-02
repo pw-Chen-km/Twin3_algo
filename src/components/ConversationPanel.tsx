@@ -416,7 +416,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
             <button
               key={index}
               onClick={() => setInputText(example)}
-              className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full border border-gray-300 dark:border-gray-600 transition-colors text-gray-700 dark:text-gray-300"
+              className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full border border-gray-300 dark:border-gray-600 transition-colors text-gray-700 dark:text-gray-300 text-left"
               disabled={isProcessing}
             >
               {example}

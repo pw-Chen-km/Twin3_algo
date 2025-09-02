@@ -86,7 +86,7 @@ function App() {
       // Generate AI response
       try {
         console.log('🤖 開始生成AI回應...');
-        const response = await aiResponseService.generateResponse(content, result.metaTags);
+        const response = await aiResponseService.generateResponse(content, result.metaTags, language);
         console.log('✅ AI回應生成完成:', response);
         
         // Add AI response message
