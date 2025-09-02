@@ -387,17 +387,6 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
         )}
       </div>
 
-      {/* Empty State */}
-      {Object.keys(matrixData).length === 0 && (
-        <div className="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-400">
-          <Grid className="w-16 h-16 mb-4 opacity-50" />
-          <h4 className="text-lg font-semibold mb-2">Twin Matrix 等待中</h4>
-          <p className="text-sm text-center">
-            提交內容以開始分析並更新您的 256 維度特徵矩陣
-          </p>
-        </div>
-      )}
-
       {/* Detailed Dimension Modal */}
       <AnimatePresence>
         {showDetailModal && (
