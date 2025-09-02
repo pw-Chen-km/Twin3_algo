@@ -342,10 +342,10 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="p-2 bg-secondary hover:bg-secondary/80 rounded-lg border border-border transition-colors flex-shrink-0"
+              className="p-3 bg-secondary hover:bg-secondary/80 rounded-lg border border-border transition-colors flex-shrink-0"
               disabled={isProcessing}
             >
-              <Image className="w-4 h-4" />
+              <Image className="w-6 h-6" />
             </button>
 
             <div className="flex-1 relative">

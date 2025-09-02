@@ -44,13 +44,13 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
   };
 
   return (
-    <div className="bg-card rounded-lg border border-border p-4 h-[calc(50vh-60px)]">
+    <div className="bg-white rounded-lg border border-gray-200 p-4 h-[calc(50vh-60px)] shadow-sm">
       <h3 className="text-lg font-semibold mb-4 flex items-center">
-        <Brain className="w-5 h-5 mr-2 text-primary" />
+        <Brain className="w-5 h-5 mr-2 text-blue-600" />
         Twin3 演算法引擎
       </h3>
 
-      <div className="space-y-4">
+      <div className="space-y-4 h-[calc(100%-60px)] overflow-y-auto">
         {steps.map((step, index) => {
           const Icon = step.icon;
           const status = getStepStatus(step.id);
@@ -58,10 +58,10 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
           return (
             <motion.div
               key={step.id}
-              className={`p-4 rounded-lg border-2 transition-all duration-500 ${
-                status === 'active' ? 'border-primary bg-primary/10' :
-                status === 'complete' ? 'border-green-500 bg-green-500/10' :
-                'border-border bg-secondary/50'
+              className={`p-4 rounded-lg border-2 transition-all duration-500 shadow-sm ${
+                status === 'active' ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-200/50' :
+                status === 'complete' ? 'border-green-500 bg-green-50' :
+                'border-gray-200 bg-gray-50'
               }`}
               animate={{
                 scale: status === 'active' ? 1.05 : 1,
