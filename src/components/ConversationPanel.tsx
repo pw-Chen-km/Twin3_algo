@@ -44,10 +44,10 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputText.trim() || isProcessing) return;
+    if ((!inputText.trim() && !selectedFile) || isProcessing) return;
 
     onContentSubmit({
-      text: inputText.trim(),
+      text: inputText.trim() || '用戶上傳了圖片',
       image: selectedFile || undefined
     });
 
@@ -338,7 +338,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
               <textarea
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                placeholder="描述您的體驗或活動..."
+                placeholder="描述您的體驗或活動... (可選，也可以只上傳圖片)"
                 className="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-gray-900 dark:text-gray-100 transition-colors"
                 rows={2}
                 disabled={isProcessing}
@@ -356,7 +356,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
 
             <button
               type="submit"
-              disabled={!inputText.trim() || isProcessing}
+              disabled={(!inputText.trim() && !selectedFile) || isProcessing}
               className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 active:scale-95 flex-shrink-0"
             >
               <Send className="w-4 h-4" />
