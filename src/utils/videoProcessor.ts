@@ -3,12 +3,14 @@ import { UserContent, ProcessingResult, MetaTag, CalculationDetails } from '../t
 // 視頻處理和LLM解析工具
 export class VideoLLMProcessor {
   private apiKey: string;
-  private geminiEndpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
+  private geminiEndpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
   constructor() {
     this.apiKey = import.meta.env.VITE_GEMINI_API_KEY;
     if (!this.apiKey) {
-      console.warn('⚠️ Gemini API key not found in environment variables');
+      console.error('❌ Gemini API key not found in environment variables');
+    } else {
+      console.log('✅ Gemini API key loaded for video processing');
     }
   }
 

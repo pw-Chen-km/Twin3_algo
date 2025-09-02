@@ -140,10 +140,10 @@ const InputPanel: React.FC<InputPanelProps> = ({
           <button
             type="submit"
             disabled={!text.trim() || isProcessing}
-            className="w-full bg-primary text-primary-foreground py-3 px-4 rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 transition-all transform hover:scale-105 active:scale-95"
+            className="w-full bg-primary text-primary-foreground py-3 px-4 rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 transition-all transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
           >
             <Send className="w-4 h-4" />
-            <span>{isProcessing ? '處理中...' : '開始 Twin3 分析'}</span>
+            <span>{isProcessing ? '🤖 AI 分析中...' : '🚀 開始 Twin3 + AI 分析'}</span>
           </button>
         </form>
       </div>
