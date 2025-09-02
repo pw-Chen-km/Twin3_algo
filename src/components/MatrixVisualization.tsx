@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Grid, Filter, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { Grid, Filter, TrendingUp, TrendingDown, Minus, Info } from 'lucide-react';
 import { ProcessingState } from '../types';
 
 interface MatrixVisualizationProps {
@@ -11,7 +11,23 @@ interface MatrixVisualizationProps {
 const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, processingState }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [selectedDimension, setSelectedDimension] = useState<string | null>(null);
 
+  // Mock dimension names mapping (in real app this would come from metadata)
+  const dimensionNames: Record<string, string> = {
+    '0071': 'Social Achievements',
+    '0048': 'Leadership Ability',
+    '0008': 'Dietary Habits',
+    '0032': 'Emotional Stability',
+    '0099': 'Learning Orientation',
+    '0156': 'Creative Expression',
+    'SP088': 'Social Responsibility',
+    '0010': 'Physical Fitness',
+    '0040': 'Social Relationships',
+    '0081': 'Technology Adoption',
+    '0067': 'Spiritual Awareness',
+    '0203': 'Risk Taking'
+  };
   const categories = {
     physical: { name: 'Physical', color: 'bg-red-500', attributes: ['0010', '0012', '0016', '0019', '0021', '0033', '0034', '0035'] },
     social: { name: 'Social', color: 'bg-green-500', attributes: ['0040', '0041', '0047', '004C', '004D', '0054', '0060', '006E', '0071', '0048'] },
@@ -50,6 +66,9 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
     return <Minus className="w-3 h-3 text-gray-400" />;
   };
 
+  const getDimensionName = (attrId: string) => {
+    return dimensionNames[attrId] || `Dimension ${attrId}`;
+  };
   return (
     <div className="bg-card rounded-lg border border-border p-6">
       <div className="flex items-center justify-between mb-4">
@@ -79,6 +98,20 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
         </div>
       </div>
 
+      {/* Algorithm Results Summary */}
+      {Object.keys(matrixData).length > 0 && (
+        <div className="mb-4 p-4 bg-primary/10 border border-primary/20 rounded-lg">
+          <h4 className="text-sm font-semibold mb-2 flex items-center text-primary">
+            <Info className="w-4 h-4 mr-2" />
+            演算法計算結果 (Algorithm Results)
+          </h4>
+          <div className="text-xs text-muted-foreground">
+            共更新 {Object.keys(matrixData).length} 個維度 | 
+            最高分數: {Math.max(...Object.values(matrixData))} | 
+            平均分數: {Math.round(Object.values(matrixData).reduce((a, b) => a + b, 0) / Object.keys(matrixData).length)}
+          </div>
+        </div>
+      )}
       {/* Category Legend */}
       <div className="flex flex-wrap gap-2 mb-4">
         {Object.entries(categories).map(([key, cat]) => (
@@ -91,36 +124,44 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
 
       {viewMode === 'grid' ? (
         /* Grid View */
-        <div className="grid grid-cols-8 gap-1">
+        <div className="grid grid-cols-4 gap-3">
           {Object.entries(filteredData).map(([attrId, score]) => {
             const category = Object.entries(categories).find(([_, cat]) => 
               cat.attributes.some(catAttr => attrId.includes(catAttr))
             );
             const categoryColor = category?.[1].color || 'bg-gray-500';
+            const dimensionName = getDimensionName(attrId);
             
             return (
               <motion.div
                 key={attrId}
-                className={`matrix-cell aspect-square rounded-sm border border-border/50 relative group cursor-pointer ${categoryColor}`}
+                className={`matrix-cell rounded-lg border border-border/50 relative group cursor-pointer p-4 ${categoryColor}`}
                 style={{ 
                   opacity: getScoreIntensity(score),
                 }}
-                whileHover={{ scale: 1.1, zIndex: 10 }}
+                whileHover={{ scale: 1.05, zIndex: 10 }}
+                onClick={() => setSelectedDimension(selectedDimension === attrId ? null : attrId)}
                 animate={processingState === 'processing' ? { 
                   scale: [1, 1.05, 1],
                   opacity: [getScoreIntensity(score), 0.8, getScoreIntensity(score)]
                 } : {}}
                 transition={{ duration: 0.3 }}
               >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-xs font-mono text-white drop-shadow-sm">
+                <div className="text-center">
+                  <div className="text-lg font-bold text-white drop-shadow-sm mb-1">
                     {score}
-                  </span>
+                  </div>
+                  <div className="text-xs text-white/90 font-medium mb-1">
+                    {attrId}
+                  </div>
+                  <div className="text-xs text-white/80 leading-tight">
+                    {dimensionName}
+                  </div>
                 </div>
                 
-                {/* Tooltip */}
-                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity z-20 whitespace-nowrap">
-                  {attrId}: {score}/255
+                {/* Algorithm Result Badge */}
+                <div className="absolute top-1 right-1">
+                  <div className="w-2 h-2 bg-white/80 rounded-full"></div>
                 </div>
               </motion.div>
             );
@@ -135,6 +176,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
               const category = Object.entries(categories).find(([_, cat]) => 
                 cat.attributes.some(catAttr => attrId.includes(catAttr))
               );
+              const dimensionName = getDimensionName(attrId);
               
               return (
                 <motion.div
@@ -146,7 +188,10 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                 >
                   <div className="flex items-center space-x-3">
                     <div className={`w-3 h-3 rounded-full ${category?.[1].color || 'bg-gray-500'}`}></div>
-                    <span className="font-mono text-sm">{attrId}</span>
+                    <div>
+                      <div className="font-mono text-sm font-semibold">{attrId}</div>
+                      <div className="text-xs text-muted-foreground">{dimensionName}</div>
+                    </div>
                     {getChangeIcon(attrId)}
                   </div>
                   
@@ -159,7 +204,10 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                         transition={{ duration: 0.5 }}
                       />
                     </div>
-                    <span className="font-mono text-sm w-8 text-right">{score}</span>
+                    <div className="text-right">
+                      <div className="font-mono text-sm font-bold">{score}</div>
+                      <div className="text-xs text-muted-foreground">/255</div>
+                    </div>
                   </div>
                 </motion.div>
               );
@@ -167,6 +215,37 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
         </div>
       )}
 
+      {/* Selected Dimension Detail */}
+      {selectedDimension && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-4 p-4 bg-primary/10 border border-primary/20 rounded-lg"
+        >
+          <h4 className="font-semibold mb-2">維度詳細資訊 (Dimension Details)</h4>
+          <div className="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <span className="text-muted-foreground">維度ID:</span>
+              <span className="ml-2 font-mono font-bold">{selectedDimension}</span>
+            </div>
+            <div>
+              <span className="text-muted-foreground">維度名稱:</span>
+              <span className="ml-2 font-medium">{getDimensionName(selectedDimension)}</span>
+            </div>
+            <div>
+              <span className="text-muted-foreground">演算法分數:</span>
+              <span className="ml-2 font-bold text-primary">{matrixData[selectedDimension]}/255</span>
+            </div>
+            <div>
+              <span className="text-muted-foreground">HEX值:</span>
+              <span className="ml-2 font-mono">0x{matrixData[selectedDimension].toString(16).toUpperCase().padStart(2, '0')}</span>
+            </div>
+          </div>
+          <div className="mt-3 text-xs text-muted-foreground">
+            💡 此分數由Twin3演算法基於用戶內容分析計算得出
+          </div>
+        </motion.div>
+      )}
       {/* Processing Overlay */}
       <AnimatePresence>
         {processingState === 'processing' && (

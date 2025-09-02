@@ -98,25 +98,43 @@ const generateMockMatrixUpdates = (text: string, image?: File | string): Record<
     const matches = keywords.filter(keyword => textLower.includes(keyword)).length;
     
     if (matches > 0) {
-      // Base score influenced by number of keyword matches
-      let baseScore = 128 + (matches * 15) + Math.random() * 30 - 15;
+      // Algorithm-calculated score based on semantic analysis
+      // Simulating ULTU processor's intelligent scoring
+      let algorithmScore = 128; // Default baseline
+      
+      // Primary match bonus (simulating Gemini AI analysis)
+      algorithmScore += matches * 25;
+      
+      // Content complexity bonus
+      if (text.length > 50) algorithmScore += 15;
+      if (text.length > 100) algorithmScore += 10;
+      
+      // Semantic depth bonus (simulating advanced NLP analysis)
+      const semanticWords = ['帶領', '完成', '學習', '創新', '環保'];
+      const semanticMatches = semanticWords.filter(word => textLower.includes(word)).length;
+      algorithmScore += semanticMatches * 20;
       
       // Image bonus (if image is provided)
       if (image) {
-        baseScore += 10 + Math.random() * 20;
+        algorithmScore += 25; // Multi-modal analysis bonus
       }
       
+      // Apply ULTU smoothing simulation (alpha = 0.3)
+      const previousScore = 128; // Simulated previous state
+      const smoothedScore = Math.round(0.3 * algorithmScore + 0.7 * previousScore);
+      
       // Ensure score is within valid range
-      updates[dimensionId] = Math.max(0, Math.min(255, Math.round(baseScore)));
+      updates[dimensionId] = Math.max(0, Math.min(255, smoothedScore));
     }
   });
 
-  // Add some random updates for demonstration
+  // Add baseline updates for demonstration (simulating time decay effects)
   if (Object.keys(updates).length < 3) {
     const randomDimensions = ['0067', '0069', '006C', '006D', '0070'];
     randomDimensions.forEach(dim => {
       if (Math.random() > 0.6) {
-        updates[dim] = Math.round(100 + Math.random() * 100);
+        // Simulated algorithm baseline calculation
+        updates[dim] = Math.round(128 + (Math.random() - 0.5) * 40);
       }
     });
   }
