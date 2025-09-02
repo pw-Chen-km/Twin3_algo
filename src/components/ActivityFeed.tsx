@@ -37,7 +37,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities, processingState
               <motion.div
                 key={activity.id}
                 initial={{ opacity: 0, y: -20 }}
-                      className="w-2 h-2 bg-blue-500 rounded-full"
+                animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 className="p-3 bg-gray-50 rounded-lg border border-gray-200"
               >
@@ -50,7 +50,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities, processingState
                     <span className="text-xs text-gray-500">
                       {activity.processingTime}ms
                     </span>
-                  <span className="text-sm text-gray-600">AI 正在分析...</span>
+                  </div>
                 </div>
                 <p className="text-sm mb-2 line-clamp-2">{activity.content}</p>
 
