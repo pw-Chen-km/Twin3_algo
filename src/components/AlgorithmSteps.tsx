@@ -46,7 +46,7 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-4 h-[calc(50vh-60px)] shadow-sm">
       <h3 className="text-lg font-semibold mb-4 flex items-center">
-        <Brain className="w-5 h-5 mr-2 text-indigo-600" />
+        <Brain className="w-5 h-5 mr-2 text-blue-600" />
         twin3 演算法引擎
       </h3>
 
@@ -61,7 +61,7 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
               className={`p-4 rounded-lg border-2 transition-all duration-500 shadow-sm ${
                 status === 'active' ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-200/50' :
                 status === 'complete' ? 'border-green-500 bg-green-50' :
-                'border-gray-200 bg-gray-50'
+                'border-gray-300 bg-white'
               }`}
               animate={{
                 scale: status === 'active' ? 1.05 : 1,
@@ -74,7 +74,7 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
                 <div className={`p-2 rounded-full ${
                   status === 'active' ? 'bg-primary text-primary-foreground' :
                   status === 'complete' ? 'bg-green-500 text-white' :
-                  'bg-muted text-muted-foreground'
+                  'bg-gray-200 text-gray-600'
                 }`}>
                   {status === 'complete' ? (
                     <motion.div
@@ -91,8 +91,8 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
                 
                 <div className="flex-1">
                   <h4 className="font-semibold text-base">{step.name}</h4>
-                  <p className="text-sm text-muted-foreground mb-1">{step.description}</p>
-                  <p className="text-xs text-muted-foreground/80">{step.details}</p>
+                  <p className="text-sm text-gray-600 mb-1">{step.description}</p>
+                  <p className="text-xs text-gray-500">{step.details}</p>
                 </div>
                 
                 {status === 'active' && (
@@ -123,7 +123,7 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
                   >
                     {step.id === 'msmm' && results.metaTags && (
                       <div className="space-y-3">
-                        <div className="text-sm font-semibold text-primary flex items-center">
+                        <div className="text-sm font-semibold text-blue-600 flex items-center">
                           <Tag className="w-4 h-4 mr-2" />
                           提取的Meta-Tags
                         </div>
@@ -139,7 +139,7 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
                                 stiffness: 300,
                                 damping: 20
                               }}
-                              className="px-3 py-1.5 bg-blue-500/20 text-blue-300 text-sm rounded-full flex items-center border border-blue-500/30"
+                              className="px-3 py-1.5 bg-blue-100 text-blue-700 text-sm rounded-full flex items-center border border-blue-300"
                             >
                               <Tag className="w-3 h-3 mr-1" />
                               {tag}
@@ -156,7 +156,7 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
 
                     {step.id === 'ultu' && results.updates && (
                       <div className="space-y-3">
-                        <div className="text-sm font-semibold text-green-400 flex items-center">
+                        <div className="text-sm font-semibold text-green-600 flex items-center">
                           <Zap className="w-4 h-4 mr-2" />
                           評分更新結果
                         </div>
@@ -167,14 +167,14 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
                               initial={{ opacity: 0, x: -20 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: index * 0.1 }}
-                              className="flex items-center justify-between p-2 bg-green-500/10 rounded border border-green-500/20"
+                              className="flex items-center justify-between p-2 bg-green-50 rounded border border-green-200"
                             >
-                              <span className="font-mono text-sm text-green-300">{dimId}</span>
+                              <span className="font-mono text-sm text-green-700">{dimId}</span>
                               <motion.span 
                                 initial={{ scale: 0.8 }}
                                 animate={{ scale: 1 }}
                                 transition={{ delay: index * 0.1 + 0.2, type: "spring" }}
-                                className="font-bold text-green-400 text-lg"
+                                className="font-bold text-green-600 text-lg"
                               >
                                 {score}
                               </motion.span>
@@ -182,7 +182,7 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
                           ))}
                         </div>
                         {Object.keys(results.updates).length > 3 && (
-                          <div className="text-sm text-muted-foreground text-center">
+                          <div className="text-sm text-gray-500 text-center">
                             +{Object.keys(results.updates).length - 3} 個維度更新
                           </div>
                         )}
@@ -191,18 +191,18 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
 
                     {step.id === 'complete' && results.totalUpdates && (
                       <div className="space-y-2">
-                        <div className="flex items-center space-x-2 text-purple-400 text-sm font-semibold">
+                        <div className="flex items-center space-x-2 text-purple-600 text-sm font-semibold">
                           <Database className="w-4 h-4" />
                           <span>矩陣更新完成</span>
                         </div>
-                        <div className="bg-purple-500/10 border border-purple-500/20 rounded p-3">
+                        <div className="bg-purple-50 border border-purple-200 rounded p-3">
                           <div className="flex items-center justify-between">
-                            <span className="text-sm text-purple-300">總計更新維度</span>
+                            <span className="text-sm text-purple-700">總計更新維度</span>
                             <motion.span 
                               initial={{ scale: 0 }}
                               animate={{ scale: 1 }}
                               transition={{ type: "spring", stiffness: 400 }}
-                              className="text-xl font-bold text-purple-400"
+                              className="text-xl font-bold text-purple-600"
                             >
                               {results.totalUpdates}
                             </motion.span>
@@ -223,34 +223,26 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1 }}
-          className="mt-4 p-4 bg-gradient-to-r from-primary/10 to-blue-500/10 border border-primary/30 rounded-lg"
+          className="mt-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg"
         >
           <div className="flex items-center space-x-2">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-              className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full"
+              className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full"
             />
-            <span className="text-sm font-medium text-primary">🧠 Twin3 AI演算法運行中...</span>
+            <span className="text-sm font-medium text-blue-700">🧠 twin3 AI演算法運行中...</span>
             <motion.div
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 2, repeat: Infinity }}
               className="flex space-x-1"
             >
-              <div className="w-1 h-1 bg-primary rounded-full"></div>
-              <div className="w-1 h-1 bg-primary rounded-full"></div>
-              <div className="w-1 h-1 bg-primary rounded-full"></div>
+              <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
+              <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
+              <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
             </motion.div>
           </div>
         </motion.div>
-      )}
-
-      {!isProcessing && (
-        <div className="mt-4 text-center py-4 text-muted-foreground">
-          <Brain className="w-8 h-8 mx-auto mb-2 opacity-50" />
-          <p className="text-sm font-medium">等待內容輸入</p>
-          <p className="text-xs">AI準備分析您的體驗</p>
-        </div>
       )}
     </div>
   );

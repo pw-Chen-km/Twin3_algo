@@ -85,7 +85,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
     <div className="bg-card rounded-lg border border-border p-6 h-[calc(100vh-180px)]">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold flex items-center">
-          <Grid className="w-5 h-5 mr-2 text-indigo-600" />
+          <Grid className="w-5 h-5 mr-2 text-blue-600" />
           twin3 Matrix Visualization
         </h3>
         
@@ -93,7 +93,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="bg-secondary text-secondary-foreground px-3 py-1 rounded-md border border-border text-sm"
+            className="bg-white text-gray-900 px-3 py-1 rounded-md border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="all">All Dimensions</option>
             {Object.entries(categories).map(([key, cat]) => (
@@ -103,7 +103,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
           
           <button
             onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
-            className="p-2 bg-secondary hover:bg-secondary/80 rounded-md border border-border"
+            className="p-2 bg-white hover:bg-gray-50 rounded-md border border-gray-300"
           >
             <Filter className="w-4 h-4" />
           </button>
@@ -112,19 +112,19 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
 
       {/* Algorithm Results Summary */}
       {Object.keys(matrixData).length > 0 && (
-        <div className="mb-4 p-4 bg-primary/10 border border-primary/20 rounded-lg">
-          <h4 className="text-sm font-semibold mb-2 flex items-center text-primary">
+        <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <h4 className="text-sm font-semibold mb-2 flex items-center text-blue-700">
             <Info className="w-4 h-4 mr-2" />
             演算法計算結果 (Algorithm Results)
           </h4>
           <div className="grid grid-cols-2 gap-4 text-xs">
             <div>
-              <div className="text-muted-foreground">共更新維度: <span className="font-bold text-foreground">{Object.keys(matrixData).length}</span></div>
-              <div className="text-muted-foreground">最高分數: <span className="font-bold text-green-400">{Math.max(...Object.values(matrixData))}</span></div>
+              <div className="text-gray-600">共更新維度: <span className="font-bold text-gray-900">{Object.keys(matrixData).length}</span></div>
+              <div className="text-gray-600">最高分數: <span className="font-bold text-green-600">{Math.max(...Object.values(matrixData))}</span></div>
             </div>
             <div>
-              <div className="text-muted-foreground">平均分數: <span className="font-bold text-foreground">{Math.round(Object.values(matrixData).reduce((a, b) => a + b, 0) / Object.keys(matrixData).length)}</span></div>
-              <div className="text-muted-foreground">總更新次數: <span className="font-bold text-primary">{Object.values(dimensionHistory).reduce((sum, hist) => sum + hist.totalUpdates, 0)}</span></div>
+              <div className="text-gray-600">平均分數: <span className="font-bold text-gray-900">{Math.round(Object.values(matrixData).reduce((a, b) => a + b, 0) / Object.keys(matrixData).length)}</span></div>
+              <div className="text-gray-600">總更新次數: <span className="font-bold text-blue-600">{Object.values(dimensionHistory).reduce((sum, hist) => sum + hist.totalUpdates, 0)}</span></div>
             </div>
           </div>
         </div>
@@ -135,7 +135,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
         {Object.entries(categories).map(([key, cat]) => (
           <div key={key} className="flex items-center space-x-1">
             <div className={`w-3 h-3 rounded-full ${cat.color}`}></div>
-            <span className="text-xs text-muted-foreground">{cat.name}</span>
+            <span className="text-xs text-gray-600">{cat.name}</span>
           </div>
         ))}
       </div>

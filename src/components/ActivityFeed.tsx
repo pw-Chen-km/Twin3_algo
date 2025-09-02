@@ -37,20 +37,20 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities, processingState
               <motion.div
                 key={activity.id}
                 initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
+                      className="w-2 h-2 bg-blue-500 rounded-full"
                 exit={{ opacity: 0, y: 20 }}
                 className="p-3 bg-gray-50 rounded-lg border border-gray-200"
               >
                 <div className="flex items-start justify-between mb-2">
-                  <span className="text-xs text-muted-foreground">
+                      className="w-2 h-2 bg-blue-500 rounded-full"
                     {formatTime(activity.timestamp)}
                   </span>
                   <div className="flex items-center space-x-1">
                     {activity.image && <Image className="w-3 h-3 text-muted-foreground" />}
-                    <span className="text-xs text-muted-foreground">
+                      className="w-2 h-2 bg-blue-500 rounded-full"
                       {activity.processingTime}ms
                     </span>
-                  </div>
+                  <span className="text-sm text-gray-600">AI 正在分析...</span>
                 </div>
 
                 <p className="text-sm mb-2 line-clamp-2">{activity.content}</p>
@@ -104,8 +104,8 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities, processingState
         {activities.length === 0 && (
           <div className="text-center py-8 text-muted-foreground">
             <Clock className="w-8 h-8 mx-auto mb-2 opacity-50" />
-            <p className="text-sm">No activity yet</p>
-            <p className="text-xs">Submit content to see processing results</p>
+            <p className="text-sm text-gray-600">尚無活動記錄</p>
+            <p className="text-xs text-gray-500">提交內容以查看處理結果</p>
           </div>
         )}
       </div>
