@@ -43,7 +43,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
     const matrix = [];
     for (let i = 0; i < 256; i++) {
       const hexAddress = i.toString(16).toUpperCase().padStart(4, '0');
-      const score = matrixData[hexAddress] || 128; // 默認值128
+      const score = matrixData[hexAddress] || 0; // 默認值0
       const isActive = matrixData.hasOwnProperty(hexAddress);
       
       matrix.push({
@@ -209,7 +209,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                   {Array.from({length: 16}, (_, col) => {
                     const index = row * 16 + col;
                     const hexAddress = index.toString(16).toUpperCase().padStart(4, '0');
-                    const score = matrixData[hexAddress] || 128;
+                    const score = matrixData[hexAddress] || 0;
                     const isActive = matrixData.hasOwnProperty(hexAddress);
                     const history = dimensionHistory[hexAddress];
                     

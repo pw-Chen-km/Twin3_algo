@@ -117,13 +117,13 @@ const runULTU = (
   if (!dimension) return { score: 128, details: null };
   
   // 1. Gemini AI評分模擬（基於真實的AI解析指導）
-  let geminiRawScore = 128; // 基準分數
+  let geminiRawScore = 0; // 基準分數從0開始
   const relevanceFactors = [];
   
   // Meta-Tags匹配強度分析
   const tagMatchStrength = matchedMetaTags.length / dimension.meta_tags.length;
   if (tagMatchStrength > 0) {
-    const tagBonus = Math.round(tagMatchStrength * 60); // 最高60分加分
+    const tagBonus = Math.round(tagMatchStrength * 80 + 50); // 基礎50分 + 最高80分加分
     geminiRawScore += tagBonus;
     relevanceFactors.push({
       factor: 'Meta-Tags匹配強度',
@@ -150,11 +150,11 @@ const runULTU = (
   // 社會成就維度特定分析
   if (dimensionId === '0071') {
     if (textLower.includes('完成') || textLower.includes('成功') || textLower.includes('獲得')) {
-      const achievementBonus = 35;
+      const achievementBonus = 50;
       geminiRawScore += achievementBonus;
       relevanceFactors.push({
         factor: '成就行為識別',
-        contribution: achievementBonus,
+        contribution: achievementBonus, 
         description: '識別到明確的成就表現行為'
       });
     }
@@ -163,7 +163,7 @@ const runULTU = (
   // 領導能力維度特定分析
   if (dimensionId === '0048') {
     if (textLower.includes('帶領') || textLower.includes('指導') || textLower.includes('組織')) {
-      const leadershipBonus = 40;
+      const leadershipBonus = 60;
       geminiRawScore += leadershipBonus;
       relevanceFactors.push({
         factor: '領導行為識別',
@@ -176,7 +176,7 @@ const runULTU = (
   // 社會責任維度特定分析
   if (dimensionId === 'SP088') {
     if (textLower.includes('環保') || textLower.includes('永續') || textLower.includes('社會')) {
-      const responsibilityBonus = 45;
+      const responsibilityBonus = 70;
       geminiRawScore += responsibilityBonus;
       relevanceFactors.push({
         factor: '社會責任識別',
@@ -275,13 +275,13 @@ export const processContentWithTwin3Algorithm = async (
   
   // 為每個匹配的維度計算新分數
   msmmResult.matchedDimensions.forEach(match => {
-    const previousScore = currentMatrix[match.id] || 128;
+    const previousScore = currentMatrix[match.id] || 0;
     const updateCount = 0; // 在真實系統中這會從狀態文件讀取
     
     const result = runULTU(
       match.id,
       content.text,
-      previousScore,
+      previousScore, 
       updateCount,
       match.similarity,
       msmmResult.metaTags.filter(tag => 
