@@ -108,3 +108,31 @@ body {
 .dimension-category.social { border-left-color: #10b981; }
 .dimension-category.digital { border-left-color: #3b82f6; }
 .dimension-category.spiritual { border-left-color: #8b5cf6; }
+
+/* Conversation Styles */
+.message-bubble {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.typing-indicator {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Scrollbar Styling */
+.conversation-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.conversation-scroll::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+.conversation-scroll::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground));
+  border-radius: 2px;
+}
+
+.conversation-scroll::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
+}

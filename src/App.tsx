@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
-import InputPanel from './components/InputPanel';
+import ConversationPanel from './components/ConversationPanel';
 import ProcessingPipeline from './components/ProcessingPipeline';
 import MatrixVisualization from './components/MatrixVisualization';
 import ActivityFeed from './components/ActivityFeed';
 import PerformanceDashboard from './components/PerformanceDashboard';
 import AlgorithmSteps from './components/AlgorithmSteps';
-import AIResponsePanel from './components/AIResponsePanel';
 import { ProcessingState, UserContent, MatrixUpdate, DimensionHistory } from './types';
 import { processContentWithTwin3Algorithm } from './utils/twin3Processor';
 import { aiResponseService, AIResponse } from './utils/aiResponseService';
+
+interface Message {
+  id: string;
+  type: 'user' | 'ai' | 'system';
+  content: string;
+  image?: File | string;
+  timestamp: string;
+  aiResponse?: AIResponse;
+  matrixUpdates?: Record<string, number>;
+  processingTime?: number;
+}
 
 function App() {
   const [selectedUser, setSelectedUser] = useState<number>(1);
@@ -23,18 +33,32 @@ function App() {
   const [processingSpeed, setProcessingSpeed] = useState(1);
   const [currentAlgorithmStep, setCurrentAlgorithmStep] = useState<string>('');
   const [algorithmResults, setAlgorithmResults] = useState<any>(null);
-  const [aiResponse, setAiResponse] = useState<AIResponse | null>(null);
-  const [isGeneratingResponse, setIsGeneratingResponse] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 'welcome',
+      type: 'system',
+      content: '歡迎使用 Twin3 智能分析系統！請分享您的體驗，AI 將為您提供個人化洞察。',
+      timestamp: new Date().toISOString()
+    }
+  ]);
 
   const handleContentSubmit = async (content: UserContent) => {
     if (processingState === 'processing') return;
+    
+    // Add user message
+    const userMessage: Message = {
+      id: `user-${Date.now()}`,
+      type: 'user',
+      content: content.text,
+      image: content.image,
+      timestamp: new Date().toISOString()
+    };
+    setMessages(prev => [...prev, userMessage]);
     
     setCurrentContent(content);
     setProcessingState('processing');
     setCurrentAlgorithmStep('msmm');
     setAlgorithmResults(null);
-    setAiResponse(null);
-    setIsGeneratingResponse(false);
     
     try {
       // Process with real Twin3 algorithm
@@ -48,25 +72,44 @@ function App() {
         }
       );
       
-      // Generate AI response after processing
-      setIsGeneratingResponse(true);
+      // Generate AI response
       try {
         console.log('🤖 開始生成AI回應...');
         const response = await aiResponseService.generateResponse(content, result.metaTags);
         console.log('✅ AI回應生成完成:', response);
-        setAiResponse(response);
+        
+        // Add AI response message
+        const aiMessage: Message = {
+          id: `ai-${Date.now()}`,
+          type: 'ai',
+          content: response.message,
+          timestamp: new Date().toISOString(),
+          aiResponse: response,
+          matrixUpdates: result.matrixUpdates,
+          processingTime: result.processingTime
+        };
+        setMessages(prev => [...prev, aiMessage]);
+        
       } catch (error) {
         console.error('❌ AI回應生成失敗:', error);
-        // 提供回退回應
-        setAiResponse({
-          message: "感謝您分享這個體驗！系統已成功分析並更新您的Twin Matrix。",
-          insights: ["您的行為模式已被記錄和分析"],
-          recommendations: ["繼續保持積極的生活態度", "記錄更多有意義的體驗"],
-          emotionalTone: "正面積極",
-          analysisConfidence: 0.8
-        });
-      } finally {
-        setIsGeneratingResponse(false);
+        
+        // Add fallback AI response
+        const fallbackMessage: Message = {
+          id: `ai-fallback-${Date.now()}`,
+          type: 'ai',
+          content: "感謝您分享這個體驗！系統已成功分析並更新您的Twin Matrix。",
+          timestamp: new Date().toISOString(),
+          aiResponse: {
+            message: "感謝您分享這個體驗！系統已成功分析並更新您的Twin Matrix。",
+            insights: ["您的行為模式已被記錄和分析"],
+            recommendations: ["繼續保持積極的生活態度", "記錄更多有意義的體驗"],
+            emotionalTone: "正面積極",
+            analysisConfidence: 0.8
+          },
+          matrixUpdates: result.matrixUpdates,
+          processingTime: result.processingTime
+        };
+        setMessages(prev => [...prev, fallbackMessage]);
       }
       
       // Update matrix data and track changes
@@ -143,11 +186,21 @@ function App() {
         setCurrentContent(null);
         setCurrentAlgorithmStep('');
         setAlgorithmResults(null);
-      }, 3000); // 延長顯示時間以便查看AI回應
+      }, 2000);
       
     } catch (error) {
       console.error('Processing error:', error);
       setProcessingState('error');
+      
+      // Add error message
+      const errorMessage: Message = {
+        id: `error-${Date.now()}`,
+        type: 'system',
+        content: '處理過程中發生錯誤，請稍後再試。',
+        timestamp: new Date().toISOString()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+      
       setTimeout(() => setProcessingState('idle'), 3000);
     }
   };
@@ -158,8 +211,14 @@ function App() {
     setMatrixData({});
     setDimensionHistory({});
     setActivityLog([]);
-    setAiResponse(null);
-    setIsGeneratingResponse(false);
+    setMessages([
+      {
+        id: `welcome-${userId}`,
+        type: 'system',
+        content: `已切換到用戶 ${userId}。歡迎使用 Twin3 智能分析系統！`,
+        timestamp: new Date().toISOString()
+      }
+    ]);
   };
 
   return (
@@ -171,49 +230,40 @@ function App() {
       />
       
       <div className="container mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[calc(100vh-120px)]">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-120px)]">
           {/* Left Panel - Input & Controls */}
           <div className="lg:col-span-1 space-y-4">
-            <InputPanel
+            <ConversationPanel
+              messages={messages}
               onContentSubmit={handleContentSubmit}
               isProcessing={processingState === 'processing'}
-              isAutoProcess={isAutoProcess}
-              onAutoProcessChange={setIsAutoProcess}
-              processingSpeed={processingSpeed}
-              onSpeedChange={setProcessingSpeed}
+              processingState={processingState}
+            />
+          </div>
+          
+          {/* Main Visualization Area */}
+          <div className="lg:col-span-1 space-y-4">
+            <MatrixVisualization
+              matrixData={matrixData}
+              processingState={processingState}
+              dimensionHistory={dimensionHistory}
             />
             
-            {/* Algorithm Steps Display */}
             <AlgorithmSteps
               currentStep={currentAlgorithmStep}
               results={algorithmResults}
               isProcessing={processingState === 'processing'}
             />
-            
-            {/* AI Response Panel */}
-            <AIResponsePanel
-              response={aiResponse}
-              isGenerating={isGeneratingResponse}
-            />
           </div>
           
-          {/* Main Visualization Area */}
-          <div className="lg:col-span-2 space-y-4">
+          {/* Right Panel - Activity & Performance */}
+          <div className="lg:col-span-1 space-y-4">
             <ProcessingPipeline
               state={processingState}
               content={currentContent}
               speed={processingSpeed}
             />
             
-            <MatrixVisualization
-              matrixData={matrixData}
-              processingState={processingState}
-              dimensionHistory={dimensionHistory}
-            />
-          </div>
-          
-          {/* Right Panel - Activity & Performance */}
-          <div className="lg:col-span-1 space-y-4">
             <ActivityFeed
               activities={activityLog}
               processingState={processingState}
