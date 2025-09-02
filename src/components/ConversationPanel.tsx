@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Image, Video, Brain, User, Bot, Clock, Heart, Lightbulb, TrendingUp, Calculator } from 'lucide-react';
 import { UserContent, AIResponse, ProcessingState } from '../types';
