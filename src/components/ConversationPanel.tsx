@@ -361,7 +361,8 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
             >
               <Send className="w-4 h-4" />
             </button>
-            <span>{isProcessing ? '🤖 AI 分析中...' : '🚀 開始 twin3 + AI 分析'}</span>
+          </div>
+          <span>{isProcessing ? '🤖 AI 分析中...' : '🚀 開始 twin3 + AI 分析'}</span>
         </form>
 
         {/* Quick Examples */}
