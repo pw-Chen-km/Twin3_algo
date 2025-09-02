@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Grid, Filter, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { ProcessingState } from '../types';
 
