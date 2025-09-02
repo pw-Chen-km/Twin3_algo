@@ -186,20 +186,6 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                           )}
 
                           {/* Recommendations */}
-                          {message.aiResponse.recommendations.length > 0 && (
-                            <div className="space-y-1">
-                              <div className="flex items-center space-x-1 text-xs text-green-400">
-                                <TrendingUp className="w-3 h-3" />
-                                <span>成長建議</span>
-                              </div>
-                              {message.aiResponse.recommendations.slice(0, 2).map((rec, index) => (
-                                <div key={index} className="text-xs text-green-200 bg-green-500/10 rounded px-2 py-1">
-                                  {index + 1}. {rec}
-                                </div>
-                              ))}
-                            </div>
-                          )}
-
                           {/* Matrix Updates Summary */}
                           {message.matrixUpdates && Object.keys(message.matrixUpdates).length > 0 && (
                             <div className="bg-primary/10 rounded-lg p-2">

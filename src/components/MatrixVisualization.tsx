@@ -85,8 +85,8 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
     <div className="bg-card rounded-lg border border-border p-6 h-[calc(100vh-180px)]">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold flex items-center">
-          <Grid className="w-5 h-5 mr-2 text-primary" />
-          Twin Matrix Visualization
+          <Grid className="w-5 h-5 mr-2 text-indigo-600" />
+          twin3 Matrix Visualization
         </h3>
         
         <div className="flex items-center space-x-2">

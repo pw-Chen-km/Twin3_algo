@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({ selectedUser, onUserChange, processingS
             <div className="flex items-center space-x-2">
               <Brain className="w-8 h-8 text-primary" />
               <div>
-                <h1 className="text-2xl font-bold">Twin3 Monitor</h1>
+                <h1 className="text-2xl font-bold">twin3 Monitor</h1>
                 <p className="text-sm text-muted-foreground">Real-Time Processing Visualization</p>
               </div>
             </div>

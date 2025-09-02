@@ -185,7 +185,7 @@ export class AIResponseService {
     return {
       message,
       insights,
-      recommendations: recommendations.slice(0, 3), // 最多3個建議
+      recommendations: [], // 移除建議功能
       emotionalTone,
       analysisConfidence: 0.85 + Math.random() * 0.15
     };
@@ -212,11 +212,7 @@ export class AIResponseService {
     return {
       message,
       insights: [`您展現了與${tags.slice(0, 3).join('、')}相關的特質`],
-      recommendations: [
-        "繼續保持這樣的積極態度",
-        "可以考慮分享經驗給其他人",
-        "記錄這些有意義的時刻"
-      ],
+      recommendations: [], // 移除建議功能
       emotionalTone,
       analysisConfidence: 0.75
     };

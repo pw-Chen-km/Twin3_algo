@@ -46,8 +46,8 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-4 h-[calc(50vh-60px)] shadow-sm">
       <h3 className="text-lg font-semibold mb-4 flex items-center">
-        <Brain className="w-5 h-5 mr-2 text-blue-600" />
-        Twin3 演算法引擎
+        <Brain className="w-5 h-5 mr-2 text-indigo-600" />
+        twin3 演算法引擎
       </h3>
 
       <div className="space-y-4 h-[calc(100%-60px)] overflow-y-auto">
@@ -247,12 +247,7 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
 
       {!isProcessing && (
         <div className="mt-4 text-center py-4 text-muted-foreground">
-          <motion.div
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <Brain className="w-8 h-8 mx-auto mb-2 opacity-50" />
-          </motion.div>
+          <Brain className="w-8 h-8 mx-auto mb-2 opacity-50" />
           <p className="text-sm font-medium">等待內容輸入</p>
           <p className="text-xs">AI準備分析您的體驗</p>
         </div>
