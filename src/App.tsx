@@ -188,7 +188,7 @@ function App() {
         setCurrentContent(null);
         setCurrentAlgorithmStep('');
         setAlgorithmResults(null);
-      }, 2000);
+      }, 1500);
       
     } catch (error) {
       console.error('Processing error:', error);
