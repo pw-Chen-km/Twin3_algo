@@ -41,9 +41,9 @@ body {
 }
 
 .matrix-cell:hover {
-  transform: scale(1.08) translateY(-4px);
+  transform: scale(1.12) translateY(-6px);
   z-index: 10;
-  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
 }
 
 .matrix-cell::before {
@@ -95,8 +95,8 @@ body {
 }
 
 .pipeline-step.active {
-  transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
 }
 
 .dimension-category {
@@ -135,4 +135,30 @@ body {
 
 .conversation-scroll::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--primary));
+}
+
+/* Enhanced Algorithm Steps Animation */
+.algorithm-step-active {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+  border: 2px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+}
+
+.algorithm-step-complete {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+  border: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Pulsing effect for active processing */
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+  }
+}
+
+.processing-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
 }

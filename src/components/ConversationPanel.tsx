@@ -95,7 +95,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
   };
 
   return (
-    <div className="bg-card rounded-lg border border-border flex flex-col h-[600px]">
+    <div className="bg-card rounded-lg border border-border flex flex-col h-[calc(100vh-180px)]">
       {/* Header */}
       <div className="p-4 border-b border-border">
         <h3 className="text-lg font-semibold flex items-center">
@@ -106,7 +106,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 conversation-scroll">
         <AnimatePresence>
           {messages.map((message) => (
             <motion.div

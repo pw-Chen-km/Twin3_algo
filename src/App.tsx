@@ -230,9 +230,9 @@ function App() {
       />
       
       <div className="container mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-120px)]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-[calc(100vh-120px)]">
           {/* Left Panel - Input & Controls */}
-          <div className="lg:col-span-1 space-y-4">
+          <div className="lg:col-span-5 space-y-4">
             <ConversationPanel
               messages={messages}
               onContentSubmit={handleContentSubmit}
@@ -242,36 +242,25 @@ function App() {
           </div>
           
           {/* Main Visualization Area */}
-          <div className="lg:col-span-1 space-y-4">
+          <div className="lg:col-span-4 space-y-4">
             <MatrixVisualization
               matrixData={matrixData}
               processingState={processingState}
               dimensionHistory={dimensionHistory}
             />
-            
+          </div>
+          
+          {/* Right Panel - Activity & Performance */}
+          <div className="lg:col-span-3 space-y-4">
             <AlgorithmSteps
               currentStep={currentAlgorithmStep}
               results={algorithmResults}
               isProcessing={processingState === 'processing'}
             />
-          </div>
-          
-          {/* Right Panel - Activity & Performance */}
-          <div className="lg:col-span-1 space-y-4">
-            <ProcessingPipeline
-              state={processingState}
-              content={currentContent}
-              speed={processingSpeed}
-            />
             
             <ActivityFeed
               activities={activityLog}
               processingState={processingState}
-            />
-            
-            <PerformanceDashboard
-              activityLog={activityLog}
-              matrixData={matrixData}
             />
           </div>
         </div>

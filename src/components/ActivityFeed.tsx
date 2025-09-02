@@ -22,13 +22,13 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities, processingState
   };
 
   return (
-    <div className="bg-card rounded-lg border border-border p-4">
+    <div className="bg-card rounded-lg border border-border p-4 h-[calc(50vh-60px)]">
       <h3 className="text-lg font-semibold mb-4 flex items-center">
         <Clock className="w-5 h-5 mr-2 text-primary" />
         Activity Feed
       </h3>
 
-      <div className="space-y-3 max-h-96 overflow-y-auto">
+      <div className="space-y-3 h-full overflow-y-auto conversation-scroll">
         <AnimatePresence>
           {activities.map((activity) => {
             const summary = getUpdateSummary(activity.updates);

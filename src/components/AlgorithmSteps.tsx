@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Zap, Database, CheckCircle, Clock, Tag, Calculator, TrendingUp } from 'lucide-react';
+import { Search, Zap, Database, CheckCircle, Clock, Tag, Calculator, TrendingUp, Brain, Activity, Cpu } from 'lucide-react';
 
 interface AlgorithmStepsProps {
   currentStep: string;
@@ -15,21 +15,24 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
       name: 'MSMM 語意匹配',
       icon: Search,
       description: 'Gemini 2.5 Flash 提取Meta-Tags',
-      color: 'bg-blue-500'
+      color: 'bg-blue-500',
+      details: 'AI分析文字和圖片內容，提取關鍵概念標籤'
     },
     {
       id: 'ultu',
       name: 'ULTU 動態評分',
       icon: Zap,
       description: '精確評分與分數平滑',
-      color: 'bg-green-500'
+      color: 'bg-green-500',
+      details: '基於維度定義進行AI評分，應用智能平滑策略'
     },
     {
       id: 'complete',
       name: '矩陣更新',
       icon: Database,
       description: 'Twin Matrix狀態更新',
-      color: 'bg-purple-500'
+      color: 'bg-purple-500',
+      details: '更新用戶的256維度特徵矩陣'
     }
   ];
 
@@ -41,13 +44,13 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
   };
 
   return (
-    <div className="bg-card rounded-lg border border-border p-4">
+    <div className="bg-card rounded-lg border border-border p-4 h-[calc(50vh-60px)]">
       <h3 className="text-lg font-semibold mb-4 flex items-center">
-        <Calculator className="w-5 h-5 mr-2 text-primary" />
-        Twin3 演算法步驟
+        <Brain className="w-5 h-5 mr-2 text-primary" />
+        Twin3 演算法引擎
       </h3>
 
-      <div className="space-y-3">
+      <div className="space-y-4">
         {steps.map((step, index) => {
           const Icon = step.icon;
           const status = getStepStatus(step.id);
@@ -55,36 +58,56 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
           return (
             <motion.div
               key={step.id}
-              className={`p-3 rounded-lg border transition-all ${
+              className={`p-4 rounded-lg border-2 transition-all duration-500 ${
                 status === 'active' ? 'border-primary bg-primary/10' :
                 status === 'complete' ? 'border-green-500 bg-green-500/10' :
                 'border-border bg-secondary/50'
               }`}
               animate={{
-                scale: status === 'active' ? 1.02 : 1,
-                opacity: status === 'pending' ? 0.6 : 1
+                scale: status === 'active' ? 1.05 : 1,
+                opacity: status === 'pending' ? 0.6 : 1,
+                y: status === 'active' ? -2 : 0
               }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              <div className="flex items-center space-x-3">
+              <div className="flex items-start space-x-4">
                 <div className={`p-2 rounded-full ${
                   status === 'active' ? 'bg-primary text-primary-foreground' :
                   status === 'complete' ? 'bg-green-500 text-white' :
                   'bg-muted text-muted-foreground'
                 }`}>
                   {status === 'complete' ? (
-                    <CheckCircle className="w-4 h-4" />
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    >
+                      <CheckCircle className="w-5 h-5" />
+                    </motion.div>
                   ) : (
-                    <Icon className={`w-4 h-4 ${status === 'active' ? 'animate-pulse' : ''}`} />
+                    <Icon className={`w-5 h-5 ${status === 'active' ? 'animate-spin' : ''}`} />
                   )}
                 </div>
                 
                 <div className="flex-1">
-                  <h4 className="font-medium text-sm">{step.name}</h4>
-                  <p className="text-xs text-muted-foreground">{step.description}</p>
+                  <h4 className="font-semibold text-base">{step.name}</h4>
+                  <p className="text-sm text-muted-foreground mb-1">{step.description}</p>
+                  <p className="text-xs text-muted-foreground/80">{step.details}</p>
                 </div>
                 
                 {status === 'active' && (
-                  <div className="w-2 h-6 bg-primary rounded-full animate-pulse"></div>
+                  <motion.div
+                    animate={{ 
+                      scale: [1, 1.2, 1],
+                      opacity: [0.5, 1, 0.5]
+                    }}
+                    transition={{ 
+                      duration: 1.5, 
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    className="w-3 h-8 bg-gradient-to-t from-primary to-primary/50 rounded-full"
+                  />
                 )}
               </div>
 
@@ -92,58 +115,99 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
               <AnimatePresence>
                 {results && currentStep === step.id && (
                   <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="mt-3 pt-3 border-t border-border/50"
+                    initial={{ opacity: 0, height: 0, y: -10 }}
+                    animate={{ opacity: 1, height: 'auto', y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: -10 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    className="mt-4 pt-4 border-t border-border/50"
                   >
                     {step.id === 'msmm' && results.metaTags && (
-                      <div className="space-y-2">
-                        <div className="text-xs font-medium text-primary">提取的Meta-Tags:</div>
-                        <div className="flex flex-wrap gap-1">
+                      <div className="space-y-3">
+                        <div className="text-sm font-semibold text-primary flex items-center">
+                          <Tag className="w-4 h-4 mr-2" />
+                          提取的Meta-Tags
+                        </div>
+                        <div className="flex flex-wrap gap-2">
                           {results.metaTags.map((tag: string, index: number) => (
                             <motion.span
                               key={tag}
-                              initial={{ opacity: 0, scale: 0.8 }}
+                              initial={{ opacity: 0, scale: 0.5, y: 10 }}
                               animate={{ opacity: 1, scale: 1 }}
-                              transition={{ delay: index * 0.1 }}
-                              className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full flex items-center"
+                              transition={{ 
+                                delay: index * 0.15,
+                                type: "spring",
+                                stiffness: 300,
+                                damping: 20
+                              }}
+                              className="px-3 py-1.5 bg-blue-500/20 text-blue-300 text-sm rounded-full flex items-center border border-blue-500/30"
                             >
-                              <Tag className="w-2 h-2 mr-1" />
+                              <Tag className="w-3 h-3 mr-1" />
                               {tag}
                             </motion.span>
                           ))}
                         </div>
                         {results.matchedDimensions && (
-                          <div className="text-xs text-muted-foreground">
-                            匹配到 {results.matchedDimensions.length} 個維度
+                          <div className="text-sm text-green-400 font-medium">
+                            ✅ 匹配到 {results.matchedDimensions.length} 個維度
                           </div>
                         )}
                       </div>
                     )}
 
                     {step.id === 'ultu' && results.updates && (
-                      <div className="space-y-2">
-                        <div className="text-xs font-medium text-green-400">評分更新:</div>
-                        {Object.entries(results.updates).slice(0, 3).map(([dimId, score]: [string, any]) => (
-                          <div key={dimId} className="flex items-center justify-between text-xs">
-                            <span className="font-mono">{dimId}</span>
-                            <span className="font-bold text-green-400">{score}</span>
-                          </div>
-                        ))}
+                      <div className="space-y-3">
+                        <div className="text-sm font-semibold text-green-400 flex items-center">
+                          <Zap className="w-4 h-4 mr-2" />
+                          評分更新結果
+                        </div>
+                        <div className="space-y-2">
+                          {Object.entries(results.updates).slice(0, 3).map(([dimId, score]: [string, any], index: number) => (
+                            <motion.div 
+                              key={dimId} 
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: index * 0.1 }}
+                              className="flex items-center justify-between p-2 bg-green-500/10 rounded border border-green-500/20"
+                            >
+                              <span className="font-mono text-sm text-green-300">{dimId}</span>
+                              <motion.span 
+                                initial={{ scale: 0.8 }}
+                                animate={{ scale: 1 }}
+                                transition={{ delay: index * 0.1 + 0.2, type: "spring" }}
+                                className="font-bold text-green-400 text-lg"
+                              >
+                                {score}
+                              </motion.span>
+                            </motion.div>
+                          ))}
+                        </div>
                         {Object.keys(results.updates).length > 3 && (
-                          <div className="text-xs text-muted-foreground">
-                            +{Object.keys(results.updates).length - 3} 個維度
+                          <div className="text-sm text-muted-foreground text-center">
+                            +{Object.keys(results.updates).length - 3} 個維度更新
                           </div>
                         )}
+                      </div>
                       </div>
                     )}
 
                     {step.id === 'complete' && results.totalUpdates && (
-                      <div className="text-xs">
-                        <div className="flex items-center space-x-2 text-purple-400">
-                          <TrendingUp className="w-3 h-3" />
-                          <span>總計更新 {results.totalUpdates} 個維度</span>
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2 text-purple-400 text-sm font-semibold">
+                          <Database className="w-4 h-4" />
+                          <span>矩陣更新完成</span>
+                        </div>
+                        <div className="bg-purple-500/10 border border-purple-500/20 rounded p-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-purple-300">總計更新維度</span>
+                            <motion.span 
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ type: "spring", stiffness: 400 }}
+                              className="text-xl font-bold text-purple-400"
+                            >
+                              {results.totalUpdates}
+                            </motion.span>
+                          </div>
                         </div>
                       </div>
                     )}
@@ -158,25 +222,40 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
       {/* 即時狀態指示器 */}
       {isProcessing && (
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1 }}
-          className="mt-4 p-3 bg-primary/10 border border-primary/20 rounded-lg"
+          className="mt-4 p-4 bg-gradient-to-r from-primary/10 to-blue-500/10 border border-primary/30 rounded-lg"
         >
           <div className="flex items-center space-x-2">
             <motion.div
               animate={{ rotate: 360 }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-              className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full"
+              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+              className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full"
             />
-            <span className="text-sm text-primary">Twin3演算法運行中...</span>
+            <span className="text-sm font-medium text-primary">🧠 Twin3 AI演算法運行中...</span>
+            <motion.div
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="flex space-x-1"
+            >
+              <div className="w-1 h-1 bg-primary rounded-full"></div>
+              <div className="w-1 h-1 bg-primary rounded-full"></div>
+              <div className="w-1 h-1 bg-primary rounded-full"></div>
+            </motion.div>
           </div>
         </motion.div>
       )}
 
-      {!isProcessing && !results && (
+      {!isProcessing && (
         <div className="mt-4 text-center py-4 text-muted-foreground">
-          <Clock className="w-6 h-6 mx-auto mb-2 opacity-50" />
-          <p className="text-xs">等待內容輸入</p>
+          <motion.div
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <Brain className="w-8 h-8 mx-auto mb-2 opacity-50" />
+          </motion.div>
+          <p className="text-sm font-medium">等待內容輸入</p>
+          <p className="text-xs">AI準備分析您的體驗</p>
         </div>
       )}
     </div>
