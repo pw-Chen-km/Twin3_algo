@@ -154,17 +154,27 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                   {/* AI Response */}
                   {message.type === 'ai' && (
                     <div className="space-y-3">
-                      {/* Main AI Message */}
-                      <div className="flex items-start space-x-2">
-                        <Bot className="w-4 h-4 mt-0.5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
-                        <p className="text-sm leading-relaxed">{message.content}</p>
+                      {/* AI Response Framework */}
+                      <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-l-4 border-blue-500 rounded-lg p-4">
+                        <div className="flex items-start space-x-3">
+                          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-full flex items-center justify-center flex-shrink-0">
+                            <Brain className="w-4 h-4" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-2 mb-2">
+                              <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">twin3 AI 助理</span>
+                              <span className="text-xs text-gray-500 dark:text-gray-400">• Gemini 2.5 Flash</span>
+                            </div>
+                            <p className="text-sm leading-relaxed text-gray-800 dark:text-gray-200">{message.content}</p>
+                          </div>
+                        </div>
                       </div>
 
                       {/* AI Response Details */}
                       {message.aiResponse && (
-                        <div className="space-y-2 border-t border-gray-200 dark:border-gray-700 pt-3">
+                        <div className="space-y-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
                           {/* Emotional Tone */}
-                          <div className="flex items-center space-x-2 text-xs">
+                          <div className="flex items-center space-x-2 text-xs bg-white dark:bg-gray-800 rounded-lg p-2 border border-gray-200 dark:border-gray-700">
                             <Heart className="w-3 h-3 text-red-400" />
                             <span className="text-gray-600 dark:text-gray-400">情緒狀態:</span>
                             <span className="text-gray-900 dark:text-gray-100 font-medium">{message.aiResponse.emotionalTone}</span>
@@ -172,13 +182,13 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
 
                           {/* Insights */}
                           {message.aiResponse.insights.length > 0 && (
-                            <div className="space-y-1">
-                              <div className="flex items-center space-x-1 text-xs text-yellow-600 dark:text-yellow-400">
+                            <div className="space-y-2">
+                              <div className="flex items-center space-x-2 text-xs font-semibold text-yellow-700 dark:text-yellow-300">
                                 <Lightbulb className="w-3 h-3" />
                                 <span>行為洞察</span>
                               </div>
                               {message.aiResponse.insights.map((insight, index) => (
-                                <div key={index} className="text-xs text-yellow-800 dark:text-yellow-200 bg-yellow-100 dark:bg-yellow-900/30 rounded px-2 py-1">
+                                <div key={index} className="text-xs text-yellow-800 dark:text-yellow-200 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg px-3 py-2 border border-yellow-200 dark:border-yellow-700">
                                   {insight}
                                 </div>
                               ))}
@@ -188,12 +198,12 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                           {/* Recommendations */}
                           {/* Matrix Updates Summary */}
                           {message.matrixUpdates && Object.keys(message.matrixUpdates).length > 0 && (
-                            <div className="bg-blue-100 dark:bg-blue-900/30 rounded-lg p-2">
-                              <div className="flex items-center space-x-1 text-xs text-blue-700 dark:text-blue-300 mb-1">
+                            <div className="bg-blue-100 dark:bg-blue-900/30 rounded-lg p-3 border border-blue-200 dark:border-blue-700">
+                              <div className="flex items-center space-x-2 text-xs font-semibold text-blue-700 dark:text-blue-300 mb-2">
                                 <Calculator className="w-3 h-3" />
-                                <span>twin Matrix 更新</span>
+                                <span>twin3 Matrix 更新結果</span>
                               </div>
-                              <div className="text-xs text-blue-600 dark:text-blue-400">
+                              <div className="text-xs text-blue-600 dark:text-blue-400 bg-white dark:bg-gray-800 rounded px-2 py-1">
                                 更新了 {Object.keys(message.matrixUpdates).length} 個維度
                                 {message.processingTime && (
                                   <span className="ml-2">• 處理時間: {message.processingTime}ms</span>
@@ -203,11 +213,21 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                           )}
 
                           {/* Confidence */}
-                          <div className="flex items-center justify-between text-xs">
+                          <div className="flex items-center justify-between text-xs bg-white dark:bg-gray-800 rounded-lg p-2 border border-gray-200 dark:border-gray-700">
                             <span className="text-gray-600 dark:text-gray-400">分析信心度</span>
-                            <span className="font-bold text-blue-600 dark:text-blue-400">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                <motion.div
+                                  initial={{ width: 0 }}
+                                  animate={{ width: `${message.aiResponse.analysisConfidence * 100}%` }}
+                                  transition={{ duration: 1, ease: "easeOut" }}
+                                  className="h-full bg-blue-500"
+                                />
+                              </div>
+                              <span className="font-bold text-blue-600 dark:text-blue-400">
                               {Math.round(message.aiResponse.analysisConfidence * 100)}%
-                            </span>
+                              </span>
+                            </div>
                           </div>
                         </div>
                       )}
