@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 217.2 91.2% 59.8%;
+  --primary-foreground: 222.2 84% 4.9%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 224.3 76.3% 94.1%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.matrix-cell {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.matrix-cell:hover {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+.processing-animation {
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.glow-effect {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.meta-tag {
+  animation: slideUp 0.3s ease-out;
+}
+
+.score-change-positive {
+  color: #10b981;
+  animation: bounce 0.5s ease-out;
+}
+
+.score-change-negative {
+  color: #ef4444;
+  animation: bounce 0.5s ease-out;
+}
+
+.pipeline-step {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pipeline-step.active {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+}
+
+.dimension-category {
+  border-left: 4px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.dimension-category.physical { border-left-color: #ef4444; }
+.dimension-category.social { border-left-color: #10b981; }
+.dimension-category.digital { border-left-color: #3b82f6; }
+.dimension-category.spiritual { border-left-color: #8b5cf6; }
