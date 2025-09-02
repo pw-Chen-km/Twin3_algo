@@ -174,72 +174,78 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
               </p>
             </div>
             
-            {/* 完整256維度矩陣 */}
-            <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700">
-              {/* 列標籤 */}
-              <div className="flex justify-center mb-2">
-                <div className="grid gap-1" style={{ gridTemplateColumns: 'auto repeat(16, 1fr)' }}>
-                  <div className="w-8"></div> {/* 空白角落 */}
-                  {Array.from({length: 16}, (_, i) => (
-                    <div key={i} className="text-xs text-gray-500 dark:text-gray-400 text-center font-mono w-8 h-6 flex items-center justify-center">
-                      {i.toString(16).toUpperCase()}
-                    </div>
-                  ))}
+            {/* Terminal風格256維度矩陣 */}
+            <div className="bg-black text-green-400 p-4 rounded-lg border-2 border-gray-600 font-mono text-xs overflow-auto max-h-96">
+              {/* Terminal Header */}
+              <div className="text-green-300 mb-3 border-b border-green-600 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="text-green-500">●</span>
+                  <span>Twin Matrix DNA Map [256 dimensions]</span>
+                </div>
+                <div className="text-green-600 text-xs mt-1">
+                  Address: 0x0000-0x00FF | Format: HEX | Status: ACTIVE
                 </div>
               </div>
               
-              {/* 矩陣主體 */}
-              <div className="flex justify-center">
-                <div className="grid gap-1" style={{ gridTemplateColumns: 'auto repeat(16, 1fr)' }}>
-                  {Array.from({length: 16}, (_, row) => (
-                    <React.Fragment key={row}>
-                      {/* 行標籤 */}
-                      <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center justify-center font-mono w-8 h-8">
-                        {row.toString(16).toUpperCase()}0
-                      </div>
-                      
-                      {/* 該行的16個維度 */}
-                      {Array.from({length: 16}, (_, col) => {
-                        const index = row * 16 + col;
-                        const hexAddress = index.toString(16).toUpperCase().padStart(4, '0');
-                        const score = matrixData[hexAddress] || 128;
-                        const isActive = matrixData.hasOwnProperty(hexAddress);
-                        const history = dimensionHistory[hexAddress];
-                        
-                        return (
-                          <motion.div
-                            key={hexAddress}
-                            className={`w-8 h-8 rounded border-2 border-gray-300 dark:border-gray-600 flex items-center justify-center text-xs font-bold cursor-pointer transition-all duration-200 relative ${getScoreColor(score)}`}
-                            style={{ 
-                              opacity: isActive ? Math.max(0.7, getScoreIntensity(score)) : 0.4,
-                            }}
-                            whileHover={{ 
-                              scale: 1.3,
-                              zIndex: 20
-                            }}
-                            onClick={() => setShowDetailModal(hexAddress)}
-                            title={`${hexAddress}: ${getDimensionName(hexAddress)} (${score}/255)`}
-                          >
-                            <span className="text-white text-xs font-bold drop-shadow">
-                              {score.toString(16).toUpperCase().padStart(2, '0')}
-                            </span>
-                            
-                            {/* 活躍指示器 */}
-                            {isActive && (
-                              <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full border border-gray-400"></div>
-                            )}
-                            
-                            {/* 更新次數指示器 */}
-                            {history && history.totalUpdates > 0 && (
-                              <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
-                                {history.totalUpdates > 9 ? '9+' : history.totalUpdates}
-                              </div>
-                            )}
-                          </motion.div>
-                        );
-                      })}
-                    </React.Fragment>
-                  ))}
+              {/* Column Headers */}
+              <div className="flex text-green-600 mb-1">
+                <div className="w-12 text-right pr-2">ADDR</div>
+                {Array.from({length: 16}, (_, i) => (
+                  <div key={i} className="w-6 text-center">
+                    {i.toString(16).toUpperCase()}
+                  </div>
+                ))}
+              </div>
+              
+              {/* Matrix Rows */}
+              {Array.from({length: 16}, (_, row) => (
+                <div key={row} className="flex items-center">
+                  {/* Row Address */}
+                  <div className="w-12 text-right pr-2 text-green-600">
+                    {row.toString(16).toUpperCase().padStart(2, '0')}0:
+                  </div>
+                  
+                  {/* Row Data */}
+                  {Array.from({length: 16}, (_, col) => {
+                    const index = row * 16 + col;
+                    const hexAddress = index.toString(16).toUpperCase().padStart(4, '0');
+                    const score = matrixData[hexAddress] || 128;
+                    const isActive = matrixData.hasOwnProperty(hexAddress);
+                    const history = dimensionHistory[hexAddress];
+                    
+                    const getTerminalColor = (score: number, isActive: boolean) => {
+                      if (!isActive) return 'text-gray-600';
+                      if (score >= 200) return 'text-green-400';
+                      if (score >= 150) return 'text-yellow-400';
+                      if (score >= 100) return 'text-orange-400';
+                      if (score >= 50) return 'text-red-400';
+                      return 'text-gray-400';
+                    };
+                    
+                    return (
+                      <motion.div
+                        key={hexAddress}
+                        className={`w-6 text-center cursor-pointer hover:bg-green-900 hover:text-white transition-all duration-200 ${getTerminalColor(score, isActive)}`}
+                        whileHover={{ scale: 1.2 }}
+                        onClick={() => setShowDetailModal(hexAddress)}
+                        title={`${hexAddress}: ${getDimensionName(hexAddress)} (${score}/255)${history ? ` | Updates: ${history.totalUpdates}` : ''}`}
+                      >
+                        {score.toString(16).toUpperCase().padStart(2, '0')}
+                        {isActive && <span className="text-white">*</span>}
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              ))}
+              
+              {/* Terminal Footer */}
+              <div className="mt-3 pt-2 border-t border-green-600 text-green-600 text-xs">
+                <div className="flex justify-between">
+                  <span>Active: {Object.keys(matrixData).length}/256</span>
+                  <span>Updates: {Object.values(dimensionHistory).reduce((sum, hist) => sum + hist.totalUpdates, 0)}</span>
+                </div>
+                <div className="mt-1 text-green-700">
+                  Legend: <span className="text-green-400">High</span> | <span className="text-yellow-400">Med</span> | <span className="text-red-400">Low</span> | <span className="text-gray-600">Inactive</span> | * = Active
                 </div>
               </div>
             </div>
