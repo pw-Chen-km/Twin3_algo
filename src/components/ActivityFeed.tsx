@@ -50,7 +50,6 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities, processingState
                     <span className="text-xs text-gray-500">
                       {activity.processingTime}ms
                     </span>
-                    </span>
                   <span className="text-sm text-gray-600">AI 正在分析...</span>
                 </div>
                 <p className="text-sm mb-2 line-clamp-2">{activity.content}</p>
