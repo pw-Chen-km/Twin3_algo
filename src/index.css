@@ -21,7 +21,7 @@
   --accent-foreground: 30 58 138;      /* 強調文字深藍 #1e3a8a */
   --destructive: 239 68 68;            /* 危險紅色 #ef4444 */
   --destructive-foreground: 255 255 255; /* 危險文字白色 */
-  --border: 226 232 240;               /* 邊框淺灰 #e2e8f0 */
+  --border: 203 213 225;               /* 邊框中灰 #cbd5e1 - 更清晰 */
   --input: 255 255 255;                /* 輸入框白色背景 */
   --ring: 37 99 235;                   /* 焦點環藍色 */
 }
@@ -64,6 +64,54 @@ body {
 /* ===== 主題過渡動畫 ===== */
 .theme-transition {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== 256維度矩陣樣式 ===== */
+.matrix-256-grid {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  gap: 2px;
+  padding: 8px;
+  background: rgb(var(--muted));
+  border: 2px solid rgb(var(--border));
+  border-radius: 8px;
+}
+
+.matrix-cell-256 {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  border: 1px solid rgb(var(--border));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.matrix-cell-256:hover {
+  transform: scale(1.2);
+  z-index: 10;
+  border: 2px solid rgb(var(--primary));
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.matrix-cell-256.active {
+  border: 2px solid rgb(var(--primary));
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.5);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.matrix-address-label {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  color: rgb(var(--muted-foreground));
+  margin-bottom: 4px;
 }
 
 /* ===== 組件樣式 ===== */
@@ -145,6 +193,15 @@ body {
 
 .dark .pipeline-step.active {
   box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+}
+
+.dark .matrix-cell-256 {
+  border-color: rgb(var(--border));
+}
+
+.dark .matrix-cell-256:hover {
+  border-color: rgb(var(--primary));
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
 }
 
 /* ===== 動畫關鍵幀 ===== */

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from './hooks/useTheme';
 import Header from './components/Header';
 import ConversationPanel from './components/ConversationPanel';
 import ProcessingPipeline from './components/ProcessingPipeline';
@@ -23,6 +24,7 @@ interface Message {
 }
 
 function App() {
+  const { theme } = useTheme();
   const [selectedUser, setSelectedUser] = useState<number>(1);
   const [processingState, setProcessingState] = useState<ProcessingState>('idle');
   const [currentContent, setCurrentContent] = useState<UserContent | null>(null);
@@ -222,7 +224,11 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className={`min-h-screen transition-colors duration-300 ${
+      theme === 'dark' 
+        ? 'bg-gray-900 text-gray-100' 
+        : 'bg-white text-gray-900'
+    }`}>
       <Header 
         selectedUser={selectedUser}
         onUserChange={handleUserChange}
