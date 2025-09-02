@@ -1,5 +1,155 @@
 import { UserContent, ProcessingResult, MetaTag } from '../types';
 
+// Real Twin3 algorithm simulation based on actual project code
+const TWIN3_METADATA = {
+  '0008': {
+    name: 'Dietary Habits',
+    definition: '個人飲食習慣和營養選擇的傾向',
+    meta_tags: ['食物', '營養', '健康', '飲食', '料理'],
+    encoding_rules: '基於飲食選擇的健康程度和多樣性評分'
+  },
+  '0067': {
+    name: 'Spiritual Awareness',
+    definition: '對精神層面和內在成長的關注程度',
+    meta_tags: ['精神', '內在', '成長', '覺察', '靈性'],
+    encoding_rules: '基於精神實踐和自我反思的深度評分'
+  },
+  '006C': {
+    name: 'Dimension 006C',
+    definition: '個人特質維度006C',
+    meta_tags: ['特質', '行為', '表現'],
+    encoding_rules: '基於行為表現評分'
+  },
+  '0071': {
+    name: 'Social Achievements',
+    definition: '在社會環境中的成就和認可程度',
+    meta_tags: ['成就', '成功', '認可', '表現', '完成'],
+    encoding_rules: '基於社會成就的影響力和重要性評分'
+  },
+  '0048': {
+    name: 'Leadership Ability',
+    definition: '領導他人和組織團隊的能力',
+    meta_tags: ['領導', '指導', '管理', '組織', '帶領'],
+    encoding_rules: '基於領導行為的效果和影響範圍評分'
+  },
+  '0040': {
+    name: 'Social Relationships',
+    definition: '建立和維持人際關係的能力',
+    meta_tags: ['朋友', '關係', '社交', '互動', '連結'],
+    encoding_rules: '基於社交互動的質量和頻率評分'
+  },
+  '0099': {
+    name: 'Learning Orientation',
+    definition: '對學習新知識和技能的積極程度',
+    meta_tags: ['學習', '知識', '技能', '成長', '教育'],
+    encoding_rules: '基於學習活動的主動性和深度評分'
+  },
+  '0156': {
+    name: 'Creative Expression',
+    definition: '創意表達和藝術創作的能力',
+    meta_tags: ['創意', '創作', '藝術', '表達', '想像'],
+    encoding_rules: '基於創意作品的原創性和表達力評分'
+  },
+  'SP088': {
+    name: 'Social Responsibility',
+    definition: '對社會責任和環境保護的關注程度',
+    meta_tags: ['責任', '環保', '社會', '永續', '公益'],
+    encoding_rules: '基於社會責任行為的影響力和持續性評分'
+  },
+  '0010': {
+    name: 'Physical Fitness',
+    definition: '身體健康和體能狀況',
+    meta_tags: ['健身', '運動', '體能', '健康', '鍛鍊'],
+    encoding_rules: '基於運動頻率和強度評分'
+  },
+  '0081': {
+    name: 'Technology Adoption',
+    definition: '對新技術的接受和應用能力',
+    meta_tags: ['科技', '技術', '數位', '創新', '應用'],
+    encoding_rules: '基於技術使用的熟練度和創新性評分'
+  },
+  '0032': {
+    name: 'Emotional Stability',
+    definition: '情緒管理和心理穩定性',
+    meta_tags: ['情緒', '穩定', '平衡', '調節', '心理'],
+    encoding_rules: '基於情緒表達的穩定性和適應性評分'
+  }
+};
+
+// MSMM語意匹配算法模擬
+const simulateMSMM = (text: string): { metaTags: string[], matchedDimensions: string[] } => {
+  const extractedTags: string[] = [];
+  const matchedDimensions: string[] = [];
+  
+  // 1. Meta-Tag提取（模擬Gemini AI）
+  const textLower = text.toLowerCase();
+  
+  // 基於關鍵詞提取Meta-Tags
+  Object.values(TWIN3_METADATA).forEach(dim => {
+    dim.meta_tags.forEach(tag => {
+      if (textLower.includes(tag)) {
+        extractedTags.push(tag);
+      }
+    });
+  });
+  
+  // 2. 維度匹配（模擬Sentence-BERT相似度計算）
+  Object.entries(TWIN3_METADATA).forEach(([dimId, dim]) => {
+    const similarity = calculateSemanticSimilarity(extractedTags, dim.meta_tags);
+    if (similarity > 0.1) { // 相似度閾值
+      matchedDimensions.push(dimId);
+    }
+  });
+  
+  return { metaTags: extractedTags, matchedDimensions };
+};
+
+// 語意相似度計算（模擬Sentence-BERT）
+const calculateSemanticSimilarity = (userTags: string[], dimensionTags: string[]): number => {
+  const intersection = userTags.filter(tag => dimensionTags.includes(tag));
+  const union = [...new Set([...userTags, ...dimensionTags])];
+  return intersection.length / Math.max(union.length, 1);
+};
+
+// ULTU評分算法模擬
+const simulateULTU = (dimensionId: string, userContent: string, previousScore: number = 128): number => {
+  const dimension = TWIN3_METADATA[dimensionId];
+  if (!dimension) return 128;
+  
+  // 1. Gemini AI評分模擬（基於內容相關性）
+  let geminiRawScore = 128; // 基準分數
+  
+  const textLower = userContent.toLowerCase();
+  let relevanceScore = 0;
+  
+  // 計算與維度Meta-Tags的相關性
+  dimension.meta_tags.forEach(tag => {
+    if (textLower.includes(tag)) {
+      relevanceScore += 25; // 每個匹配的tag加25分
+    }
+  });
+  
+  // 內容複雜度加分
+  if (userContent.length > 50) relevanceScore += 15;
+  if (userContent.length > 100) relevanceScore += 10;
+  
+  // 特殊關鍵詞加分（模擬Gemini的語意理解）
+  const strongKeywords = ['帶領', '完成', '成功', '創新', '學習', '幫助'];
+  strongKeywords.forEach(keyword => {
+    if (textLower.includes(keyword)) {
+      relevanceScore += 20;
+    }
+  });
+  
+  geminiRawScore = Math.min(255, Math.max(0, 128 + relevanceScore));
+  
+  // 2. ULTU分數平滑（α = 0.3）
+  const alpha = 0.3;
+  const smoothedScore = Math.round(alpha * geminiRawScore + (1 - alpha) * previousScore);
+  
+  return Math.max(0, Math.min(255, smoothedScore));
+};
+
 // Mock processing function that simulates the Twin3 pipeline
 export const mockProcessContent = async (content: UserContent, speed: number = 1): Promise<ProcessingResult> => {
   const baseDelay = 1000 / speed;
@@ -7,11 +157,22 @@ export const mockProcessContent = async (content: UserContent, speed: number = 1
   // Simulate processing delay
   await new Promise(resolve => setTimeout(resolve, baseDelay * 2));
   
-  // Mock meta-tag extraction based on content
-  const metaTags: MetaTag[] = extractMockMetaTags(content.text);
+  // 使用真實Twin3演算法模擬
+  const msmmResult = simulateMSMM(content.text);
   
-  // Mock dimension matching and scoring
-  const matrixUpdates = generateMockMatrixUpdates(content.text, content.image);
+  // 轉換為MetaTag格式
+  const metaTags: MetaTag[] = msmmResult.metaTags.map(tag => ({
+    tag,
+    confidence: 0.8 + Math.random() * 0.2
+  }));
+  
+  // 使用ULTU演算法計算分數
+  const matrixUpdates: Record<string, number> = {};
+  msmmResult.matchedDimensions.forEach(dimId => {
+    const previousScore = 128; // 模擬前次分數
+    const newScore = simulateULTU(dimId, content.text, previousScore);
+    matrixUpdates[dimId] = newScore;
+  });
   
   // Mock processing time
   const processingTime = Math.round(800 + Math.random() * 400);
@@ -20,124 +181,6 @@ export const mockProcessContent = async (content: UserContent, speed: number = 1
     metaTags,
     matrixUpdates,
     processingTime,
-    matchedDimensions: Object.keys(matrixUpdates)
+    matchedDimensions: msmmResult.matchedDimensions
   };
-};
-
-const extractMockMetaTags = (text: string): MetaTag[] => {
-  const keywords = {
-    '學習': ['學習', '研究', '課程', '知識', '閱讀'],
-    '成就感': ['完成', '成功', '達成', '獲得', '成就'],
-    '領導': ['帶領', '領導', '指導', '管理', '組織'],
-    '食物': ['吃', '食物', '餐廳', '料理', '早餐', '晚餐'],
-    '社交': ['朋友', '聚會', '社交', '團體', '分享'],
-    '運動': ['健身', '運動', '跑步', '訓練', '體能'],
-    '環保': ['環保', '永續', '減碳', '綠色', '生態'],
-    '科技': ['程式', '科技', '軟體', 'AI', '開發'],
-    '創意': ['創作', '設計', '藝術', '創新', '想法'],
-    '慶祝': ['慶祝', '開心', '快樂', '滿足', '愉悅']
-  };
-
-  const extractedTags: MetaTag[] = [];
-  const textLower = text.toLowerCase();
-
-  Object.entries(keywords).forEach(([tag, words]) => {
-    const matches = words.filter(word => textLower.includes(word)).length;
-    if (matches > 0) {
-      extractedTags.push({
-        tag,
-        confidence: Math.min(0.9, 0.3 + matches * 0.2)
-      });
-    }
-  });
-
-  // Add some random variation
-  if (extractedTags.length < 3) {
-    const randomTags = ['體驗', '感受', '活動', '時間', '生活'];
-    randomTags.forEach(tag => {
-      if (Math.random() > 0.7) {
-        extractedTags.push({ tag, confidence: 0.4 + Math.random() * 0.3 });
-      }
-    });
-  }
-
-  return extractedTags.slice(0, 6);
-};
-
-const generateMockMatrixUpdates = (text: string, image?: File | string): Record<string, number> => {
-  const updates: Record<string, number> = {};
-  
-  // Define dimension mappings based on content analysis
-  const dimensionMappings = {
-    // Social dimensions
-    '0071': ['完成', '成功', '達成', '論文', '成就'],  // Social Achievements
-    '0048': ['帶領', '領導', '指導', '管理'],          // Leadership Ability
-    '0040': ['朋友', '聚會', '社交', '分享'],          // Social Relationships
-    
-    // Learning dimensions
-    '0099': ['學習', '研究', '課程', '知識', '閱讀'],   // Learning Orientation
-    '0156': ['創新', '創意', '設計', '想法'],          // Creative Expression
-    
-    // Physical dimensions
-    '0008': ['吃', '食物', '餐廳', '料理', '早餐'],     // Dietary Habits
-    '0010': ['健身', '運動', '跑步', '訓練'],          // Physical Fitness
-    
-    // Digital dimensions
-    '0081': ['程式', '科技', '軟體', 'AI', '開發'],     // Technology Adoption
-    
-    // Environmental/Social responsibility
-    'SP088': ['環保', '永續', '減碳', '綠色', '生態'],  // Social Responsibility
-    
-    // Emotional dimensions
-    '0032': ['開心', '快樂', '滿足', '愉悅', '慶祝']    // Emotional Stability
-  };
-
-  const textLower = text.toLowerCase();
-  
-  Object.entries(dimensionMappings).forEach(([dimensionId, keywords]) => {
-    const matches = keywords.filter(keyword => textLower.includes(keyword)).length;
-    
-    if (matches > 0) {
-      // Algorithm-calculated score based on semantic analysis
-      // Simulating ULTU processor's intelligent scoring
-      let algorithmScore = 128; // Default baseline
-      
-      // Primary match bonus (simulating Gemini AI analysis)
-      algorithmScore += matches * 25;
-      
-      // Content complexity bonus
-      if (text.length > 50) algorithmScore += 15;
-      if (text.length > 100) algorithmScore += 10;
-      
-      // Semantic depth bonus (simulating advanced NLP analysis)
-      const semanticWords = ['帶領', '完成', '學習', '創新', '環保'];
-      const semanticMatches = semanticWords.filter(word => textLower.includes(word)).length;
-      algorithmScore += semanticMatches * 20;
-      
-      // Image bonus (if image is provided)
-      if (image) {
-        algorithmScore += 25; // Multi-modal analysis bonus
-      }
-      
-      // Apply ULTU smoothing simulation (alpha = 0.3)
-      const previousScore = 128; // Simulated previous state
-      const smoothedScore = Math.round(0.3 * algorithmScore + 0.7 * previousScore);
-      
-      // Ensure score is within valid range
-      updates[dimensionId] = Math.max(0, Math.min(255, smoothedScore));
-    }
-  });
-
-  // Add baseline updates for demonstration (simulating time decay effects)
-  if (Object.keys(updates).length < 3) {
-    const randomDimensions = ['0067', '0069', '006C', '006D', '0070'];
-    randomDimensions.forEach(dim => {
-      if (Math.random() > 0.6) {
-        // Simulated algorithm baseline calculation
-        updates[dim] = Math.round(128 + (Math.random() - 0.5) * 40);
-      }
-    });
-  }
-
-  return updates;
 };
