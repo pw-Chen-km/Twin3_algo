@@ -338,7 +338,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
               <textarea
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                placeholder="描述您的體驗或活動... 例如：我今天帶領學弟妹完成了一篇論文"
+                placeholder="描述您的體驗或活動..."
                 className="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-gray-900 dark:text-gray-100 transition-colors"
                 rows={2}
                 disabled={isProcessing}
