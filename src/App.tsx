@@ -6,8 +6,9 @@ import ProcessingPipeline from './components/ProcessingPipeline';
 import MatrixVisualization from './components/MatrixVisualization';
 import ActivityFeed from './components/ActivityFeed';
 import PerformanceDashboard from './components/PerformanceDashboard';
+import AlgorithmSteps from './components/AlgorithmSteps';
 import { ProcessingState, UserContent, MatrixUpdate, DimensionHistory } from './types';
-import { mockProcessContent } from './utils/mockProcessor';
+import { processContentWithTwin3Algorithm } from './utils/twin3Processor';
 
 function App() {
   const [selectedUser, setSelectedUser] = useState<number>(1);
@@ -18,16 +19,28 @@ function App() {
   const [activityLog, setActivityLog] = useState<any[]>([]);
   const [isAutoProcess, setIsAutoProcess] = useState(true);
   const [processingSpeed, setProcessingSpeed] = useState(1);
+  const [currentAlgorithmStep, setCurrentAlgorithmStep] = useState<string>('');
+  const [algorithmResults, setAlgorithmResults] = useState<any>(null);
 
   const handleContentSubmit = async (content: UserContent) => {
     if (processingState === 'processing') return;
     
     setCurrentContent(content);
     setProcessingState('processing');
+    setCurrentAlgorithmStep('msmm');
+    setAlgorithmResults(null);
     
     try {
-      // Simulate processing with the mock processor
-      const result = await mockProcessContent(content, processingSpeed, matrixData);
+      // Process with real Twin3 algorithm
+      const result = await processContentWithTwin3Algorithm(
+        content, 
+        processingSpeed, 
+        matrixData,
+        (step: string, data: any) => {
+          setCurrentAlgorithmStep(step);
+          setAlgorithmResults(data);
+        }
+      );
       
       // Update matrix data and track changes
       const previousMatrix = { ...matrixData };
@@ -82,6 +95,7 @@ function App() {
           updates: result.matrixUpdates,
           metaTags: result.metaTags,
           processingTime: result.processingTime,
+          algorithmSteps: result.algorithmSteps,
           changes: Object.entries(result.matrixUpdates).map(([dimId, newScore]) => ({
             dimensionId: dimId,
             previousScore: previousMatrix[dimId] || 128,
@@ -98,6 +112,8 @@ function App() {
       setTimeout(() => {
         setProcessingState('idle');
         setCurrentContent(null);
+        setCurrentAlgorithmStep('');
+        setAlgorithmResults(null);
       }, 2000);
       
     } catch (error) {
@@ -134,6 +150,13 @@ function App() {
               onAutoProcessChange={setIsAutoProcess}
               processingSpeed={processingSpeed}
               onSpeedChange={setProcessingSpeed}
+            />
+            
+            {/* Algorithm Steps Display */}
+            <AlgorithmSteps
+              currentStep={currentAlgorithmStep}
+              results={algorithmResults}
+              isProcessing={processingState === 'processing'}
             />
           </div>
           

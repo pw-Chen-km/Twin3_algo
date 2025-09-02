@@ -61,6 +61,8 @@ export interface CalculationDetails {
     contribution: number;
     description: string;
   }>;
+  strategy: string;
+  updateCount: number;
 }
 
 export interface DimensionUpdate {

@@ -337,13 +337,16 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                         <div className="bg-accent/10 p-4 rounded-lg">
                           <h5 className="font-semibold mb-2 flex items-center">
                             <Zap className="w-4 h-4 mr-2" />
-                            ULTU 分數平滑公式
+                            Twin3 ULTU 分數平滑公式
                           </h5>
                           <div className="font-mono text-sm bg-background p-3 rounded border mb-2">
-                            新分數 = α × Gemini評分 + (1-α) × 前次分數
+                            新分數 = α × Gemini評分 + (1-α) × 前次分數 (α={latestUpdate.calculationDetails.smoothingFactor})
                           </div>
                           <div className="font-mono text-sm bg-primary/10 p-3 rounded border">
                             {latestUpdate.newScore} = {latestUpdate.calculationDetails.smoothingFactor} × {latestUpdate.calculationDetails.geminiRawScore} + {1-latestUpdate.calculationDetails.smoothingFactor} × {latestUpdate.calculationDetails.previousScore}
+                          </div>
+                          <div className="text-xs text-muted-foreground mt-2">
+                            更新策略: {latestUpdate.calculationDetails.strategy} | 第 {latestUpdate.calculationDetails.updateCount} 次更新
                           </div>
                         </div>
 
@@ -354,18 +357,21 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                             <div className="flex-1">
                               <div className="font-medium">MSMM 語意匹配</div>
                               <div className="text-sm text-muted-foreground">
-                                相似度: {(latestUpdate.calculationDetails.msmmSimilarity * 100).toFixed(1)}% | 
+                                語意相似度: {(latestUpdate.calculationDetails.msmmSimilarity * 100).toFixed(1)}% | 
                                 匹配標籤: {latestUpdate.calculationDetails.matchedMetaTags.join(', ') || '無'}
                               </div>
+                            </div>
+                            <div className="text-sm font-bold text-blue-400">
+                              {(latestUpdate.calculationDetails.msmmSimilarity * 100).toFixed(1)}%
                             </div>
                           </div>
                           
                           <div className="flex items-center space-x-4 p-3 bg-secondary rounded-lg">
                             <div className="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
                             <div className="flex-1">
-                              <div className="font-medium">Gemini AI 評分</div>
+                              <div className="font-medium">Gemini 2.5 Flash AI 評分</div>
                               <div className="text-sm text-muted-foreground">
-                                原始評分: {latestUpdate.calculationDetails.geminiRawScore}/255 (基準128 + 相關性加分)
+                                AI原始評分: {latestUpdate.calculationDetails.geminiRawScore}/255 | 基準分數: 128
                               </div>
                             </div>
                             <div className="text-lg font-bold text-green-400">{latestUpdate.calculationDetails.geminiRawScore}</div>
@@ -376,7 +382,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                             <div className="flex-1">
                               <div className="font-medium">ULTU 分數平滑</div>
                               <div className="text-sm text-muted-foreground">
-                                平滑係數 α = {latestUpdate.calculationDetails.smoothingFactor} | 前次分數: {latestUpdate.calculationDetails.previousScore}
+                                策略: {latestUpdate.calculationDetails.strategy} | α = {latestUpdate.calculationDetails.smoothingFactor} | 前次: {latestUpdate.calculationDetails.previousScore}
                               </div>
                             </div>
                             <div className="text-lg font-bold text-primary">{latestUpdate.newScore}</div>
@@ -386,7 +392,10 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                         {/* Relevance Factors */}
                         {latestUpdate.calculationDetails.relevanceFactors.length > 0 && (
                           <div className="bg-muted/50 p-4 rounded-lg">
-                            <h5 className="font-semibold mb-3">評分因子分析</h5>
+                            <h5 className="font-semibold mb-3 flex items-center">
+                              <Calculator className="w-4 h-4 mr-2" />
+                              Gemini AI 評分因子分析
+                            </h5>
                             <div className="space-y-2">
                               {latestUpdate.calculationDetails.relevanceFactors.map((factor, index) => (
                                 <div key={index} className="flex items-center justify-between p-2 bg-background rounded">
@@ -397,6 +406,12 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                                   <div className="text-sm font-bold text-primary">+{factor.contribution}</div>
                                 </div>
                               ))}
+                            </div>
+                            <div className="mt-3 pt-3 border-t border-border/50">
+                              <div className="text-xs text-muted-foreground">
+                                總加分: +{latestUpdate.calculationDetails.relevanceFactors.reduce((sum, f) => sum + f.contribution, 0)} 
+                                | 最終Gemini評分: {latestUpdate.calculationDetails.geminiRawScore}/255
+                              </div>
                             </div>
                           </div>
                         )}
