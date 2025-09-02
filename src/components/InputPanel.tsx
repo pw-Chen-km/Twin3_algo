@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Send, Image, Settings, Play, Pause, Zap } from 'lucide-react';
 import { UserContent } from '../types';
+import { useLanguage } from '../hooks/useLanguage';
+import { useTranslation } from '../utils/translations';
 
 interface InputPanelProps {
   onContentSubmit: (content: UserContent) => void;
@@ -19,6 +21,8 @@ const InputPanel: React.FC<InputPanelProps> = ({
   processingSpeed,
   onSpeedChange
 }) => {
+  const { language } = useLanguage();
+  const t = useTranslation(language);
   const [text, setText] = useState('');
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -60,10 +64,47 @@ const InputPanel: React.FC<InputPanelProps> = ({
   };
 
   const quickExamples = [
-    "我今天帶領學弟妹完成了一篇論文，還順便去吃了有名的台式早餐慶祝。",
-    "參加了環保市集，學習如何減少碳足跡，買了一些永續產品。",
-    "在健身房進行了高強度間歇訓練，然後和朋友們一起享用健康晚餐。"
+    getQuickExample(language, 'academic'),
+    getQuickExample(language, 'environmental'),
+    getQuickExample(language, 'fitness')
   ];
+
+  // 快速範例生成函數
+  const getQuickExample = (lang: string, type: string): string => {
+    const examples = {
+      'en': {
+        academic: "I led my juniors to complete a research paper and celebrated with a famous Taiwanese breakfast.",
+        environmental: "Participated in an eco-market, learned how to reduce carbon footprint, and bought some sustainable products.",
+        fitness: "Did high-intensity interval training at the gym, then enjoyed a healthy dinner with friends."
+      },
+      'zh-CN': {
+        academic: "我今天带领学弟妹完成了一篇论文，还顺便去吃了有名的台式早餐庆祝。",
+        environmental: "参加了环保市集，学习如何减少碳足迹，买了一些永续产品。",
+        fitness: "在健身房进行了高强度间歇训练，然后和朋友们一起享用健康晚餐。"
+      },
+      'ja': {
+        academic: "今日、後輩たちと一緒に論文を完成させ、有名な台湾式朝食を食べてお祝いしました。",
+        environmental: "エコマーケットに参加し、カーボンフットプリントを減らす方法を学び、持続可能な製品を購入しました。",
+        fitness: "ジムで高強度インターバルトレーニングを行い、その後友達と健康的な夕食を楽しみました。"
+      },
+      'ko': {
+        academic: "오늘 후배들과 함께 논문을 완성하고 유명한 대만식 아침식사로 축하했습니다.",
+        environmental: "환경 시장에 참여하여 탄소 발자국을 줄이는 방법을 배우고 지속 가능한 제품을 구입했습니다.",
+        fitness: "체육관에서 고강도 인터벌 트레이닝을 하고 친구들과 건강한 저녁을 즐겼습니다."
+      },
+      'es': {
+        academic: "Hoy dirigí a mis compañeros menores para completar un artículo de investigación y celebramos con un famoso desayuno taiwanés.",
+        environmental: "Participé en un mercado ecológico, aprendí cómo reducir la huella de carbono y compré algunos productos sostenibles.",
+        fitness: "Hice entrenamiento de intervalos de alta intensidad en el gimnasio, luego disfruté de una cena saludable con amigos."
+      },
+      'zh-TW': {
+        academic: "我今天帶領學弟妹完成了一篇論文，還順便去吃了有名的台式早餐慶祝。",
+        environmental: "參加了環保市集，學習如何減少碳足跡，買了一些永續產品。",
+        fitness: "在健身房進行了高強度間歇訓練，然後和朋友們一起享用健康晚餐。"
+      }
+    };
+    return examples[lang]?.[type] || examples['zh-TW'][type];
+  };
 
   return (
     <div className="space-y-4">
@@ -80,18 +121,18 @@ const InputPanel: React.FC<InputPanelProps> = ({
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="分享您今天的體驗或活動... 例如：我今天帶領學弟妹完成了一篇論文，還順便去吃了有名的台式早餐慶祝。"
+              placeholder={t.input.placeholder}
               className="w-full h-32 px-3 py-2 bg-input border border-border rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-primary"
               disabled={isProcessing}
             />
             <div className="text-xs text-muted-foreground mt-1">
-              {text.length}/500 characters
+              {text.length}/500 {t.input.characterCount}
             </div>
           </div>
 
           {/* Image Upload */}
           <div>
-            <label className="block text-sm font-medium mb-2">Image (Optional)</label>
+            <label className="block text-sm font-medium mb-2">{t.input.uploadImage}</label>
             <div className="space-y-2">
               <input
                 ref={fileInputRef}
@@ -110,8 +151,8 @@ const InputPanel: React.FC<InputPanelProps> = ({
                 >
                   <div className="text-center">
                     <Image className="w-6 h-6 mx-auto mb-1 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">上傳圖片或視頻</span>
-                    <span className="text-xs text-muted-foreground block">支援多模態AI分析</span>
+                    <span className="text-sm text-muted-foreground">{t.input.uploadImage}</span>
+                    <span className="text-xs text-muted-foreground block">{t.input.uploadSupport}</span>
                   </div>
                 </button>
               ) : (
@@ -143,14 +184,14 @@ const InputPanel: React.FC<InputPanelProps> = ({
             className="w-full bg-primary text-primary-foreground py-3 px-4 rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 transition-all transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
           >
             <Send className="w-4 h-4" />
-            <span>{isProcessing ? '🤖 AI 分析中...' : '🚀 開始 Twin3 + AI 分析'}</span>
+            <span>{isProcessing ? t.input.processingButton : t.input.submitButton}</span>
           </button>
         </form>
       </div>
 
       {/* Quick Examples */}
       <div className="bg-card rounded-lg border border-border p-4">
-        <h4 className="text-sm font-medium mb-3">快速範例</h4>
+        <h4 className="text-sm font-medium mb-3">{t.input.quickExamples}</h4>
         <div className="space-y-2">
           {quickExamples.map((example, index) => (
             <button
@@ -169,12 +210,12 @@ const InputPanel: React.FC<InputPanelProps> = ({
       <div className="bg-card rounded-lg border border-border p-4">
         <h4 className="text-sm font-medium mb-3 flex items-center">
           <Settings className="w-4 h-4 mr-2" />
-          系統設定
+          {t.input.systemSettings}
         </h4>
         
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-sm">自動處理</span>
+            <span className="text-sm">{t.input.autoProcess}</span>
             <button
               onClick={() => onAutoProcessChange(!isAutoProcess)}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
@@ -191,7 +232,7 @@ const InputPanel: React.FC<InputPanelProps> = ({
           
           <div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm">動畫速度</span>
+              <span className="text-sm">{t.input.animationSpeed}</span>
               <span className="text-xs text-muted-foreground">{processingSpeed}x</span>
             </div>
             <input

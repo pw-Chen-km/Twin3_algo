@@ -402,6 +402,42 @@ Emoción: [Estado emocional]
           learning: "Ansioso por Aprender",
           environmental: "Responsabilidad Social"
         }
+      },
+      'ja': {
+        default: "この意味のある体験をシェアしていただき、ありがとうございます！",
+        achievement: "この成果おめでとうございます！あなたの努力と継続は称賛に値します。",
+        learning: "素晴らしい学習体験ですね！継続的な学習は個人の成長の鍵です。",
+        environmental: "環境と社会への関心は素晴らしいです！これらの行動はとても意義があります。",
+        emotionalTones: {
+          default: "前向きで積極的",
+          achievement: "達成感に満ちている",
+          learning: "学習意欲旺盛",
+          environmental: "社会責任感"
+        }
+      },
+      'ko': {
+        default: "이 의미 있는 경험을 공유해 주셔서 감사합니다!",
+        achievement: "이 성취를 축하드립니다! 당신의 노력과 끈기는 칭찬받을 만합니다.",
+        learning: "훌륭한 학습 경험이네요! 지속적인 학습은 개인 성장의 열쇠입니다.",
+        environmental: "환경과 사회에 대한 관심이 존경스럽습니다! 이러한 행동들은 매우 의미가 있습니다.",
+        emotionalTones: {
+          default: "긍정적이고 적극적",
+          achievement: "성취감 충만",
+          learning: "학습 욕구 왕성",
+          environmental: "사회적 책임감"
+        }
+      },
+      'es': {
+        default: "¡Gracias por compartir esta experiencia tan significativa!",
+        achievement: "¡Felicidades por este logro! Tu esfuerzo y persistencia son admirables.",
+        learning: "¡Excelente experiencia de aprendizaje! El aprendizaje continuo es clave para el crecimiento personal.",
+        environmental: "¡Tu preocupación por el medio ambiente y la sociedad es admirable! Estas acciones son muy significativas.",
+        emotionalTones: {
+          default: "Positivo y Activo",
+          achievement: "Sensación de Logro",
+          learning: "Ansioso por Aprender",
+          environmental: "Responsabilidad Social"
+        }
       }
     };
     
