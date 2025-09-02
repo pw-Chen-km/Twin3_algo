@@ -134,9 +134,6 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
                         )}
                       </div>
                     )}
-    </div>
-  );
-};
 
                     {step.id === 'complete' && results.totalUpdates && (
                       <div className="space-y-1">
@@ -177,4 +174,8 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
           </motion.div>
         )}
       </div>
+    </div>
+  );
+};
+
 export default AlgorithmSteps;
