@@ -75,28 +75,27 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities, processingState
                   </div>
                 )}
 
-                {/* Update Summary */}
-                <div className="flex items-center justify-between text-xs">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-muted-foreground">
-                      {summary.total} dimensions updated
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    {summary.increases > 0 && (
-                      <span className="flex items-center text-green-400">
-                        <TrendingUp className="w-3 h-3 mr-1" />
-                        {summary.increases}
-                      </span>
+                {/* Detailed Changes */}
+                {activity.changes && activity.changes.length > 0 && (
+                  <div className="space-y-1 mb-2">
+                    {activity.changes.slice(0, 3).map((change, index) => (
+                      <div key={index} className="flex items-center justify-between text-xs">
+                        <span className="text-muted-foreground font-mono">{change.dimensionId}</span>
+                        <div className="flex items-center space-x-1">
+                          <span className="font-mono">{change.previousScore} → {change.newScore}</span>
+                          <span className={`font-bold ${change.change > 0 ? 'text-green-400' : change.change < 0 ? 'text-red-400' : 'text-gray-400'}`}>
+                            {change.change > 0 ? '+' : ''}{change.change}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                    {activity.changes.length > 3 && (
+                      <div className="text-xs text-muted-foreground text-center">
+                        +{activity.changes.length - 3} more changes
+                      </div>
                     )}
-                    {summary.decreases > 0 && (
-                      <span className="flex items-center text-red-400">
-                        <TrendingDown className="w-3 h-3 mr-1" />
-                        {summary.decreases}
-                      </span>
-                    )}
                   </div>
-                </div>
+                )}
               </motion.div>
             );
           })}
