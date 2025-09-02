@@ -42,11 +42,14 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities, processingState
                 className="p-3 bg-gray-50 rounded-lg border border-gray-200"
               >
                 <div className="flex items-start justify-between mb-2">
+                  <span className="text-xs text-gray-500">
                     {formatTime(activity.timestamp)}
                   </span>
                   <div className="flex items-center space-x-1">
                     {activity.image && <Image className="w-3 h-3 text-muted-foreground" />}
+                    <span className="text-xs text-gray-500">
                       {activity.processingTime}ms
+                    </span>
                     </span>
                   <span className="text-sm text-gray-600">AI 正在分析...</span>
                 </div>
