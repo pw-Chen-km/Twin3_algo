@@ -174,70 +174,73 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
               </p>
             </div>
             
-            {/* 列標籤 */}
-            <div className="flex justify-center mb-2">
-              <div className="grid grid-cols-17 gap-1 items-center">
-                <div></div> {/* 空白角落 */}
-                {Array.from({length: 16}, (_, i) => (
-                  <div key={i} className="text-xs text-gray-500 dark:text-gray-400 text-center font-mono w-6">
-                    {i.toString(16).toUpperCase()}
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* 矩陣主體 */}
-            <div className="flex justify-center">
-              <div className="grid grid-cols-17 gap-1">
-                {Array.from({length: 16}, (_, row) => (
-                  <React.Fragment key={row}>
-                    {/* 行標籤 */}
-                    <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center justify-center font-mono h-6">
-                      {row.toString(16).toUpperCase()}0
+            {/* 完整256維度矩陣 */}
+            <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700">
+              {/* 列標籤 */}
+              <div className="flex justify-center mb-2">
+                <div className="grid gap-1" style={{ gridTemplateColumns: 'auto repeat(16, 1fr)' }}>
+                  <div className="w-8"></div> {/* 空白角落 */}
+                  {Array.from({length: 16}, (_, i) => (
+                    <div key={i} className="text-xs text-gray-500 dark:text-gray-400 text-center font-mono w-8 h-6 flex items-center justify-center">
+                      {i.toString(16).toUpperCase()}
                     </div>
-                    
-                    {/* 該行的16個維度 */}
-                    {Array.from({length: 16}, (_, col) => {
-                      const index = row * 16 + col;
-                      const hexAddress = index.toString(16).toUpperCase().padStart(4, '0');
-                      const score = matrixData[hexAddress] || 128;
-                      const isActive = matrixData.hasOwnProperty(hexAddress);
-                      const history = dimensionHistory[hexAddress];
+                  ))}
+                </div>
+              </div>
+              
+              {/* 矩陣主體 */}
+              <div className="flex justify-center">
+                <div className="grid gap-1" style={{ gridTemplateColumns: 'auto repeat(16, 1fr)' }}>
+                  {Array.from({length: 16}, (_, row) => (
+                    <React.Fragment key={row}>
+                      {/* 行標籤 */}
+                      <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center justify-center font-mono w-8 h-8">
+                        {row.toString(16).toUpperCase()}0
+                      </div>
                       
-                      return (
-                        <motion.div
-                          key={hexAddress}
-                          className={`w-6 h-6 rounded border border-gray-300 dark:border-gray-600 flex items-center justify-center text-xs font-bold cursor-pointer transition-all duration-200 ${getScoreColor(score)}`}
-                          style={{ 
-                            opacity: isActive ? getScoreIntensity(score) : 0.3,
-                          }}
-                          whileHover={{ 
-                            scale: 1.5,
-                            zIndex: 20
-                          }}
-                          onClick={() => setShowDetailModal(hexAddress)}
-                          title={`${hexAddress}: ${getDimensionName(hexAddress)} (${score}/255)`}
-                        >
-                          <span className="text-white text-xs font-bold drop-shadow">
-                            {score.toString(16).toUpperCase().padStart(2, '0')}
-                          </span>
-                          
-                          {/* 活躍指示器 */}
-                          {isActive && (
-                            <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full border border-gray-400"></div>
-                          )}
-                          
-                          {/* 更新次數指示器 */}
-                          {history && history.totalUpdates > 0 && (
-                            <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
-                              {history.totalUpdates > 9 ? '9+' : history.totalUpdates}
-                            </div>
-                          )}
-                        </motion.div>
-                      );
-                    })}
-                  </React.Fragment>
-                ))}
+                      {/* 該行的16個維度 */}
+                      {Array.from({length: 16}, (_, col) => {
+                        const index = row * 16 + col;
+                        const hexAddress = index.toString(16).toUpperCase().padStart(4, '0');
+                        const score = matrixData[hexAddress] || 128;
+                        const isActive = matrixData.hasOwnProperty(hexAddress);
+                        const history = dimensionHistory[hexAddress];
+                        
+                        return (
+                          <motion.div
+                            key={hexAddress}
+                            className={`w-8 h-8 rounded border-2 border-gray-300 dark:border-gray-600 flex items-center justify-center text-xs font-bold cursor-pointer transition-all duration-200 relative ${getScoreColor(score)}`}
+                            style={{ 
+                              opacity: isActive ? Math.max(0.7, getScoreIntensity(score)) : 0.4,
+                            }}
+                            whileHover={{ 
+                              scale: 1.3,
+                              zIndex: 20
+                            }}
+                            onClick={() => setShowDetailModal(hexAddress)}
+                            title={`${hexAddress}: ${getDimensionName(hexAddress)} (${score}/255)`}
+                          >
+                            <span className="text-white text-xs font-bold drop-shadow">
+                              {score.toString(16).toUpperCase().padStart(2, '0')}
+                            </span>
+                            
+                            {/* 活躍指示器 */}
+                            {isActive && (
+                              <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full border border-gray-400"></div>
+                            )}
+                            
+                            {/* 更新次數指示器 */}
+                            {history && history.totalUpdates > 0 && (
+                              <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                                {history.totalUpdates > 9 ? '9+' : history.totalUpdates}
+                              </div>
+                            )}
+                          </motion.div>
+                        );
+                      })}
+                    </React.Fragment>
+                  ))}
+                </div>
               </div>
             </div>
             
