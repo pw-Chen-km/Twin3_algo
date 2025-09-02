@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Grid, Filter, TrendingUp, TrendingDown, Minus, Info } from 'lucide-react';
+import { Grid, Filter, TrendingUp, TrendingDown, Minus, Info, X, Calculator, Brain, Zap } from 'lucide-react';
 import { ProcessingState } from '../types';
 
 interface MatrixVisualizationProps {
@@ -12,6 +12,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [selectedDimension, setSelectedDimension] = useState<string | null>(null);
+  const [showDetailModal, setShowDetailModal] = useState<string | null>(null);
 
   // Mock dimension names mapping (in real app this would come from metadata)
   const dimensionNames: Record<string, string> = {
@@ -69,6 +70,32 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
   const getDimensionName = (attrId: string) => {
     return dimensionNames[attrId] || `Dimension ${attrId}`;
   };
+
+  const getCalculationDetails = (attrId: string, score: number) => {
+    // Mock calculation process details - in real app this would come from ULTU processor
+    const baseScore = 128;
+    const geminiRawScore = Math.round(score / 0.7); // Reverse engineer raw score
+    const smoothingFactor = 0.3;
+    const timeDecayFactor = 0.95;
+    
+    return {
+      geminiRawScore,
+      baseScore,
+      smoothingFactor,
+      timeDecayFactor,
+      finalScore: score,
+      formula: `新分數 = α × Gemini評分 + (1-α) × 舊分數`,
+      calculation: `${score} = ${smoothingFactor} × ${geminiRawScore} + ${1-smoothingFactor} × ${baseScore}`,
+      metaTags: ['學習', '成就感', '團隊合作'], // Mock meta tags
+      matchingProcess: [
+        { step: 'Meta-Tag提取', result: '學習, 成就感, 團隊合作', confidence: 0.92 },
+        { step: '語意匹配', result: `與維度${attrId}相似度: 0.85`, confidence: 0.85 },
+        { step: 'Gemini評分', result: `原始分數: ${geminiRawScore}`, confidence: 0.88 },
+        { step: '分數平滑', result: `最終分數: ${score}`, confidence: 1.0 }
+      ]
+    };
+  };
+
   return (
     <div className="bg-card rounded-lg border border-border p-6">
       <div className="flex items-center justify-between mb-4">
@@ -140,7 +167,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                   opacity: getScoreIntensity(score),
                 }}
                 whileHover={{ scale: 1.05, zIndex: 10 }}
-                onClick={() => setSelectedDimension(selectedDimension === attrId ? null : attrId)}
+                onClick={() => setShowDetailModal(attrId)}
                 animate={processingState === 'processing' ? { 
                   scale: [1, 1.05, 1],
                   opacity: [getScoreIntensity(score), 0.8, getScoreIntensity(score)]
@@ -215,37 +242,162 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
         </div>
       )}
 
-      {/* Selected Dimension Detail */}
-      {selectedDimension && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-4 p-4 bg-primary/10 border border-primary/20 rounded-lg"
-        >
-          <h4 className="font-semibold mb-2">維度詳細資訊 (Dimension Details)</h4>
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <div>
-              <span className="text-muted-foreground">維度ID:</span>
-              <span className="ml-2 font-mono font-bold">{selectedDimension}</span>
-            </div>
-            <div>
-              <span className="text-muted-foreground">維度名稱:</span>
-              <span className="ml-2 font-medium">{getDimensionName(selectedDimension)}</span>
-            </div>
-            <div>
-              <span className="text-muted-foreground">演算法分數:</span>
-              <span className="ml-2 font-bold text-primary">{matrixData[selectedDimension]}/255</span>
-            </div>
-            <div>
-              <span className="text-muted-foreground">HEX值:</span>
-              <span className="ml-2 font-mono">0x{matrixData[selectedDimension].toString(16).toUpperCase().padStart(2, '0')}</span>
-            </div>
-          </div>
-          <div className="mt-3 text-xs text-muted-foreground">
-            💡 此分數由Twin3演算法基於用戶內容分析計算得出
-          </div>
-        </motion.div>
-      )}
+      {/* Detailed Dimension Modal */}
+      <AnimatePresence>
+        {showDetailModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowDetailModal(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="bg-card border border-border rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {(() => {
+                const score = matrixData[showDetailModal];
+                const dimensionName = getDimensionName(showDetailModal);
+                const details = getCalculationDetails(showDetailModal, score);
+                
+                return (
+                  <>
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-6">
+                      <div>
+                        <h3 className="text-xl font-bold">{dimensionName}</h3>
+                        <p className="text-muted-foreground font-mono">{showDetailModal}</p>
+                      </div>
+                      <button
+                        onClick={() => setShowDetailModal(null)}
+                        className="p-2 hover:bg-secondary rounded-lg transition-colors"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                    </div>
+
+                    {/* Score Display */}
+                    <div className="grid grid-cols-3 gap-4 mb-6">
+                      <div className="bg-primary/10 p-4 rounded-lg text-center">
+                        <div className="text-2xl font-bold text-primary">{score}</div>
+                        <div className="text-sm text-muted-foreground">演算法分數</div>
+                      </div>
+                      <div className="bg-secondary p-4 rounded-lg text-center">
+                        <div className="text-2xl font-bold font-mono">0x{score.toString(16).toUpperCase().padStart(2, '0')}</div>
+                        <div className="text-sm text-muted-foreground">HEX值</div>
+                      </div>
+                      <div className="bg-accent/10 p-4 rounded-lg text-center">
+                        <div className="text-2xl font-bold">{Math.round((score/255)*100)}%</div>
+                        <div className="text-sm text-muted-foreground">相對強度</div>
+                      </div>
+                    </div>
+
+                    {/* Calculation Process */}
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-semibold flex items-center">
+                        <Calculator className="w-5 h-5 mr-2 text-primary" />
+                        演算法計算過程
+                      </h4>
+                      
+                      {/* Processing Steps */}
+                      <div className="space-y-3">
+                        {details.matchingProcess.map((step, index) => (
+                          <div key={index} className="flex items-center space-x-4 p-3 bg-secondary rounded-lg">
+                            <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">
+                              {index + 1}
+                            </div>
+                            <div className="flex-1">
+                              <div className="font-medium">{step.step}</div>
+                              <div className="text-sm text-muted-foreground">{step.result}</div>
+                            </div>
+                            <div className="text-sm font-mono bg-primary/20 px-2 py-1 rounded">
+                              {Math.round(step.confidence * 100)}%
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* ULTU Formula */}
+                      <div className="bg-accent/10 p-4 rounded-lg">
+                        <h5 className="font-semibold mb-2 flex items-center">
+                          <Zap className="w-4 h-4 mr-2" />
+                          ULTU 分數平滑公式
+                        </h5>
+                        <div className="font-mono text-sm bg-background p-3 rounded border">
+                          {details.formula}
+                        </div>
+                        <div className="mt-2 text-sm text-muted-foreground">
+                          實際計算: {details.calculation}
+                        </div>
+                        <div className="mt-2 text-xs text-muted-foreground">
+                          α (平滑係數) = {details.smoothingFactor} | 時間衰減 = {details.timeDecayFactor}
+                        </div>
+                      </div>
+
+                      {/* Meta Tags Used */}
+                      <div className="bg-secondary/50 p-4 rounded-lg">
+                        <h5 className="font-semibold mb-2 flex items-center">
+                          <Brain className="w-4 h-4 mr-2" />
+                          相關 Meta-Tags
+                        </h5>
+                        <div className="flex flex-wrap gap-2">
+                          {details.metaTags.map((tag, index) => (
+                            <span
+                              key={index}
+                              className="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Technical Details */}
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div className="space-y-2">
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Gemini原始評分:</span>
+                            <span className="font-mono font-bold">{details.geminiRawScore}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">前次分數:</span>
+                            <span className="font-mono">{details.baseScore}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">平滑係數 (α):</span>
+                            <span className="font-mono">{details.smoothingFactor}</span>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">時間衰減:</span>
+                            <span className="font-mono">{details.timeDecayFactor}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">最終分數:</span>
+                            <span className="font-mono font-bold text-primary">{details.finalScore}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">分數變化:</span>
+                            <span className={`font-mono font-bold ${score > details.baseScore ? 'text-green-400' : score < details.baseScore ? 'text-red-400' : 'text-gray-400'}`}>
+                              {score > details.baseScore ? '+' : ''}{score - details.baseScore}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                );
+              })()}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Processing Overlay */}
       <AnimatePresence>
         {processingState === 'processing' && (
