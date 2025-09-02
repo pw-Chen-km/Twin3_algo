@@ -1,4 +1,4 @@
-import { UserContent, ProcessingResult, MetaTag } from '../types';
+import { UserContent, ProcessingResult, MetaTag, CalculationDetails } from '../types';
 
 // Real Twin3 algorithm simulation based on actual project code
 const TWIN3_METADATA = {
@@ -13,6 +13,12 @@ const TWIN3_METADATA = {
     definition: '對精神層面和內在成長的關注程度',
     meta_tags: ['精神', '內在', '成長', '覺察', '靈性'],
     encoding_rules: '基於精神實踐和自我反思的深度評分'
+  },
+  '006C': {
+    name: 'Emotional Intelligence',
+    definition: '理解和管理自己及他人情緒的能力',
+    meta_tags: ['情緒', '理解', '同理心', '溝通', '感受'],
+    encoding_rules: '基於情緒識別和管理能力評分'
   },
   '006C': {
     name: 'Dimension 006C',
@@ -111,31 +117,160 @@ const calculateSemanticSimilarity = (userTags: string[], dimensionTags: string[]
   return intersection.length / Math.max(union.length, 1);
 };
 
-// ULTU評分算法模擬
-const simulateULTU = (dimensionId: string, userContent: string, previousScore: number = 128): number => {
+// ULTU評分算法模擬（包含詳細計算過程）
+const simulateULTU = (dimensionId: string, userContent: string, previousScore: number = 128): { score: number, details: CalculationDetails } => {
   const dimension = TWIN3_METADATA[dimensionId];
-  if (!dimension) return 128;
+  if (!dimension) return { score: 128, details: null };
   
-  // 1. Gemini AI評分模擬（基於內容相關性）
-  let geminiRawScore = 128; // 基準分數
-  
+  // 1. MSMM語意匹配
   const textLower = userContent.toLowerCase();
+  const matchedMetaTags = dimension.meta_tags.filter(tag => textLower.includes(tag));
+  const msmmSimilarity = matchedMetaTags.length / dimension.meta_tags.length;
+  
+  // 2. Gemini AI評分模擬（基於內容相關性）
+  let geminiRawScore = 128; // 基準分數
+  const relevanceFactors = [];
+  
   let relevanceScore = 0;
   
-  // 計算與維度Meta-Tags的相關性
-  dimension.meta_tags.forEach(tag => {
-    if (textLower.includes(tag)) {
-      relevanceScore += 25; // 每個匹配的tag加25分
-    }
-  });
+  // Meta-Tags匹配加分
+  if (matchedMetaTags.length > 0) {
+    const tagBonus = matchedMetaTags.length * 25;
+    relevanceScore += tagBonus;
+    relevanceFactors.push({
+      factor: 'Meta-Tags匹配',
+      contribution: tagBonus,
+      description: `匹配${matchedMetaTags.length}個標籤: ${matchedMetaTags.join(', ')}`
+    });
+  }
   
   // 內容複雜度加分
-  if (userContent.length > 50) relevanceScore += 15;
-  if (userContent.length > 100) relevanceScore += 10;
+  if (userContent.length > 50) {
+    relevanceScore += 15;
+    relevanceFactors.push({
+      factor: '內容複雜度',
+      contribution: 15,
+      description: '內容長度超過50字符'
+    });
+  }
+  if (userContent.length > 100) {
+    relevanceScore += 10;
+    relevanceFactors.push({
+      factor: '內容深度',
+      contribution: 10,
+      description: '內容長度超過100字符'
+    });
+  }
   
   // 特殊關鍵詞加分（模擬Gemini的語意理解）
   const strongKeywords = ['帶領', '完成', '成功', '創新', '學習', '幫助'];
-  strongKeywords.forEach(keyword => {
+  const semanticMatches = strongKeywords.filter(keyword => textLower.includes(keyword));
+  if (semanticMatches.length > 0) {
+    const semanticBonus = semanticMatches.length * 20;
+    relevanceScore += semanticBonus;
+    relevanceFactors.push({
+      factor: '語意深度分析',
+      contribution: semanticBonus,
+      description: `識別關鍵行為: ${semanticMatches.join(', ')}`
+    });
+  }
+  
+  // 維度特定加分
+  if (dimensionId === '0071' && (textLower.includes('完成') || textLower.includes('成就'))) {
+    relevanceScore += 30;
+    relevanceFactors.push({
+      factor: '社會成就特定加分',
+      contribution: 30,
+      description: '內容體現明確的成就表現'
+    });
+  }
+  
+  if (dimensionId === '0048' && textLower.includes('帶領')) {
+    relevanceScore += 35;
+    relevanceFactors.push({
+      factor: '領導能力特定加分',
+      contribution: 35,
+      description: '內容體現領導行為'
+    });
+  }
+  
+  if (dimensionId === 'SP088' && (textLower.includes('環保') || textLower.includes('永續'))) {
+    relevanceScore += 40;
+    relevanceFactors.push({
+      factor: '社會責任特定加分',
+      contribution: 40,
+      description: '內容體現環保意識'
+    });
+  }
+  
+  geminiRawScore = Math.min(255, Math.max(0, 128 + relevanceScore));
+  
+  // 3. ULTU分數平滑（Twin3標準公式）
+  const alpha = 0.3; // Twin3標準平滑係數
+  const smoothedScore = Math.round(alpha * geminiRawScore + (1 - alpha) * previousScore);
+  
+  // 4. 時間衰減模擬
+  const timeDecayFactor = 0.98; // 輕微時間衰減
+  
+  const calculationDetails: CalculationDetails = {
+    msmmSimilarity,
+    geminiRawScore,
+    previousScore,
+    smoothingFactor: alpha,
+    timeDecayFactor,
+    finalScore: smoothedScore,
+    matchedMetaTags,
+    relevanceFactors
+  };
+  
+  return { 
+    score: Math.max(0, Math.min(255, smoothedScore)), 
+    details: calculationDetails 
+  };
+};
+
+// Mock processing function that simulates the Twin3 pipeline
+export const mockProcessContent = async (
+  content: UserContent, 
+  speed: number = 1, 
+  currentMatrix: Record<string, number> = {}
+): Promise<ProcessingResult & { calculationDetails: Record<string, CalculationDetails> }> => {
+  const baseDelay = 1000 / speed;
+  
+  // Simulate processing delay
+  await new Promise(resolve => setTimeout(resolve, baseDelay * 2));
+  
+  // 使用真實Twin3演算法模擬
+  const msmmResult = simulateMSMM(content.text);
+  
+  // 轉換為MetaTag格式
+  const metaTags: MetaTag[] = msmmResult.metaTags.map(tag => ({
+    tag,
+    confidence: 0.8 + Math.random() * 0.2
+  }));
+  
+  // 使用ULTU演算法計算分數（包含詳細計算過程）
+  const matrixUpdates: Record<string, number> = {};
+  const calculationDetails: Record<string, CalculationDetails> = {};
+  
+  msmmResult.matchedDimensions.forEach(dimId => {
+    const previousScore = currentMatrix[dimId] || 128; // 使用實際的前次分數
+    const result = simulateULTU(dimId, content.text, previousScore);
+    matrixUpdates[dimId] = result.score;
+    calculationDetails[dimId] = result.details;
+  });
+  
+  // Mock processing time
+  const processingTime = Math.round(800 + Math.random() * 400);
+  
+  return {
+    metaTags,
+    matrixUpdates,
+    processingTime,
+    matchedDimensions: msmmResult.matchedDimensions,
+    calculationDetails
+  };
+};
     if (textLower.includes(keyword)) {
       relevanceScore += 20;
     }

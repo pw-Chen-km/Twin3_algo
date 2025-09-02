@@ -34,10 +34,47 @@ export interface ActivityLogEntry {
   updates: Record<string, number>;
   metaTags: MetaTag[];
   processingTime: number;
+  changes: Array<{
+    dimensionId: string;
+    previousScore: number;
+    newScore: number;
+    change: number;
+  }>;
 }
 
 export interface DimensionCategory {
   name: string;
   color: string;
   attributes: string[];
+}
+
+export interface CalculationDetails {
+  msmmSimilarity: number;
+  geminiRawScore: number;
+  previousScore: number;
+  smoothingFactor: number;
+  timeDecayFactor: number;
+  finalScore: number;
+  matchedMetaTags: string[];
+  relevanceFactors: Array<{
+    factor: string;
+    contribution: number;
+    description: string;
+  }>;
+}
+
+export interface DimensionUpdate {
+  timestamp: string;
+  previousScore: number;
+  newScore: number;
+  change: number;
+  content: string;
+  calculationDetails: CalculationDetails | null;
+}
+
+export interface DimensionHistory {
+  updates: DimensionUpdate[];
+  totalUpdates: number;
+  firstSeen: string;
+  lastUpdated: string;
 }

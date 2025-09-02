@@ -6,7 +6,7 @@ import ProcessingPipeline from './components/ProcessingPipeline';
 import MatrixVisualization from './components/MatrixVisualization';
 import ActivityFeed from './components/ActivityFeed';
 import PerformanceDashboard from './components/PerformanceDashboard';
-import { ProcessingState, UserContent, MatrixUpdate } from './types';
+import { ProcessingState, UserContent, MatrixUpdate, DimensionHistory } from './types';
 import { mockProcessContent } from './utils/mockProcessor';
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
   const [processingState, setProcessingState] = useState<ProcessingState>('idle');
   const [currentContent, setCurrentContent] = useState<UserContent | null>(null);
   const [matrixData, setMatrixData] = useState<Record<string, number>>({});
+  const [dimensionHistory, setDimensionHistory] = useState<Record<string, DimensionHistory>>({});
   const [activityLog, setActivityLog] = useState<any[]>([]);
   const [isAutoProcess, setIsAutoProcess] = useState(true);
   const [processingSpeed, setProcessingSpeed] = useState(1);
@@ -26,13 +27,50 @@ function App() {
     
     try {
       // Simulate processing with the mock processor
-      const result = await mockProcessContent(content, processingSpeed);
+      const result = await mockProcessContent(content, processingSpeed, matrixData);
       
-      // Update matrix data
+      // Update matrix data and track changes
+      const previousMatrix = { ...matrixData };
       setMatrixData(prev => ({
         ...prev,
         ...result.matrixUpdates
       }));
+      
+      // Update dimension history with calculation details
+      setDimensionHistory(prev => {
+        const newHistory = { ...prev };
+        Object.entries(result.matrixUpdates).forEach(([dimId, newScore]) => {
+          const previousScore = previousMatrix[dimId] || 128;
+          const change = newScore - previousScore;
+          
+          if (!newHistory[dimId]) {
+            newHistory[dimId] = {
+              updates: [],
+              totalUpdates: 0,
+              firstSeen: new Date().toISOString(),
+              lastUpdated: new Date().toISOString()
+            };
+          }
+          
+          newHistory[dimId].updates.push({
+            timestamp: new Date().toISOString(),
+            previousScore,
+            newScore,
+            change,
+            content: content.text,
+            calculationDetails: result.calculationDetails?.[dimId] || null
+          });
+          
+          newHistory[dimId].totalUpdates += 1;
+          newHistory[dimId].lastUpdated = new Date().toISOString();
+          
+          // Keep only last 20 updates per dimension
+          if (newHistory[dimId].updates.length > 20) {
+            newHistory[dimId].updates = newHistory[dimId].updates.slice(-20);
+          }
+        });
+        return newHistory;
+      });
       
       // Add to activity log
       setActivityLog(prev => [
@@ -43,7 +81,13 @@ function App() {
           image: content.image,
           updates: result.matrixUpdates,
           metaTags: result.metaTags,
-          processingTime: result.processingTime
+          processingTime: result.processingTime,
+          changes: Object.entries(result.matrixUpdates).map(([dimId, newScore]) => ({
+            dimensionId: dimId,
+            previousScore: previousMatrix[dimId] || 128,
+            newScore,
+            change: newScore - (previousMatrix[dimId] || 128)
+          }))
         },
         ...prev.slice(0, 49) // Keep last 50 entries
       ]);
@@ -67,6 +111,7 @@ function App() {
     setSelectedUser(userId);
     // In a real app, this would load the user's matrix state
     setMatrixData({});
+    setDimensionHistory({});
     setActivityLog([]);
   };
 
@@ -103,6 +148,7 @@ function App() {
             <MatrixVisualization
               matrixData={matrixData}
               processingState={processingState}
+              dimensionHistory={dimensionHistory}
             />
           </div>
           
