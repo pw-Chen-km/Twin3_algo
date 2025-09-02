@@ -107,7 +107,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold flex items-center text-gray-900 dark:text-gray-100">
           <Grid className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />
-          twin3 Matrix Visualization
+          Twin Matrix Visualization
         </h3>
         
         <div className="flex items-center space-x-2">
@@ -161,164 +161,102 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
         ))}
       </div>
 
-      {/* 256維度矩陣視圖 */}
-      {viewMode === 'matrix256' && (
-        <div className="space-y-4">
-          <div className="text-center">
-            <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
-              完整256維度 twin3 Matrix (16x16 DNA位址映射)
-            </h4>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mb-4">
-              每個格子代表一個維度，位址格式為4位16進制 (0000-00FF)
-            </p>
-          </div>
-          
-          <div className="matrix-256-grid max-w-full overflow-auto">
-            {/* 列標籤 */}
-            <div className="col-span-16 grid grid-cols-16 gap-2 mb-2">
-              {Array.from({length: 16}, (_, i) => (
-                <div key={i} className="matrix-address-label text-center">
-                  {i.toString(16).toUpperCase()}
-                </div>
-              ))}
+      <div className="h-[calc(100%-200px)] overflow-auto">
+        {/* 256維度矩陣視圖 */}
+        {viewMode === 'matrix256' && (
+          <div className="space-y-4">
+            <div className="text-center">
+              <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                完整256維度 Twin Matrix (16x16 DNA位址映射)
+              </h4>
+              <p className="text-xs text-gray-600 dark:text-gray-400 mb-4">
+                每個格子代表一個維度，位址格式為4位16進制 (0000-00FF)
+              </p>
             </div>
             
-            {/* 矩陣內容 */}
-            {Array.from({length: 16}, (_, row) => (
-              <React.Fragment key={row}>
-                {/* 行標籤 */}
-                <div className="matrix-address-label flex items-center justify-center">
-                  {(row * 16).toString(16).toUpperCase().padStart(2, '0')}0
-                </div>
-                
-                {/* 該行的15個維度 */}
-                {Array.from({length: 15}, (_, col) => {
-                  const index = row * 16 + col + 1;
-                  const hexAddress = index.toString(16).toUpperCase().padStart(4, '0');
-                  const score = matrixData[hexAddress] || 128;
-                  const isActive = matrixData.hasOwnProperty(hexAddress);
-                  const history = dimensionHistory[hexAddress];
-                  
-                  return (
-                    <motion.div
-                      key={hexAddress}
-                      className={`matrix-cell-256 ${getScoreColor(score)} ${isActive ? 'active' : ''}`}
-                      style={{ 
-                        opacity: isActive ? getScoreIntensity(score) : 0.3,
-                      }}
-                      whileHover={{ 
-                        scale: 1.3,
-                        zIndex: 20
-                      }}
-                      onClick={() => setShowDetailModal(hexAddress)}
-                      title={`${hexAddress}: ${getDimensionName(hexAddress)} (${score}/255)`}
-                    >
-                      <span className="text-white text-xs font-bold">
-                        {score > 0 ? score.toString(16).toUpperCase() : '00'}
-                      </span>
-                      
-                      {/* 活躍指示器 */}
-                      {isActive && (
-                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full border border-gray-400"></div>
-                      )}
-                      
-                      {/* 更新次數指示器 */}
-                      {history && history.totalUpdates > 0 && (
-                        <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
-                          {history.totalUpdates > 9 ? '9+' : history.totalUpdates}
-                        </div>
-                      )}
-                    </motion.div>
-                  );
-                })}
-              </React.Fragment>
-            ))}
-          </div>
-          
-          <div className="text-xs text-gray-500 dark:text-gray-400 text-center space-y-1">
-            <p>💡 點擊任意維度查看詳細資訊</p>
-            <p>🎯 活躍維度有白色圓點標記，更新次數顯示在左下角</p>
-            <p>📊 顏色深度代表分數強度，16進制值顯示在格子中</p>
-          </div>
-        </div>
-      )}
-
-      {viewMode === 'grid' && (
-        /* Grid View */
-        <div className="grid grid-cols-4 gap-3">
-          {Object.entries(filteredData).map(([attrId, score]) => {
-            const category = Object.entries(categories).find(([_, cat]) => 
-              cat.attributes.some(catAttr => attrId.includes(catAttr))
-            );
-            const categoryColor = category?.[1].color || 'bg-gray-500';
-            const dimensionName = getDimensionName(attrId);
-            const latestChange = getLatestChange(attrId);
-            const history = dimensionHistory[attrId];
+            {/* 列標籤 */}
+            <div className="flex justify-center mb-2">
+              <div className="grid grid-cols-17 gap-1 items-center">
+                <div></div> {/* 空白角落 */}
+                {Array.from({length: 16}, (_, i) => (
+                  <div key={i} className="text-xs text-gray-500 dark:text-gray-400 text-center font-mono w-6">
+                    {i.toString(16).toUpperCase()}
+                  </div>
+                ))}
+              </div>
+            </div>
             
-            return (
-              <motion.div
-                key={attrId}
-                className={`matrix-cell rounded-lg border-2 border-gray-300 dark:border-gray-600 relative group cursor-pointer p-4 ${categoryColor} hover:border-blue-500 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300 transform hover:-translate-y-1`}
-                style={{ 
-                  opacity: getScoreIntensity(score),
-                }}
-                whileHover={{ 
-                  scale: 1.08, 
-                  zIndex: 10,
-                  boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)"
-                }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setShowDetailModal(attrId)}
-              >
-                <div className="text-center relative h-full flex flex-col justify-center">
-                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-white/20 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                  </div>
-                  
-                  <div className="text-2xl font-bold text-white drop-shadow-lg mb-2">
-                    {score}
-                  </div>
-                  {latestChange !== 0 && (
-                    <div className={`text-sm font-bold mb-2 px-2 py-1 rounded-full bg-white/30 ${latestChange > 0 ? 'text-green-200' : 'text-red-200'}`}>
-                      {latestChange > 0 ? '+' : ''}{latestChange}
+            {/* 矩陣主體 */}
+            <div className="flex justify-center">
+              <div className="grid grid-cols-17 gap-1">
+                {Array.from({length: 16}, (_, row) => (
+                  <React.Fragment key={row}>
+                    {/* 行標籤 */}
+                    <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center justify-center font-mono h-6">
+                      {row.toString(16).toUpperCase()}0
                     </div>
-                  )}
-                  <div className="text-sm text-white/90 font-bold mb-1">
-                    {attrId}
-                  </div>
-                  <div className="text-xs text-white/90 leading-tight font-medium">
-                    {dimensionName}
-                  </div>
-                  
-                  <div className="absolute inset-0 bg-white/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="text-sm text-white font-bold bg-black/50 px-3 py-2 rounded-lg shadow-lg">
-                      點擊查看詳情
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="absolute top-1 right-1">
-                  {history && history.totalUpdates > 0 && (
-                    <div className="bg-white/40 text-white text-sm px-2 py-1 rounded-full font-bold border border-white/30 shadow-lg">
-                      {history.totalUpdates}
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      )}
+                    
+                    {/* 該行的16個維度 */}
+                    {Array.from({length: 16}, (_, col) => {
+                      const index = row * 16 + col;
+                      const hexAddress = index.toString(16).toUpperCase().padStart(4, '0');
+                      const score = matrixData[hexAddress] || 128;
+                      const isActive = matrixData.hasOwnProperty(hexAddress);
+                      const history = dimensionHistory[hexAddress];
+                      
+                      return (
+                        <motion.div
+                          key={hexAddress}
+                          className={`w-6 h-6 rounded border border-gray-300 dark:border-gray-600 flex items-center justify-center text-xs font-bold cursor-pointer transition-all duration-200 ${getScoreColor(score)}`}
+                          style={{ 
+                            opacity: isActive ? getScoreIntensity(score) : 0.3,
+                          }}
+                          whileHover={{ 
+                            scale: 1.5,
+                            zIndex: 20
+                          }}
+                          onClick={() => setShowDetailModal(hexAddress)}
+                          title={`${hexAddress}: ${getDimensionName(hexAddress)} (${score}/255)`}
+                        >
+                          <span className="text-white text-xs font-bold drop-shadow">
+                            {score.toString(16).toUpperCase().padStart(2, '0')}
+                          </span>
+                          
+                          {/* 活躍指示器 */}
+                          {isActive && (
+                            <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full border border-gray-400"></div>
+                          )}
+                          
+                          {/* 更新次數指示器 */}
+                          {history && history.totalUpdates > 0 && (
+                            <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                              {history.totalUpdates > 9 ? '9+' : history.totalUpdates}
+                            </div>
+                          )}
+                        </motion.div>
+                      );
+                    })}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+            
+            <div className="text-xs text-gray-500 dark:text-gray-400 text-center space-y-1 mt-4">
+              <p>💡 點擊任意維度查看詳細資訊</p>
+              <p>🎯 活躍維度有白色圓點標記，更新次數顯示在左下角</p>
+              <p>📊 顏色深度代表分數強度，16進制值顯示在格子中</p>
+            </div>
+          </div>
+        )}
 
-      {viewMode === 'list' && (
-        /* List View */
-        <div className="space-y-2 max-h-96 overflow-y-auto">
-          {Object.entries(filteredData)
-            .sort(([,a], [,b]) => b - a)
-            .map(([attrId, score]) => {
+        {viewMode === 'grid' && (
+          /* Grid View */
+          <div className="grid grid-cols-4 gap-3">
+            {Object.entries(filteredData).map(([attrId, score]) => {
               const category = Object.entries(categories).find(([_, cat]) => 
                 cat.attributes.some(catAttr => attrId.includes(catAttr))
               );
+              const categoryColor = category?.[1].color || 'bg-gray-500';
               const dimensionName = getDimensionName(attrId);
               const latestChange = getLatestChange(attrId);
               const history = dimensionHistory[attrId];
@@ -326,48 +264,128 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
               return (
                 <motion.div
                   key={attrId}
-                  className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border-2 border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3 }}
+                  className={`matrix-cell rounded-lg border-2 border-gray-300 dark:border-gray-600 relative group cursor-pointer p-4 ${categoryColor} hover:border-blue-500 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300 transform hover:-translate-y-1`}
+                  style={{ 
+                    opacity: getScoreIntensity(score),
+                  }}
+                  whileHover={{ 
+                    scale: 1.08, 
+                    zIndex: 10,
+                    boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => setShowDetailModal(attrId)}
                 >
-                  <div className="flex items-center space-x-3">
-                    <div className={`w-3 h-3 rounded-full ${category?.[1].color || 'bg-gray-500'}`}></div>
-                    <div>
-                      <div className="font-mono text-sm font-semibold text-gray-900 dark:text-gray-100">{attrId}</div>
-                      <div className="text-xs text-gray-600 dark:text-gray-400">{dimensionName}</div>
-                      {history && (
-                        <div className="text-xs text-gray-500 dark:text-gray-500">
-                          更新 {history.totalUpdates} 次
-                        </div>
-                      )}
+                  <div className="text-center relative h-full flex flex-col justify-center">
+                    <div className="absolute -top-2 -right-2 w-4 h-4 bg-white/20 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
                     </div>
-                    {getChangeIcon(attrId)}
+                    
+                    <div className="text-2xl font-bold text-white drop-shadow-lg mb-2">
+                      {score}
+                    </div>
+                    {latestChange !== 0 && (
+                      <div className={`text-sm font-bold mb-2 px-2 py-1 rounded-full bg-white/30 ${latestChange > 0 ? 'text-green-200' : 'text-red-200'}`}>
+                        {latestChange > 0 ? '+' : ''}{latestChange}
+                      </div>
+                    )}
+                    <div className="text-sm text-white/90 font-bold mb-1">
+                      {attrId}
+                    </div>
+                    <div className="text-xs text-white/90 leading-tight font-medium">
+                      {dimensionName}
+                    </div>
+                    
+                    <div className="absolute inset-0 bg-white/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <div className="text-sm text-white font-bold bg-black/50 px-3 py-2 rounded-lg shadow-lg">
+                        點擊查看詳情
+                      </div>
+                    </div>
                   </div>
                   
-                  <div className="flex items-center space-x-2">
-                    <div className="w-24 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                      <motion.div
-                        className={`h-full ${getScoreColor(score)}`}
-                        initial={{ width: 0 }}
-                        animate={{ width: `${(score / 255) * 100}%` }}
-                        transition={{ duration: 0.5 }}
-                      />
-                    </div>
-                    <div className="text-right">
-                      <div className="font-mono text-sm font-bold text-gray-900 dark:text-gray-100">{score}</div>
-                      {latestChange !== 0 && (
-                        <div className={`text-xs font-bold ${latestChange > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                          {latestChange > 0 ? '+' : ''}{latestChange}
-                        </div>
-                      )}
-                      <div className="text-xs text-gray-500 dark:text-gray-500">/255</div>
-                    </div>
+                  <div className="absolute top-1 right-1">
+                    {history && history.totalUpdates > 0 && (
+                      <div className="bg-white/40 text-white text-sm px-2 py-1 rounded-full font-bold border border-white/30 shadow-lg">
+                        {history.totalUpdates}
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               );
             })}
+          </div>
+        )}
+
+        {viewMode === 'list' && (
+          /* List View */
+          <div className="space-y-2">
+            {Object.entries(filteredData)
+              .sort(([,a], [,b]) => b - a)
+              .map(([attrId, score]) => {
+                const category = Object.entries(categories).find(([_, cat]) => 
+                  cat.attributes.some(catAttr => attrId.includes(catAttr))
+                );
+                const dimensionName = getDimensionName(attrId);
+                const latestChange = getLatestChange(attrId);
+                const history = dimensionHistory[attrId];
+                
+                return (
+                  <motion.div
+                    key={attrId}
+                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border-2 border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3 }}
+                    onClick={() => setShowDetailModal(attrId)}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-3 h-3 rounded-full ${category?.[1].color || 'bg-gray-500'}`}></div>
+                      <div>
+                        <div className="font-mono text-sm font-semibold text-gray-900 dark:text-gray-100">{attrId}</div>
+                        <div className="text-xs text-gray-600 dark:text-gray-400">{dimensionName}</div>
+                        {history && (
+                          <div className="text-xs text-gray-500 dark:text-gray-500">
+                            更新 {history.totalUpdates} 次
+                          </div>
+                        )}
+                      </div>
+                      {getChangeIcon(attrId)}
+                    </div>
+                    
+                    <div className="flex items-center space-x-2">
+                      <div className="w-24 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                        <motion.div
+                          className={`h-full ${getScoreColor(score)}`}
+                          initial={{ width: 0 }}
+                          animate={{ width: `${(score / 255) * 100}%` }}
+                          transition={{ duration: 0.5 }}
+                        />
+                      </div>
+                      <div className="text-right">
+                        <div className="font-mono text-sm font-bold text-gray-900 dark:text-gray-100">{score}</div>
+                        {latestChange !== 0 && (
+                          <div className={`text-xs font-bold ${latestChange > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                            {latestChange > 0 ? '+' : ''}{latestChange}
+                          </div>
+                        )}
+                        <div className="text-xs text-gray-500 dark:text-gray-500">/255</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+          </div>
+        )}
+      </div>
+
+      {/* Empty State */}
+      {Object.keys(matrixData).length === 0 && (
+        <div className="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-400">
+          <Grid className="w-16 h-16 mb-4 opacity-50" />
+          <h4 className="text-lg font-semibold mb-2">Twin Matrix 等待中</h4>
+          <p className="text-sm text-center">
+            提交內容以開始分析並更新您的 256 維度特徵矩陣
+          </p>
         </div>
       )}
 
@@ -389,7 +407,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
               onClick={(e) => e.stopPropagation()}
             >
               {(() => {
-                const score = matrixData[showDetailModal];
+                const score = matrixData[showDetailModal] || 128;
                 const dimensionName = getDimensionName(showDetailModal);
                 const dimension = TWIN3_METADATA[showDetailModal];
                 const history = dimensionHistory[showDetailModal];
