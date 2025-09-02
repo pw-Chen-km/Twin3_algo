@@ -103,7 +103,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-lg border-2 border-gray-300 dark:border-gray-600 p-6 h-[calc(100vh-180px)] shadow-lg">
+    <div className="bg-white dark:bg-gray-900 rounded-lg border-2 border-gray-300 dark:border-gray-600 p-6 shadow-lg">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold flex items-center text-gray-900 dark:text-gray-100">
           <Grid className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />
@@ -161,7 +161,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
         ))}
       </div>
 
-      <div className="h-[calc(100%-200px)] overflow-auto">
+      <div>
         {/* 256維度矩陣視圖 */}
         {viewMode === 'matrix256' && (
           <div className="space-y-4">
@@ -175,7 +175,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
             </div>
             
             {/* Terminal風格256維度矩陣 */}
-            <div className="bg-black text-green-400 p-4 rounded-lg border-2 border-gray-600 font-mono text-xs overflow-auto max-h-96">
+            <div className="bg-black text-green-400 p-4 rounded-lg border-2 border-gray-600 font-mono text-xs">
               {/* Terminal Header */}
               <div className="text-green-300 mb-3 border-b border-green-600 pb-2">
                 <div className="flex items-center space-x-2">
@@ -260,7 +260,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
 
         {viewMode === 'grid' && (
           /* Grid View */
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-4 gap-3 max-h-96 overflow-auto">
             {Object.entries(filteredData).map(([attrId, score]) => {
               const category = Object.entries(categories).find(([_, cat]) => 
                 cat.attributes.some(catAttr => attrId.includes(catAttr))
@@ -327,7 +327,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
 
         {viewMode === 'list' && (
           /* List View */
-          <div className="space-y-2">
+          <div className="space-y-2 max-h-96 overflow-auto">
             {Object.entries(filteredData)
               .sort(([,a], [,b]) => b - a)
               .map(([attrId, score]) => {
