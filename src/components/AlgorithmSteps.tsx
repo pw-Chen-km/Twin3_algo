@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Zap, Database, CheckCircle, Clock, Tag, Calculator, TrendingUp, Brain, Activity, Cpu } from 'lucide-react';
+import { useLanguage } from '../hooks/useLanguage';
+import { useTranslation } from '../utils/translations';
 
 interface AlgorithmStepsProps {
   currentStep: string;
@@ -9,30 +11,48 @@ interface AlgorithmStepsProps {
 }
 
 const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, isProcessing }) => {
+  const { language } = useLanguage();
+  const t = useTranslation(language);
+
   const steps = [
     {
       id: 'msmm',
-      name: 'MSMM 語意匹配',
+      name: t.algorithm.msmm,
       icon: Search,
-      description: 'Gemini 2.5 Flash 提取Meta-Tags',
+      description: t.algorithm.msmmDesc,
       color: 'bg-blue-500',
-      details: 'AI分析文字和圖片內容，提取關鍵概念標籤'
+      details: language === 'en' ? 'AI analyzes text and image content, extracts key concept tags' :
+               language === 'zh-CN' ? 'AI分析文字和图片内容，提取关键概念标签' :
+               language === 'ja' ? 'AIがテキストと画像コンテンツを分析し、キーコンセプトタグを抽出' :
+               language === 'ko' ? 'AI가 텍스트와 이미지 콘텐츠를 분석하여 핵심 개념 태그를 추출' :
+               language === 'es' ? 'La IA analiza contenido de texto e imagen, extrae etiquetas de conceptos clave' :
+               'AI分析文字和圖片內容，提取關鍵概念標籤'
     },
     {
       id: 'ultu',
-      name: 'ULTU 動態評分',
+      name: t.algorithm.ultu,
       icon: Zap,
-      description: '精確評分與分數平滑',
+      description: t.algorithm.ultuDesc,
       color: 'bg-green-500',
-      details: '基於維度定義進行AI評分，應用智能平滑策略'
+      details: language === 'en' ? 'AI scoring based on dimension definitions, applies intelligent smoothing strategies' :
+               language === 'zh-CN' ? '基于维度定义进行AI评分，应用智能平滑策略' :
+               language === 'ja' ? '次元定義に基づくAIスコアリング、インテリジェント平滑化戦略を適用' :
+               language === 'ko' ? '차원 정의를 기반으로 한 AI 점수, 지능형 평활화 전략 적용' :
+               language === 'es' ? 'Puntuación de IA basada en definiciones de dimensiones, aplica estrategias de suavizado inteligente' :
+               '基於維度定義進行AI評分，應用智能平滑策略'
     },
     {
       id: 'complete',
-      name: '矩陣更新',
+      name: t.algorithm.matrixUpdate,
       icon: Database,
-      description: 'Twin Matrix狀態更新',
+      description: t.algorithm.matrixDesc,
       color: 'bg-purple-500',
-      details: '更新用戶的256維度特徵矩陣'
+      details: language === 'en' ? 'Updates user\'s 256-dimension feature matrix' :
+               language === 'zh-CN' ? '更新用户的256维度特征矩阵' :
+               language === 'ja' ? 'ユーザーの256次元特徴マトリックスを更新' :
+               language === 'ko' ? '사용자의 256차원 특성 매트릭스 업데이트' :
+               language === 'es' ? 'Actualiza la matriz de características de 256 dimensiones del usuario' :
+               '更新用戶的256維度特徵矩陣'
     }
   ];
 
@@ -49,10 +69,10 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
       <div className="text-green-300 mb-4 border-b border-green-600 pb-2">
         <div className="flex items-center space-x-2">
           <span className="text-green-500">●</span>
-          <span>twin3 Algorithm Engine [ACTIVE]</span>
+          <span>{t.algorithm.title}</span>
         </div>
         <div className="text-green-600 text-xs mt-1">
-          Process: MSMM → ULTU → Matrix Update | Status: {isProcessing ? 'RUNNING' : 'IDLE'}
+          Process: MSMM → ULTU → Matrix Update | {t.algorithm.status}: {isProcessing ? 'RUNNING' : 'IDLE'}
         </div>
       </div>
 
@@ -70,9 +90,9 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
                   status === 'complete' ? 'text-green-400' :
                   'text-gray-500'
                 }`}>
-                  {status === 'active' ? '[RUNNING]' :
-                   status === 'complete' ? '[COMPLETE]' :
-                   '[PENDING]'}
+                  {status === 'active' ? t.algorithm.running :
+                   status === 'complete' ? t.algorithm.complete :
+                   t.algorithm.pending}
                 </span>
                 <span className="text-green-300">{step.name}</span>
                 {status === 'active' && (
@@ -103,15 +123,15 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
                     {step.id === 'msmm' && results.metaTags && (
                       <div className="space-y-1">
                         <div className="text-cyan-400">
-                          ├─ Meta-Tags Extracted: {results.metaTags.length}
+                          ├─ {t.algorithm.extractedTags}: {results.metaTags.length}
                         </div>
                         <div className="text-green-500 ml-2">
                           └─ Tags: {results.metaTags.slice(0, 3).join(', ')}
-                          {results.metaTags.length > 3 && ` +${results.metaTags.length - 3} more`}
+                          {results.metaTags.length > 3 && ` +${results.metaTags.length - 3} ${t.common.more}`}
                         </div>
                         {results.matchedDimensions && (
                           <div className="text-yellow-400 ml-2">
-                          └─ Matched Dimensions: {results.matchedDimensions.length}
+                          └─ {t.algorithm.matchedDimensions}: {results.matchedDimensions.length}
                           </div>
                         )}
                       </div>
@@ -120,7 +140,7 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
                     {step.id === 'ultu' && results.updates && (
                       <div className="space-y-1">
                         <div className="text-cyan-400">
-                          ├─ Dimensions Updated: {Object.keys(results.updates).length}
+                          ├─ {t.algorithm.dimensionsUpdated}: {Object.keys(results.updates).length}
                         </div>
                         {Object.entries(results.updates).slice(0, 3).map(([dimId, score]: [string, any], idx: number) => (
                           <div key={dimId} className="text-green-500 ml-2">
@@ -129,7 +149,7 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
                         ))}
                         {Object.keys(results.updates).length > 3 && (
                           <div className="text-green-600 ml-2">
-                            └─ +{Object.keys(results.updates).length - 3} more updates
+                            └─ +{Object.keys(results.updates).length - 3} {t.common.more} {t.common.updates}
                           </div>
                         )}
                       </div>
@@ -138,10 +158,10 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
                     {step.id === 'complete' && results.totalUpdates && (
                       <div className="space-y-1">
                         <div className="text-cyan-400">
-                          ├─ Matrix Update Complete
+                          ├─ {t.algorithm.matrixUpdate} {t.algorithm.complete}
                         </div>
                         <div className="text-green-500 ml-2">
-                          └─ Total Updates: {results.totalUpdates} dimensions
+                          └─ {t.matrix.totalUpdates}: {results.totalUpdates} {t.performance.dimensions}
                         </div>
                       </div>
                     )}
@@ -169,7 +189,7 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
               animate={{ opacity: [1, 0.3, 1] }}
               transition={{ duration: 1, repeat: Infinity }}
             >
-              ▶ Processing user content with AI models...
+              {t.algorithm.processingContent}
             </motion.span>
           </motion.div>
         )}

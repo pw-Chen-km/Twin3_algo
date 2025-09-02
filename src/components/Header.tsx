@@ -2,6 +2,9 @@ import React from 'react';
 import { Brain, Users, Activity, AlertCircle, CheckCircle, Clock } from 'lucide-react';
 import { ProcessingState } from '../types';
 import ThemeToggle from './ThemeToggle';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useLanguage } from '../hooks/useLanguage';
+import { useTranslation } from '../utils/translations';
 
 interface HeaderProps {
   selectedUser: number;
@@ -10,6 +13,9 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ selectedUser, onUserChange, processingState }) => {
+  const { language } = useLanguage();
+  const t = useTranslation(language);
+
   const getStatusIcon = () => {
     switch (processingState) {
       case 'processing':
@@ -26,13 +32,13 @@ const Header: React.FC<HeaderProps> = ({ selectedUser, onUserChange, processingS
   const getStatusText = () => {
     switch (processingState) {
       case 'processing':
-        return 'Processing...';
+        return t.status.processing;
       case 'complete':
-        return 'Complete';
+        return t.status.complete;
       case 'error':
-        return 'Error';
+        return t.status.error;
       default:
-        return 'Ready';
+        return t.status.ready;
     }
   };
 
@@ -44,13 +50,14 @@ const Header: React.FC<HeaderProps> = ({ selectedUser, onUserChange, processingS
             <div className="flex items-center space-x-2">
               <Brain className="w-8 h-8 text-primary" />
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">twin3 Monitor</h1>
-                <p className="text-sm text-muted-foreground">Real-Time Processing Visualization</p>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{t.title}</h1>
+                <p className="text-sm text-muted-foreground">{t.subtitle}</p>
               </div>
             </div>
           </div>
           
           <div className="flex items-center space-x-6">
+            <LanguageSwitcher />
             <ThemeToggle />
             
             <div className="flex items-center space-x-2">
@@ -60,11 +67,11 @@ const Header: React.FC<HeaderProps> = ({ selectedUser, onUserChange, processingS
                 onChange={(e) => onUserChange(Number(e.target.value))}
                 className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-1 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
               >
-                <option value={1}>User 1</option>
-                <option value={2}>User 2</option>
-                <option value={3}>User 3</option>
-                <option value={4}>User 4</option>
-                <option value={5}>User 5</option>
+                <option value={1}>{t.common.user} 1</option>
+                <option value={2}>{t.common.user} 2</option>
+                <option value={3}>{t.common.user} 3</option>
+                <option value={4}>{t.common.user} 4</option>
+                <option value={5}>{t.common.user} 5</option>
               </select>
             </div>
             

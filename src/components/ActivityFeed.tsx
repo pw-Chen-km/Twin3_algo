@@ -2,6 +2,8 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Clock, Image, Tag, TrendingUp, TrendingDown } from 'lucide-react';
 import { ProcessingState, ActivityLogEntry } from '../types';
+import { useLanguage } from '../hooks/useLanguage';
+import { useTranslation } from '../utils/translations';
 
 interface ActivityFeedProps {
   activities: ActivityLogEntry[];
@@ -9,6 +11,9 @@ interface ActivityFeedProps {
 }
 
 const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities, processingState }) => {
+  const { language } = useLanguage();
+  const t = useTranslation(language);
+
   const formatTime = (timestamp: string) => {
     return new Date(timestamp).toLocaleTimeString();
   };
@@ -25,7 +30,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities, processingState
     <div className="bg-white dark:bg-gray-900 rounded-lg border-2 border-gray-300 dark:border-gray-600 p-4 h-[calc(50vh-60px)] shadow-lg">
       <h3 className="text-lg font-semibold mb-4 flex items-center">
         <Clock className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />
-        Activity Feed
+        {t.activity.title}
       </h3>
 
       <div className="space-y-3 h-[calc(100%-60px)] overflow-y-auto conversation-scroll">
@@ -68,7 +73,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities, processingState
                     ))}
                     {activity.metaTags.length > 4 && (
                       <span className="text-xs text-gray-500 dark:text-gray-400">
-                        +{activity.metaTags.length - 4} more
+                        +{activity.metaTags.length - 4} {t.common.more}
                       </span>
                     )}
                   </div>
@@ -90,7 +95,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities, processingState
                     ))}
                     {activity.changes.length > 3 && (
                       <div className="text-xs text-gray-500 dark:text-gray-400 text-center">
-                        +{activity.changes.length - 3} more changes
+                        +{activity.changes.length - 3} {t.common.more} {t.common.updates}
                       </div>
                     )}
                   </div>
@@ -103,8 +108,8 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities, processingState
         {activities.length === 0 && (
           <div className="text-center py-8 text-muted-foreground">
             <Clock className="w-8 h-8 mx-auto mb-2 opacity-50 text-gray-400 dark:text-gray-500" />
-            <p className="text-sm text-gray-600">尚無活動記錄</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">提交內容以查看處理結果</p>
+            <p className="text-sm text-gray-600">{t.activity.noActivity}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{t.activity.submitContent}</p>
           </div>
         )}
       </div>
@@ -122,7 +127,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities, processingState
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
               className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full"
             />
-            <span className="text-sm text-blue-700 dark:text-blue-300">Processing new content...</span>
+            <span className="text-sm text-blue-700 dark:text-blue-300">{t.activity.processingNew}</span>
           </div>
         </motion.div>
       )}

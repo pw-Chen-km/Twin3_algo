@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Grid, Filter, TrendingUp, TrendingDown, Minus, Info, X, Calculator, Brain, Zap, Clock, BarChart3, Eye, EyeOff } from 'lucide-react';
 import { ProcessingState, DimensionHistory } from '../types';
+import { useLanguage } from '../hooks/useLanguage';
+import { useTranslation } from '../utils/translations';
 
 interface MatrixVisualizationProps {
   matrixData: Record<string, number>;
@@ -10,6 +12,8 @@ interface MatrixVisualizationProps {
 }
 
 const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, processingState, dimensionHistory }) => {
+  const { language } = useLanguage();
+  const t = useTranslation(language);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list' | 'matrix256'>('matrix256');
   const [selectedDimension, setSelectedDimension] = useState<string | null>(null);
@@ -32,10 +36,10 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
   };
 
   const categories = {
-    physical: { name: 'Physical', color: 'bg-red-500', attributes: ['0010', '0012', '0016', '0019', '0021', '0033', '0034', '0035'] },
-    social: { name: 'Social', color: 'bg-green-500', attributes: ['0040', '0041', '0047', '004C', '004D', '0054', '0060', '006E', '0071', '0048'] },
-    digital: { name: 'Digital', color: 'bg-blue-500', attributes: ['0081', '0088', '0093', '0094', '0096', '00B6', '00BC', '00BF'] },
-    spiritual: { name: 'Spiritual', color: 'bg-purple-500', attributes: ['0067', '0069', '006C', '006D', '0070', '0099', '0156', 'SP088'] }
+    physical: { name: t.matrix.categories.physical, color: 'bg-red-500', attributes: ['0010', '0012', '0016', '0019', '0021', '0033', '0034', '0035'] },
+    social: { name: t.matrix.categories.social, color: 'bg-green-500', attributes: ['0040', '0041', '0047', '004C', '004D', '0054', '0060', '006E', '0071', '0048'] },
+    digital: { name: t.matrix.categories.digital, color: 'bg-blue-500', attributes: ['0081', '0088', '0093', '0094', '0096', '00B6', '00BC', '00BF'] },
+    spiritual: { name: t.matrix.categories.spiritual, color: 'bg-purple-500', attributes: ['0067', '0069', '006C', '006D', '0070', '0099', '0156', 'SP088'] }
   };
 
   // 生成256個維度的完整矩陣
@@ -107,7 +111,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold flex items-center text-gray-900 dark:text-gray-100">
           <Grid className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />
-          twin Matrix Visualization
+          {t.matrix.title}
         </h3>
         
         <div className="flex items-center space-x-2">
@@ -116,7 +120,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
             onChange={(e) => setSelectedCategory(e.target.value)}
             className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-1 rounded-md border-2 border-gray-300 dark:border-gray-600 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="all">All Dimensions</option>
+            <option value="all">{t.matrix.allDimensions}</option>
             {Object.entries(categories).map(([key, cat]) => (
               <option key={key} value={key}>{cat.name}</option>
             ))}
@@ -136,16 +140,16 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
         <div className="mb-4 p-4 bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-200 dark:border-blue-700 rounded-lg">
           <h4 className="text-sm font-semibold mb-2 flex items-center text-blue-700 dark:text-blue-300">
             <Info className="w-4 h-4 mr-2" />
-            演算法計算結果 (Algorithm Results)
+            {t.matrix.algorithmResults}
           </h4>
           <div className="grid grid-cols-2 gap-4 text-xs">
             <div>
-              <div className="text-gray-600 dark:text-gray-400">共更新維度: <span className="font-bold text-gray-900 dark:text-gray-100">{Object.keys(matrixData).length}</span></div>
-              <div className="text-gray-600 dark:text-gray-400">最高分數: <span className="font-bold text-green-600 dark:text-green-400">{Math.max(...Object.values(matrixData))}</span></div>
+              <div className="text-gray-600 dark:text-gray-400">{t.matrix.updatedDimensions}: <span className="font-bold text-gray-900 dark:text-gray-100">{Object.keys(matrixData).length}</span></div>
+              <div className="text-gray-600 dark:text-gray-400">{t.matrix.highestScore}: <span className="font-bold text-green-600 dark:text-green-400">{Math.max(...Object.values(matrixData))}</span></div>
             </div>
             <div>
-              <div className="text-gray-600 dark:text-gray-400">平均分數: <span className="font-bold text-gray-900 dark:text-gray-100">{Math.round(Object.values(matrixData).reduce((a, b) => a + b, 0) / Object.keys(matrixData).length)}</span></div>
-              <div className="text-gray-600 dark:text-gray-400">總更新次數: <span className="font-bold text-blue-600 dark:text-blue-400">{Object.values(dimensionHistory).reduce((sum, hist) => sum + hist.totalUpdates, 0)}</span></div>
+              <div className="text-gray-600 dark:text-gray-400">{t.matrix.averageScore}: <span className="font-bold text-gray-900 dark:text-gray-100">{Math.round(Object.values(matrixData).reduce((a, b) => a + b, 0) / Object.keys(matrixData).length)}</span></div>
+              <div className="text-gray-600 dark:text-gray-400">{t.matrix.totalUpdates}: <span className="font-bold text-blue-600 dark:text-blue-400">{Object.values(dimensionHistory).reduce((sum, hist) => sum + hist.totalUpdates, 0)}</span></div>
             </div>
           </div>
         </div>
@@ -167,10 +171,10 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
           <div className="space-y-4">
             <div className="text-center">
               <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                完整256維度 twin Matrix (16x16 DNA位址映射)
+                {t.matrix.fullMatrix}
               </h4>
               <p className="text-xs text-gray-600 dark:text-gray-400 mb-4">
-                每個格子代表一個維度，位址格式為4位16進制 (0000-00FF)
+                {t.matrix.matrixDescription}
               </p>
             </div>
             
@@ -251,9 +255,9 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
             </div>
             
             <div className="text-xs text-gray-500 dark:text-gray-400 text-center space-y-1 mt-4">
-              <p>💡 點擊任意維度查看詳細資訊</p>
-              <p>🎯 活躍維度有白色圓點標記，更新次數顯示在左下角</p>
-              <p>📊 顏色深度代表分數強度，16進制值顯示在格子中</p>
+              <p>{t.matrix.clickTip}</p>
+              <p>{t.matrix.activeTip}</p>
+              <p>{t.matrix.colorTip}</p>
             </div>
           </div>
         )}
@@ -419,7 +423,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                         <p className="text-gray-600 dark:text-gray-400 font-mono">{showDetailModal}</p>
                         {history && (
                           <p className="text-sm text-gray-500 dark:text-gray-500">
-                            總更新次數: {history.totalUpdates} | 最後更新: {new Date(history.lastUpdated).toLocaleString()}
+                            {t.matrix.totalUpdates}: {history.totalUpdates} | {new Date(history.lastUpdated).toLocaleString()}
                           </p>
                         )}
                       </div>
@@ -434,21 +438,21 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                     <div className="grid grid-cols-4 gap-4 mb-6">
                       <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg text-center border-2 border-blue-200 dark:border-blue-700">
                         <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{score}</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400">當前分數</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">{t.matrix.currentScore}</div>
                       </div>
                       <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg text-center border-2 border-gray-200 dark:border-gray-700">
                         <div className="text-2xl font-bold font-mono text-gray-900 dark:text-gray-100">0x{score.toString(16).toUpperCase().padStart(2, '0')}</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400">HEX值</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">{t.matrix.hexValue}</div>
                       </div>
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg text-center border-2 border-purple-200 dark:border-purple-700">
                         <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">{Math.round((score/255)*100)}%</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400">相對強度</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">{t.matrix.relativeStrength}</div>
                       </div>
                       <div className={`p-4 rounded-lg text-center border-2 ${latestUpdate?.change > 0 ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700' : latestUpdate?.change < 0 ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-700' : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700'}`}>
                         <div className={`text-2xl font-bold ${latestUpdate?.change > 0 ? 'text-green-600 dark:text-green-400' : latestUpdate?.change < 0 ? 'text-red-600 dark:text-red-400' : 'text-gray-600 dark:text-gray-400'}`}>
                           {latestUpdate?.change > 0 ? '+' : ''}{latestUpdate?.change || 0}
                         </div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400">最新變化</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">{t.matrix.latestChange}</div>
                       </div>
                     </div>
 
@@ -456,7 +460,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                       <div className="space-y-4 mb-6">
                         <h4 className="text-lg font-semibold flex items-center text-gray-900 dark:text-gray-100">
                           <Calculator className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />
-                          最新計算過程 (twin3演算法)
+                          {t.matrix.calculationProcess}
                         </h4>
                         
                         <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border-2 border-blue-200 dark:border-blue-700">
@@ -545,7 +549,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                       <div className="space-y-4">
                         <h4 className="text-lg font-semibold flex items-center text-gray-900 dark:text-gray-100">
                           <Clock className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />
-                          更新歷史記錄
+                          {t.matrix.updateHistory}
                         </h4>
                         
                         <div className="max-h-64 overflow-y-auto space-y-2">
@@ -571,7 +575,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
 
                     {dimension && (
                       <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg mb-4 border-2 border-gray-200 dark:border-gray-700">
-                        <h5 className="font-semibold mb-2 text-gray-900 dark:text-gray-100">維度定義</h5>
+                        <h5 className="font-semibold mb-2 text-gray-900 dark:text-gray-100">{t.matrix.dimensionDefinition}</h5>
                         <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">{dimension.definition}</p>
                         <div className="mt-2">
                           <strong className="text-xs text-gray-900 dark:text-gray-100">Meta-Tags:</strong>

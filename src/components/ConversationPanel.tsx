@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Image, Video, Brain, User, Bot, Clock, Heart, Lightbulb, TrendingUp, Calculator } from 'lucide-react';
 import { UserContent, AIResponse, ProcessingState } from '../types';
+import { useLanguage } from '../hooks/useLanguage';
+import { useTranslation } from '../utils/translations';
 
 interface Message {
   id: string;
@@ -28,6 +30,8 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
   isProcessing,
   processingState
 }) => {
+  const { language } = useLanguage();
+  const t = useTranslation(language);
   const [inputText, setInputText] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [filePreview, setFilePreview] = useState<string | null>(null);
@@ -47,7 +51,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
     if ((!inputText.trim() && !selectedFile) || isProcessing) return;
 
     onContentSubmit({
-      text: inputText.trim() || '用戶上傳了圖片',
+      text: inputText.trim() || t.conversation.imageFile,
       image: selectedFile || undefined
     });
 
@@ -100,9 +104,9 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
       <div className="p-4 border-b border-border">
         <h3 className="text-lg font-semibold flex items-center">
           <Brain className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />
-          twin3 智能對話
+          {t.conversation.title}
         </h3>
-        <p className="text-sm text-gray-600 dark:text-gray-400">與AI助理對話，即時分析您的生活體驗</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">{t.conversation.subtitle}</p>
       </div>
 
       {/* Messages Area */}
@@ -162,7 +166,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center space-x-2 mb-2">
-                              <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">twin3 AI 助理</span>
+                              <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">{t.ai.assistant}</span>
                               <span className="text-xs text-gray-500 dark:text-gray-400">• Gemini 2.5 Flash</span>
                             </div>
                             <p className="text-sm leading-relaxed text-gray-800 dark:text-gray-200">{message.content}</p>
@@ -176,7 +180,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                           {/* Emotional Tone */}
                           <div className="flex items-center space-x-2 text-xs bg-white dark:bg-gray-800 rounded-lg p-2 border border-gray-200 dark:border-gray-700">
                             <Heart className="w-3 h-3 text-red-400" />
-                            <span className="text-gray-600 dark:text-gray-400">情緒狀態:</span>
+                            <span className="text-gray-600 dark:text-gray-400">{t.ai.emotionalState}:</span>
                             <span className="text-gray-900 dark:text-gray-100 font-medium">{message.aiResponse.emotionalTone}</span>
                           </div>
 
@@ -185,7 +189,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                             <div className="space-y-2">
                               <div className="flex items-center space-x-2 text-xs font-semibold text-yellow-700 dark:text-yellow-300">
                                 <Lightbulb className="w-3 h-3" />
-                                <span>行為洞察</span>
+                                <span>{t.ai.behaviorInsights}</span>
                               </div>
                               {message.aiResponse.insights.map((insight, index) => (
                                 <div key={index} className="text-xs text-yellow-800 dark:text-yellow-200 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg px-3 py-2 border border-yellow-200 dark:border-yellow-700">
@@ -201,12 +205,12 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                             <div className="bg-blue-100 dark:bg-blue-900/30 rounded-lg p-3 border border-blue-200 dark:border-blue-700">
                               <div className="flex items-center space-x-2 text-xs font-semibold text-blue-700 dark:text-blue-300 mb-2">
                                 <Calculator className="w-3 h-3" />
-                                <span>twin3 Matrix 更新結果</span>
+                                <span>{t.ai.matrixUpdateResults}</span>
                               </div>
                               <div className="text-xs text-blue-600 dark:text-blue-400 bg-white dark:bg-gray-800 rounded px-2 py-1">
-                                更新了 {Object.keys(message.matrixUpdates).length} 個維度
+                                {t.ai.updatedDimensions} {Object.keys(message.matrixUpdates).length} {t.performance.dimensions}
                                 {message.processingTime && (
-                                  <span className="ml-2">• 處理時間: {message.processingTime}ms</span>
+                                  <span className="ml-2">• {t.ai.processingTime}: {message.processingTime}ms</span>
                                 )}
                               </div>
                             </div>
@@ -214,7 +218,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
 
                           {/* Confidence */}
                           <div className="flex items-center justify-between text-xs bg-white dark:bg-gray-800 rounded-lg p-2 border border-gray-200 dark:border-gray-700">
-                            <span className="text-gray-600 dark:text-gray-400">分析信心度</span>
+                            <span className="text-gray-600 dark:text-gray-400">{t.ai.analysisConfidence}</span>
                             <div className="flex items-center space-x-2">
                               <div className="w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                                 <motion.div
@@ -358,7 +362,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
               <textarea
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                placeholder="描述您的體驗或活動... (可選，也可以只上傳圖片)"
+                placeholder={t.input.placeholder}
                 className="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-gray-900 dark:text-gray-100 transition-colors"
                 rows={2}
                 disabled={isProcessing}
@@ -382,14 +386,31 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
               <Send className="w-4 h-4" />
             </button>
           </div>
-          <span>{isProcessing ? '🤖 AI 分析中...' : '🚀 開始 twin3 + AI 分析'}</span>
+          <span>{isProcessing ? t.input.processingButton : t.input.submitButton}</span>
         </form>
 
         {/* Quick Examples */}
         <div className="mt-3 flex flex-wrap gap-2">
           {[
+            language === 'en' ? "I learned new skills today" :
+            language === 'zh-CN' ? "我今天学习了新技能" :
+            language === 'ja' ? "今日新しいスキルを学びました" :
+            language === 'ko' ? "오늘 새로운 기술을 배웠습니다" :
+            language === 'es' ? "Hoy aprendí nuevas habilidades" :
             "我今天學習了新技能",
+            
+            language === 'en' ? "Participated in environmental activities" :
+            language === 'zh-CN' ? "参加了环保活动" :
+            language === 'ja' ? "環境活動に参加しました" :
+            language === 'ko' ? "환경 활동에 참여했습니다" :
+            language === 'es' ? "Participé en actividades ambientales" :
             "參加了環保活動",
+            
+            language === 'en' ? "Had dinner with friends to celebrate" :
+            language === 'zh-CN' ? "和朋友聚餐庆祝" :
+            language === 'ja' ? "友達と食事をして祝いました" :
+            language === 'ko' ? "친구들과 저녁을 먹으며 축하했습니다" :
+            language === 'es' ? "Cené con amigos para celebrar" :
             "和朋友聚餐慶祝"
           ].map((example, index) => (
             <button
