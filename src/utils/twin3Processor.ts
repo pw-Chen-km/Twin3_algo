@@ -243,6 +243,7 @@ export const processContentWithTwin3Algorithm = async (
   const algorithmSteps = [];
   
   console.log('🚀 Twin3演算法開始處理...');
+  console.log('🚀 twin3演算法開始處理...');
   
   // 步驟1: MSMM語意匹配
   onStepUpdate?.('msmm', { status: 'running', message: '正在提取Meta-Tags...' });
@@ -328,6 +329,7 @@ export const processContentWithTwin3Algorithm = async (
   const processingTime = Math.round(baseDelay * 3 + Math.random() * 200);
   
   console.log('✅ Twin3演算法處理完成');
+  console.log('✅ twin3演算法處理完成');
   console.log(`📊 更新了 ${Object.keys(matrixUpdates).length} 個維度`);
   
   return {

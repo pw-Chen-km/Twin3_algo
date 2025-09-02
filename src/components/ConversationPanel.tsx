@@ -191,7 +191,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                             <div className="bg-blue-100 dark:bg-blue-900/30 rounded-lg p-2">
                               <div className="flex items-center space-x-1 text-xs text-blue-700 dark:text-blue-300 mb-1">
                                 <Calculator className="w-3 h-3" />
-                                <span>Twin Matrix 更新</span>
+                                <span>twin Matrix 更新</span>
                               </div>
                               <div className="text-xs text-blue-600 dark:text-blue-400">
                                 更新了 {Object.keys(message.matrixUpdates).length} 個維度
@@ -216,7 +216,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
 
                   {/* System Message */}
                   {message.type === 'system' && (
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2 text-left">
                       <Brain className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                       <span className="text-sm">{message.content}</span>
                     </div>
@@ -361,7 +361,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
             >
               <Send className="w-4 h-4" />
             </button>
-          </div>
+            <span>{isProcessing ? '🤖 AI 分析中...' : '🚀 開始 twin3 + AI 分析'}</span>
         </form>
 
         {/* Quick Examples */}

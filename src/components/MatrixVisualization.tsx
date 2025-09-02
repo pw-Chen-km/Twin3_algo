@@ -107,7 +107,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold flex items-center text-gray-900 dark:text-gray-100">
           <Grid className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />
-          Twin Matrix Visualization
+          twin Matrix Visualization
         </h3>
         
         <div className="flex items-center space-x-2">
@@ -167,7 +167,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
           <div className="space-y-4">
             <div className="text-center">
               <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                完整256維度 Twin Matrix (16x16 DNA位址映射)
+                完整256維度 twin Matrix (16x16 DNA位址映射)
               </h4>
               <p className="text-xs text-gray-600 dark:text-gray-400 mb-4">
                 每個格子代表一個維度，位址格式為4位16進制 (0000-00FF)
@@ -180,7 +180,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
               <div className="text-green-300 mb-3 border-b border-green-600 pb-2">
                 <div className="flex items-center space-x-2">
                   <span className="text-green-500">●</span>
-                  <span>Twin Matrix DNA Map [256 dimensions]</span>
+                  <span>twin Matrix DNA Map [256 dimensions]</span>
                 </div>
                 <div className="text-green-600 text-xs mt-1">
                   Address: 0x0000-0x00FF | Format: HEX | Status: ACTIVE

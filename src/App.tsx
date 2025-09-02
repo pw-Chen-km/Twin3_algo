@@ -217,7 +217,7 @@ function App() {
       {
         id: `welcome-${userId}`,
         type: 'system',
-        content: `已切換到用戶 ${userId}。歡迎使用 Twin3 智能分析系統！`,
+        content: `已切換到用戶 ${userId}。歡迎使用 twin3 智能分析系統！`,
         timestamp: new Date().toISOString()
       }
     ]);
