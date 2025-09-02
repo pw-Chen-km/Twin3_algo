@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from './hooks/useTheme';
+import { useLanguage } from './hooks/useLanguage';
+import { useTranslation } from './utils/translations';
 import Header from './components/Header';
 import ConversationPanel from './components/ConversationPanel';
 import ProcessingPipeline from './components/ProcessingPipeline';
@@ -25,6 +27,8 @@ interface Message {
 
 function App() {
   const { theme } = useTheme();
+  const { language } = useLanguage();
+  const t = useTranslation(language);
   const [selectedUser, setSelectedUser] = useState<number>(1);
   const [processingState, setProcessingState] = useState<ProcessingState>('idle');
   const [currentContent, setCurrentContent] = useState<UserContent | null>(null);
@@ -39,7 +43,12 @@ function App() {
     {
       id: 'welcome',
       type: 'system',
-      content: '歡迎使用 Twin3 智能分析系統！請分享您的體驗，AI 將為您提供個人化洞察。',
+      content: language === 'en' ? 'Welcome to twin3 intelligent analysis system! Share your experiences and AI will provide personalized insights.' :
+               language === 'zh-CN' ? '欢迎使用 twin3 智能分析系统！请分享您的体验，AI 将为您提供个性化洞察。' :
+               language === 'ja' ? 'twin3 インテリジェント分析システムへようこそ！あなたの体験をシェアしてください。AIがパーソナライズされた洞察を提供します。' :
+               language === 'ko' ? 'twin3 지능형 분석 시스템에 오신 것을 환영합니다! 경험을 공유하시면 AI가 개인화된 통찰을 제공합니다.' :
+               language === 'es' ? '¡Bienvenido al sistema de análisis inteligente twin3! Comparte tus experiencias y la IA te proporcionará perspectivas personalizadas.' :
+               '歡迎使用 twin3 智能分析系統！請分享您的體驗，AI 將為您提供個人化洞察。',
       timestamp: new Date().toISOString()
     }
   ]);
@@ -198,7 +207,12 @@ function App() {
       const errorMessage: Message = {
         id: `error-${Date.now()}`,
         type: 'system',
-        content: '處理過程中發生錯誤，請稍後再試。',
+        content: language === 'en' ? 'An error occurred during processing, please try again later.' :
+                 language === 'zh-CN' ? '处理过程中发生错误，请稍后再试。' :
+                 language === 'ja' ? '処理中にエラーが発生しました。後でもう一度お試しください。' :
+                 language === 'ko' ? '처리 중 오류가 발생했습니다. 나중에 다시 시도해주세요.' :
+                 language === 'es' ? 'Ocurrió un error durante el procesamiento, por favor inténtalo de nuevo más tarde.' :
+                 '處理過程中發生錯誤，請稍後再試。',
         timestamp: new Date().toISOString()
       };
       setMessages(prev => [...prev, errorMessage]);
@@ -217,7 +231,12 @@ function App() {
       {
         id: `welcome-${userId}`,
         type: 'system',
-        content: `已切換到用戶 ${userId}。歡迎使用 twin3 智能分析系統！`,
+        content: language === 'en' ? `Switched to User ${userId}. Welcome to twin3 intelligent analysis system!` :
+                 language === 'zh-CN' ? `已切换到用户 ${userId}。欢迎使用 twin3 智能分析系统！` :
+                 language === 'ja' ? `ユーザー ${userId} に切り替えました。twin3 インテリジェント分析システムへようこそ！` :
+                 language === 'ko' ? `사용자 ${userId}로 전환했습니다. twin3 지능형 분석 시스템에 오신 것을 환영합니다!` :
+                 language === 'es' ? `Cambiado al Usuario ${userId}. ¡Bienvenido al sistema de análisis inteligente twin3!` :
+                 `已切換到用戶 ${userId}。歡迎使用 twin3 智能分析系統！`,
         timestamp: new Date().toISOString()
       }
     ]);
