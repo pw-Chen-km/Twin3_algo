@@ -172,31 +172,31 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                 } : {}}
                 transition={{ duration: 0.3 }}
               >
-                <div className="text-center relative">
+                <div className="text-center relative h-full flex flex-col justify-center">
                   {/* Clickable indicator */}
                   <div className="absolute -top-2 -right-2 w-4 h-4 bg-white/20 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                     <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
                   </div>
                   
-                  <div className="text-lg font-bold text-white drop-shadow-sm mb-1">
+                  <div className="text-2xl font-bold text-white drop-shadow-lg mb-2">
                     {score}
                   </div>
                   {/* 顯示變化 */}
                   {latestChange !== 0 && (
-                    <div className={`text-xs font-bold mb-1 px-2 py-0.5 rounded-full bg-white/20 ${latestChange > 0 ? 'text-green-200' : 'text-red-200'}`}>
+                    <div className={`text-sm font-bold mb-2 px-2 py-1 rounded-full bg-white/30 ${latestChange > 0 ? 'text-green-200' : 'text-red-200'}`}>
                       {latestChange > 0 ? '+' : ''}{latestChange}
                     </div>
                   )}
-                  <div className="text-xs text-white/90 font-medium mb-1">
+                  <div className="text-sm text-white/90 font-bold mb-1">
                     {attrId}
                   </div>
-                  <div className="text-xs text-white/80 leading-tight font-medium">
+                  <div className="text-xs text-white/90 leading-tight font-medium">
                     {dimensionName}
                   </div>
                   
                   {/* Click hint */}
-                  <div className="absolute inset-0 bg-white/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="text-xs text-white/90 font-medium bg-black/30 px-2 py-1 rounded">
+                  <div className="absolute inset-0 bg-white/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="text-sm text-white font-bold bg-black/50 px-3 py-2 rounded-lg shadow-lg">
                       點擊查看詳情
                     </div>
                   </div>
@@ -205,7 +205,7 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                 {/* Update Count Badge */}
                 <div className="absolute top-1 right-1">
                   {history && history.totalUpdates > 0 && (
-                    <div className="bg-white/30 text-white text-xs px-2 py-0.5 rounded-full font-bold border border-white/20">
+                    <div className="bg-white/40 text-white text-sm px-2 py-1 rounded-full font-bold border border-white/30 shadow-lg">
                       {history.totalUpdates}
                     </div>
                   )}
