@@ -1,6 +1,7 @@
 import React from 'react';
 import { Brain, Users, Activity, AlertCircle, CheckCircle, Clock } from 'lucide-react';
 import { ProcessingState } from '../types';
+import ThemeToggle from './ThemeToggle';
 
 interface HeaderProps {
   selectedUser: number;
@@ -50,12 +51,14 @@ const Header: React.FC<HeaderProps> = ({ selectedUser, onUserChange, processingS
           </div>
           
           <div className="flex items-center space-x-6">
+            <ThemeToggle />
+            
             <div className="flex items-center space-x-2">
               <Users className="w-4 h-4 text-muted-foreground" />
               <select
                 value={selectedUser}
                 onChange={(e) => onUserChange(Number(e.target.value))}
-                className="bg-secondary text-secondary-foreground px-3 py-1 rounded-md border border-border focus:outline-none focus:ring-2 focus:ring-primary"
+                className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-1 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
               >
                 <option value={1}>User 1</option>
                 <option value={2}>User 2</option>
@@ -65,9 +68,9 @@ const Header: React.FC<HeaderProps> = ({ selectedUser, onUserChange, processingS
               </select>
             </div>
             
-            <div className="flex items-center space-x-2 px-3 py-1 bg-secondary rounded-md">
+            <div className="flex items-center space-x-2 px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-md border border-gray-300 dark:border-gray-600">
               {getStatusIcon()}
-              <span className="text-sm font-medium">{getStatusText()}</span>
+              <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{getStatusText()}</span>
             </div>
           </div>
         </div>

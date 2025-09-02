@@ -99,10 +99,10 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
       {/* Header */}
       <div className="p-4 border-b border-border">
         <h3 className="text-lg font-semibold flex items-center">
-          <Brain className="w-5 h-5 mr-2 text-primary" />
+          <Brain className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />
           Twin3 智能對話
         </h3>
-        <p className="text-sm text-muted-foreground">與AI助理對話，即時分析您的生活體驗</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">與AI助理對話，即時分析您的生活體驗</p>
       </div>
 
       {/* Messages Area */}
@@ -120,10 +120,10 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                 {/* Message Bubble */}
                 <div className={`rounded-2xl px-4 py-3 ${
                   message.type === 'user' 
-                    ? 'bg-primary text-primary-foreground ml-4' 
+                    ? 'bg-blue-600 text-white ml-4' 
                     : message.type === 'ai'
-                    ? 'bg-secondary text-secondary-foreground mr-4'
-                    : 'bg-muted text-muted-foreground mx-4 text-center'
+                    ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 mr-4'
+                    : 'bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300 mx-4 text-center'
                 }`}>
                   {/* User Message */}
                   {message.type === 'user' && (
@@ -156,29 +156,29 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                     <div className="space-y-3">
                       {/* Main AI Message */}
                       <div className="flex items-start space-x-2">
-                        <Bot className="w-4 h-4 mt-0.5 text-primary flex-shrink-0" />
+                        <Bot className="w-4 h-4 mt-0.5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
                         <p className="text-sm leading-relaxed">{message.content}</p>
                       </div>
 
                       {/* AI Response Details */}
                       {message.aiResponse && (
-                        <div className="space-y-2 border-t border-border/30 pt-3">
+                        <div className="space-y-2 border-t border-gray-200 dark:border-gray-700 pt-3">
                           {/* Emotional Tone */}
                           <div className="flex items-center space-x-2 text-xs">
                             <Heart className="w-3 h-3 text-red-400" />
-                            <span className="text-muted-foreground">情緒狀態:</span>
-                            <span className="text-accent-foreground font-medium">{message.aiResponse.emotionalTone}</span>
+                            <span className="text-gray-600 dark:text-gray-400">情緒狀態:</span>
+                            <span className="text-gray-900 dark:text-gray-100 font-medium">{message.aiResponse.emotionalTone}</span>
                           </div>
 
                           {/* Insights */}
                           {message.aiResponse.insights.length > 0 && (
                             <div className="space-y-1">
-                              <div className="flex items-center space-x-1 text-xs text-yellow-400">
+                              <div className="flex items-center space-x-1 text-xs text-yellow-600 dark:text-yellow-400">
                                 <Lightbulb className="w-3 h-3" />
                                 <span>行為洞察</span>
                               </div>
                               {message.aiResponse.insights.map((insight, index) => (
-                                <div key={index} className="text-xs text-yellow-200 bg-yellow-500/10 rounded px-2 py-1">
+                                <div key={index} className="text-xs text-yellow-800 dark:text-yellow-200 bg-yellow-100 dark:bg-yellow-900/30 rounded px-2 py-1">
                                   {insight}
                                 </div>
                               ))}
@@ -188,12 +188,12 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                           {/* Recommendations */}
                           {/* Matrix Updates Summary */}
                           {message.matrixUpdates && Object.keys(message.matrixUpdates).length > 0 && (
-                            <div className="bg-primary/10 rounded-lg p-2">
-                              <div className="flex items-center space-x-1 text-xs text-primary mb-1">
+                            <div className="bg-blue-100 dark:bg-blue-900/30 rounded-lg p-2">
+                              <div className="flex items-center space-x-1 text-xs text-blue-700 dark:text-blue-300 mb-1">
                                 <Calculator className="w-3 h-3" />
                                 <span>Twin Matrix 更新</span>
                               </div>
-                              <div className="text-xs text-primary/80">
+                              <div className="text-xs text-blue-600 dark:text-blue-400">
                                 更新了 {Object.keys(message.matrixUpdates).length} 個維度
                                 {message.processingTime && (
                                   <span className="ml-2">• 處理時間: {message.processingTime}ms</span>
@@ -204,8 +204,8 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
 
                           {/* Confidence */}
                           <div className="flex items-center justify-between text-xs">
-                            <span className="text-muted-foreground">分析信心度</span>
-                            <span className="font-bold text-primary">
+                            <span className="text-gray-600 dark:text-gray-400">分析信心度</span>
+                            <span className="font-bold text-blue-600 dark:text-blue-400">
                               {Math.round(message.aiResponse.analysisConfidence * 100)}%
                             </span>
                           </div>
@@ -217,7 +217,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                   {/* System Message */}
                   {message.type === 'system' && (
                     <div className="flex items-center space-x-2">
-                      <Brain className="w-4 h-4 text-muted-foreground" />
+                      <Brain className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                       <span className="text-sm">{message.content}</span>
                     </div>
                   )}
@@ -228,16 +228,16 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                   message.type === 'user' ? 'justify-end' : 'justify-start'
                 }`}>
                   {message.type !== 'user' && (
-                    <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
-                      <Bot className="w-3 h-3 text-primary-foreground" />
+                    <div className="w-6 h-6 bg-blue-600 dark:bg-blue-500 rounded-full flex items-center justify-center">
+                      <Bot className="w-3 h-3 text-white" />
                     </div>
                   )}
                   <span className="text-xs text-muted-foreground">
                     {formatTime(message.timestamp)}
                   </span>
                   {message.type === 'user' && (
-                    <div className="w-6 h-6 bg-secondary rounded-full flex items-center justify-center">
-                      <User className="w-3 h-3 text-secondary-foreground" />
+                    <div className="w-6 h-6 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                      <User className="w-3 h-3 text-gray-700 dark:text-gray-300" />
                     </div>
                   )}
                 </div>
@@ -253,27 +253,27 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
             animate={{ opacity: 1, y: 0 }}
             className="flex justify-start"
           >
-            <div className="bg-secondary text-secondary-foreground rounded-2xl px-4 py-3 mr-4">
+            <div className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-2xl px-4 py-3 mr-4">
               <div className="flex items-center space-x-2">
-                <Bot className="w-4 h-4 text-primary" />
+                <Bot className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 <div className="flex space-x-1">
                   <motion.div
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-                    className="w-2 h-2 bg-primary rounded-full"
+                    className="w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full"
                   />
                   <motion.div
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-                    className="w-2 h-2 bg-primary rounded-full"
+                    className="w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full"
                   />
                   <motion.div
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
-                    className="w-2 h-2 bg-primary rounded-full"
+                    className="w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full"
                   />
                 </div>
-                <span className="text-sm text-muted-foreground">AI 正在分析...</span>
+                <span className="text-sm text-gray-600 dark:text-gray-400">AI 正在分析...</span>
               </div>
             </div>
           </motion.div>
@@ -328,10 +328,10 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="p-3 bg-secondary hover:bg-secondary/80 rounded-lg border border-border transition-colors flex-shrink-0"
+              className="p-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 transition-colors flex-shrink-0"
               disabled={isProcessing}
             >
-              <Image className="w-6 h-6" />
+              <Image className="w-6 h-6 text-gray-700 dark:text-gray-300" />
             </button>
 
             <div className="flex-1 relative">
@@ -339,7 +339,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 placeholder="描述您的體驗或活動... 例如：我今天帶領學弟妹完成了一篇論文"
-                className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-gray-900"
+                className="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-gray-900 dark:text-gray-100 transition-colors"
                 rows={2}
                 disabled={isProcessing}
                 onKeyDown={(e) => {
@@ -349,7 +349,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
                   }
                 }}
               />
-              <div className="absolute bottom-1 right-1 text-xs text-muted-foreground">
+              <div className="absolute bottom-1 right-1 text-xs text-gray-500 dark:text-gray-400">
                 {inputText.length}/500
               </div>
             </div>
@@ -357,7 +357,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
             <button
               type="submit"
               disabled={!inputText.trim() || isProcessing}
-              className="p-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 active:scale-95 flex-shrink-0"
+              className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 active:scale-95 flex-shrink-0"
             >
               <Send className="w-4 h-4" />
             </button>
@@ -374,7 +374,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
             <button
               key={index}
               onClick={() => setInputText(example)}
-              className="text-xs px-2 py-1 bg-muted hover:bg-muted/80 rounded-full border border-border transition-colors"
+              className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full border border-gray-300 dark:border-gray-600 transition-colors text-gray-700 dark:text-gray-300"
               disabled={isProcessing}
             >
               {example}
