@@ -172,9 +172,9 @@ function App() {
           algorithmSteps: result.algorithmSteps,
           changes: Object.entries(result.matrixUpdates).map(([dimId, newScore]) => ({
             dimensionId: dimId,
-            previousScore: previousMatrix[dimId] || 128,
+            previousScore: previousMatrix[dimId] || 0,
             newScore,
-            change: newScore - (previousMatrix[dimId] || 128)
+            change: newScore - (previousMatrix[dimId] || 0)
           }))
         },
         ...prev.slice(0, 49) // Keep last 50 entries
