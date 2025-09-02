@@ -312,14 +312,10 @@ Emoción: [Estado emocional]
 
     const message = responseMatch?.[1]?.trim() || responseText.substring(0, 200);
     const insightText = insightMatch?.[1]?.trim() || '';
-    const recommendationText = recommendationMatch?.[1]?.trim() || '';
     const emotionalTone = emotionMatch?.[1]?.trim() || '正面積極';
 
     // 解析洞察和建議
     const insights = insightText ? [insightText] : [];
-    const recommendations = recommendationText ? 
-      recommendationText.split(/[1-3]\.|\n/).filter(r => r.trim()).map(r => r.trim()) : 
-      [];
 
     return {
       message,
