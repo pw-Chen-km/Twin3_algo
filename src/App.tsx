@@ -7,8 +7,10 @@ import MatrixVisualization from './components/MatrixVisualization';
 import ActivityFeed from './components/ActivityFeed';
 import PerformanceDashboard from './components/PerformanceDashboard';
 import AlgorithmSteps from './components/AlgorithmSteps';
+import AIResponsePanel from './components/AIResponsePanel';
 import { ProcessingState, UserContent, MatrixUpdate, DimensionHistory } from './types';
 import { processContentWithTwin3Algorithm } from './utils/twin3Processor';
+import { aiResponseService, AIResponse } from './utils/aiResponseService';
 
 function App() {
   const [selectedUser, setSelectedUser] = useState<number>(1);
@@ -21,6 +23,8 @@ function App() {
   const [processingSpeed, setProcessingSpeed] = useState(1);
   const [currentAlgorithmStep, setCurrentAlgorithmStep] = useState<string>('');
   const [algorithmResults, setAlgorithmResults] = useState<any>(null);
+  const [aiResponse, setAiResponse] = useState<AIResponse | null>(null);
+  const [isGeneratingResponse, setIsGeneratingResponse] = useState(false);
 
   const handleContentSubmit = async (content: UserContent) => {
     if (processingState === 'processing') return;
@@ -29,6 +33,8 @@ function App() {
     setProcessingState('processing');
     setCurrentAlgorithmStep('msmm');
     setAlgorithmResults(null);
+    setAiResponse(null);
+    setIsGeneratingResponse(false);
     
     try {
       // Process with real Twin3 algorithm
@@ -41,6 +47,17 @@ function App() {
           setAlgorithmResults(data);
         }
       );
+      
+      // Generate AI response after processing
+      setIsGeneratingResponse(true);
+      try {
+        const response = await aiResponseService.generateResponse(content, result.metaTags);
+        setAiResponse(response);
+      } catch (error) {
+        console.error('AI response generation failed:', error);
+      } finally {
+        setIsGeneratingResponse(false);
+      }
       
       // Update matrix data and track changes
       const previousMatrix = { ...matrixData };
@@ -116,7 +133,7 @@ function App() {
         setCurrentContent(null);
         setCurrentAlgorithmStep('');
         setAlgorithmResults(null);
-      }, 2000);
+      }, 3000); // 延長顯示時間以便查看AI回應
       
     } catch (error) {
       console.error('Processing error:', error);
@@ -131,6 +148,8 @@ function App() {
     setMatrixData({});
     setDimensionHistory({});
     setActivityLog([]);
+    setAiResponse(null);
+    setIsGeneratingResponse(false);
   };
 
   return (
@@ -159,6 +178,12 @@ function App() {
               currentStep={currentAlgorithmStep}
               results={algorithmResults}
               isProcessing={processingState === 'processing'}
+            />
+            
+            {/* AI Response Panel */}
+            <AIResponsePanel
+              response={aiResponse}
+              isGenerating={isGeneratingResponse}
             />
           </div>
           

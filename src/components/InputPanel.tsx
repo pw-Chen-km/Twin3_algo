@@ -80,7 +80,7 @@ const InputPanel: React.FC<InputPanelProps> = ({
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="Describe your experience or activity..."
+              placeholder="分享您今天的體驗或活動... 例如：我今天帶領學弟妹完成了一篇論文，還順便去吃了有名的台式早餐慶祝。"
               className="w-full h-32 px-3 py-2 bg-input border border-border rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-primary"
               disabled={isProcessing}
             />
@@ -96,7 +96,7 @@ const InputPanel: React.FC<InputPanelProps> = ({
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/*"
+                accept="image/*,video/*"
                 onChange={handleImageSelect}
                 className="hidden"
               />
@@ -110,7 +110,8 @@ const InputPanel: React.FC<InputPanelProps> = ({
                 >
                   <div className="text-center">
                     <Image className="w-6 h-6 mx-auto mb-1 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Upload Image</span>
+                    <span className="text-sm text-muted-foreground">上傳圖片或視頻</span>
+                    <span className="text-xs text-muted-foreground block">支援多模態AI分析</span>
                   </div>
                 </button>
               ) : (
@@ -118,8 +119,11 @@ const InputPanel: React.FC<InputPanelProps> = ({
                   <img
                     src={imagePreview}
                     alt="Preview"
-                    className="w-full h-24 object-cover rounded-md"
+                    className="w-full h-24 object-cover rounded-md border border-border"
                   />
+                  <div className="absolute bottom-1 left-1 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                    {selectedImage?.type.startsWith('video/') ? '📹 視頻' : '🖼️ 圖片'}
+                  </div>
                   <button
                     type="button"
                     onClick={removeImage}
@@ -136,17 +140,17 @@ const InputPanel: React.FC<InputPanelProps> = ({
           <button
             type="submit"
             disabled={!text.trim() || isProcessing}
-            className="w-full bg-primary text-primary-foreground py-2 px-4 rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 transition-colors"
+            className="w-full bg-primary text-primary-foreground py-3 px-4 rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 transition-all transform hover:scale-105 active:scale-95"
           >
             <Send className="w-4 h-4" />
-            <span>{isProcessing ? 'Processing...' : 'Process Content'}</span>
+            <span>{isProcessing ? '處理中...' : '開始 Twin3 分析'}</span>
           </button>
         </form>
       </div>
 
       {/* Quick Examples */}
       <div className="bg-card rounded-lg border border-border p-4">
-        <h4 className="text-sm font-medium mb-3">Quick Examples</h4>
+        <h4 className="text-sm font-medium mb-3">快速範例</h4>
         <div className="space-y-2">
           {quickExamples.map((example, index) => (
             <button
@@ -165,12 +169,12 @@ const InputPanel: React.FC<InputPanelProps> = ({
       <div className="bg-card rounded-lg border border-border p-4">
         <h4 className="text-sm font-medium mb-3 flex items-center">
           <Settings className="w-4 h-4 mr-2" />
-          Controls
+          系統設定
         </h4>
         
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-sm">Auto Process</span>
+            <span className="text-sm">自動處理</span>
             <button
               onClick={() => onAutoProcessChange(!isAutoProcess)}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
@@ -187,7 +191,7 @@ const InputPanel: React.FC<InputPanelProps> = ({
           
           <div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm">Animation Speed</span>
+              <span className="text-sm">動畫速度</span>
               <span className="text-xs text-muted-foreground">{processingSpeed}x</span>
             </div>
             <input

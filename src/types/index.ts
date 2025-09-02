@@ -26,6 +26,14 @@ export interface ProcessingResult {
   matchedDimensions: string[];
 }
 
+export interface AIResponse {
+  message: string;
+  insights: string[];
+  recommendations: string[];
+  emotionalTone: string;
+  analysisConfidence: number;
+}
+
 export interface ActivityLogEntry {
   id: number;
   timestamp: string;
