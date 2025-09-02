@@ -71,6 +71,7 @@ export interface DimensionUpdate {
   newScore: number;
   change: number;
   content: string;
+  hasImage: boolean;
   calculationDetails: CalculationDetails | null;
 }
 

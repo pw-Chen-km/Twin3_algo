@@ -155,11 +155,16 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
             return (
               <motion.div
                 key={attrId}
-                className={`matrix-cell rounded-lg border border-border/50 relative group cursor-pointer p-4 ${categoryColor}`}
+                className={`matrix-cell rounded-lg border-2 border-border/30 relative group cursor-pointer p-4 ${categoryColor} hover:border-white/50 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 transform hover:-translate-y-1`}
                 style={{ 
                   opacity: getScoreIntensity(score),
                 }}
-                whileHover={{ scale: 1.05, zIndex: 10 }}
+                whileHover={{ 
+                  scale: 1.08, 
+                  zIndex: 10,
+                  boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)"
+                }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => setShowDetailModal(attrId)}
                 animate={processingState === 'processing' ? { 
                   scale: [1, 1.05, 1],
@@ -167,32 +172,49 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
                 } : {}}
                 transition={{ duration: 0.3 }}
               >
-                <div className="text-center">
+                <div className="text-center relative">
+                  {/* Clickable indicator */}
+                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-white/20 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                  </div>
+                  
                   <div className="text-lg font-bold text-white drop-shadow-sm mb-1">
                     {score}
                   </div>
                   {/* 顯示變化 */}
                   {latestChange !== 0 && (
-                    <div className={`text-xs font-bold mb-1 ${latestChange > 0 ? 'text-green-200' : 'text-red-200'}`}>
+                    <div className={`text-xs font-bold mb-1 px-2 py-0.5 rounded-full bg-white/20 ${latestChange > 0 ? 'text-green-200' : 'text-red-200'}`}>
                       {latestChange > 0 ? '+' : ''}{latestChange}
                     </div>
                   )}
                   <div className="text-xs text-white/90 font-medium mb-1">
                     {attrId}
                   </div>
-                  <div className="text-xs text-white/80 leading-tight">
+                  <div className="text-xs text-white/80 leading-tight font-medium">
                     {dimensionName}
+                  </div>
+                  
+                  {/* Click hint */}
+                  <div className="absolute inset-0 bg-white/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="text-xs text-white/90 font-medium bg-black/30 px-2 py-1 rounded">
+                      點擊查看詳情
+                    </div>
                   </div>
                 </div>
                 
                 {/* Update Count Badge */}
                 <div className="absolute top-1 right-1">
                   {history && history.totalUpdates > 0 && (
-                    <div className="bg-white/20 text-white text-xs px-1 rounded-full font-bold">
+                    <div className="bg-white/30 text-white text-xs px-2 py-0.5 rounded-full font-bold border border-white/20">
                       {history.totalUpdates}
                     </div>
                   )}
                 </div>
+                
+                {/* Processing glow effect */}
+                {processingState === 'processing' && (
+                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
+                )}
               </motion.div>
             );
           })}

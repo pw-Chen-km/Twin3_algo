@@ -44,10 +44,11 @@ function App() {
       
       // Update matrix data and track changes
       const previousMatrix = { ...matrixData };
-      setMatrixData(prev => ({
-        ...prev,
+      const newMatrixData = {
+        ...previousMatrix,
         ...result.matrixUpdates
-      }));
+      };
+      setMatrixData(newMatrixData);
       
       // Update dimension history with calculation details
       setDimensionHistory(prev => {
@@ -71,6 +72,7 @@ function App() {
             newScore,
             change,
             content: content.text,
+            hasImage: !!content.image,
             calculationDetails: result.calculationDetails?.[dimId] || null
           });
           
