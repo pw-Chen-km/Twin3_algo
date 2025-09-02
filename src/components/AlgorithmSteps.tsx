@@ -187,7 +187,6 @@ const AlgorithmSteps: React.FC<AlgorithmStepsProps> = ({ currentStep, results, i
                           </div>
                         )}
                       </div>
-                      </div>
                     )}
 
                     {step.id === 'complete' && results.totalUpdates && (
