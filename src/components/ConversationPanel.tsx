@@ -38,6 +38,43 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Quick example generation function
+  const getQuickExample = (lang: string, type: string): string => {
+    const examples = {
+      'en': {
+        learning: "I learned new skills today",
+        environmental: "Participated in environmental activities", 
+        social: "Had dinner with friends to celebrate"
+      },
+      'zh-CN': {
+        learning: "我今天学习了新技能",
+        environmental: "参加了环保活动",
+        social: "和朋友聚餐庆祝"
+      },
+      'ja': {
+        learning: "今日新しいスキルを学びました",
+        environmental: "環境活動に参加しました",
+        social: "友達と食事をして祝いました"
+      },
+      'ko': {
+        learning: "오늘 새로운 기술을 배웠습니다",
+        environmental: "환경 활동에 참여했습니다",
+        social: "친구들과 저녁을 먹으며 축하했습니다"
+      },
+      'es': {
+        learning: "Hoy aprendí nuevas habilidades",
+        environmental: "Participé en actividades ambientales",
+        social: "Cené con amigos para celebrar"
+      },
+      'zh-TW': {
+        learning: "我今天學習了新技能",
+        environmental: "參加了環保活動",
+        social: "和朋友聚餐慶祝"
+      }
+    };
+    return examples[lang]?.[type] || examples['zh-TW'][type];
+  };
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -409,43 +446,6 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({
       </div>
     </div>
   );
-
-  // 快速範例生成函數
-  const getQuickExample = (lang: Language, type: string): string => {
-    const examples = {
-      'en': {
-        learning: "I learned new skills today",
-        environmental: "Participated in environmental activities", 
-        social: "Had dinner with friends to celebrate"
-      },
-      'zh-CN': {
-        learning: "我今天学习了新技能",
-        environmental: "参加了环保活动",
-        social: "和朋友聚餐庆祝"
-      },
-      'ja': {
-        learning: "今日新しいスキルを学びました",
-        environmental: "環境活動に参加しました",
-        social: "友達と食事をして祝いました"
-      },
-      'ko': {
-        learning: "오늘 새로운 기술을 배웠습니다",
-        environmental: "환경 활동에 참여했습니다",
-        social: "친구들과 저녁을 먹으며 축하했습니다"
-      },
-      'es': {
-        learning: "Hoy aprendí nuevas habilidades",
-        environmental: "Participé en actividades ambientales",
-        social: "Cené con amigos para celebrar"
-      },
-      'zh-TW': {
-        learning: "我今天學習了新技能",
-        environmental: "參加了環保活動",
-        social: "和朋友聚餐慶祝"
-      }
-    };
-    return examples[lang]?.[type] || examples['zh-TW'][type];
-  };
 };
 
 export default ConversationPanel;
