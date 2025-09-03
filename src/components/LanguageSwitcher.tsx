@@ -12,6 +12,11 @@ const LanguageSwitcher: React.FC = () => {
   const handleLanguageChange = (newLanguage: Language) => {
     changeLanguage(newLanguage);
     setIsOpen(false);
+    
+    // 強制重新渲染整個應用
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
 
   return (

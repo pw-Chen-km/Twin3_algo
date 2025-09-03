@@ -67,7 +67,6 @@ function App() {
   const { theme } = useTheme();
   const { language } = useLanguage();
   const t = useTranslation(language);
-  const [currentLanguage, setCurrentLanguage] = useState<Language>(language);
   const [selectedUser, setSelectedUser] = useState<number>(1);
   const [processingState, setProcessingState] = useState<ProcessingState>('idle');
   const [currentContent, setCurrentContent] = useState<UserContent | null>(null);
@@ -87,38 +86,34 @@ function App() {
     }
   ]);
 
-  // 語言切換時更新所有訊息
+  // 語言切換時立即更新所有訊息
   useEffect(() => {
-    if (currentLanguage !== language) {
-      setCurrentLanguage(language);
-      
-      // 更新所有系統訊息的語言
-      setMessages(prevMessages => 
-        prevMessages.map(message => {
-          if (message.type === 'system') {
-            if (message.id === 'welcome' || message.id.startsWith('welcome-')) {
-              return {
-                ...message,
-                content: getWelcomeMessage(language)
-              };
-            } else if (message.id.startsWith('user-switch-')) {
-              const userId = message.id.split('-')[2];
-              return {
-                ...message,
-                content: getUserSwitchMessage(language, parseInt(userId))
-              };
-            } else if (message.id.startsWith('error-')) {
-              return {
-                ...message,
-                content: getErrorMessage(language)
-              };
-            }
+    // 更新所有系統訊息的語言
+    setMessages(prevMessages => 
+      prevMessages.map(message => {
+        if (message.type === 'system') {
+          if (message.id === 'welcome' || message.id.startsWith('welcome-')) {
+            return {
+              ...message,
+              content: getWelcomeMessage(language)
+            };
+          } else if (message.id.startsWith('user-switch-')) {
+            const userId = message.id.split('-')[2];
+            return {
+              ...message,
+              content: getUserSwitchMessage(language, parseInt(userId))
+            };
+          } else if (message.id.startsWith('error-')) {
+            return {
+              ...message,
+              content: getErrorMessage(language)
+            };
           }
-          return message;
-        })
-      );
-    }
-  }, [language, currentLanguage]);
+        }
+        return message;
+      })
+    );
+  }, [language]);
 
   const handleContentSubmit = async (content: UserContent) => {
     if (processingState === 'processing') return;
@@ -196,13 +191,18 @@ function App() {
         ...previousMatrix,
         ...result.matrixUpdates
       };
+      
+      console.log('📊 Matrix更新前:', previousMatrix);
+      console.log('📊 Matrix更新後:', newMatrixData);
+      console.log('📊 本次更新:', result.matrixUpdates);
+      
       setMatrixData(newMatrixData);
       
       // Update dimension history with calculation details
       setDimensionHistory(prev => {
         const newHistory = { ...prev };
         Object.entries(result.matrixUpdates).forEach(([dimId, newScore]) => {
-          const previousScore = previousMatrix[dimId] || 128;
+          const previousScore = previousMatrix[dimId] || 0;
           const change = newScore - previousScore;
           
           if (!newHistory[dimId]) {

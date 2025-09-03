@@ -84,6 +84,31 @@ const runMSMM = (text: string, image?: File | string): { metaTags: string[], mat
     extractedTags.push(...imageTags);
   }
   
+  // 如果沒有提取到任何標籤，使用通用標籤確保有匹配結果
+  if (extractedTags.length === 0) {
+    // 基於文字內容長度和複雜度推斷可能的標籤
+    if (textLower.includes('學習') || textLower.includes('技能') || textLower.includes('知識')) {
+      extractedTags.push('學習', '知識');
+    }
+    if (textLower.includes('朋友') || textLower.includes('聚會') || textLower.includes('社交')) {
+      extractedTags.push('社交', '朋友');
+    }
+    if (textLower.includes('完成') || textLower.includes('成功') || textLower.includes('達成')) {
+      extractedTags.push('成就', '完成');
+    }
+    if (textLower.includes('吃') || textLower.includes('食物') || textLower.includes('餐')) {
+      extractedTags.push('食物', '飲食');
+    }
+    if (textLower.includes('運動') || textLower.includes('健身') || textLower.includes('鍛鍊')) {
+      extractedTags.push('運動', '健身');
+    }
+    
+    // 如果還是沒有標籤，添加通用標籤
+    if (extractedTags.length === 0) {
+      extractedTags.push('體驗', '活動', '生活');
+    }
+  }
+  
   console.log('🎯 提取的Meta-Tags:', extractedTags);
   
   // 2. 維度匹配（模擬Sentence-BERT相似度計算）
@@ -91,17 +116,63 @@ const runMSMM = (text: string, image?: File | string): { metaTags: string[], mat
   
   Object.entries(REAL_TWIN3_METADATA).forEach(([dimId, dim]) => {
     const intersection = extractedTags.filter(tag => dim.meta_tags.includes(tag));
-    const similarity = intersection.length / Math.max(dim.meta_tags.length, 1);
+    let similarity = intersection.length / Math.max(dim.meta_tags.length, 1);
     
-    if (similarity > 0.1) { // 相似度閾值
+    // 如果沒有直接匹配，使用語意相似度計算
+    if (similarity === 0) {
+      // 計算語意相似度（簡化版）
+      const semanticScore = calculateSemanticSimilarity(extractedTags, dim.meta_tags);
+      similarity = semanticScore;
+    }
+    
+    if (similarity > 0.05) { // 降低相似度閾值以確保有匹配結果
       matchedDimensions.push({ id: dimId, similarity });
       console.log(`📊 匹配維度 ${dimId}: 相似度 ${(similarity * 100).toFixed(1)}%`);
     }
   });
   
+  // 確保至少有一些維度被匹配到
+  if (matchedDimensions.length === 0) {
+    console.log('⚠️ 沒有匹配到維度，使用默認匹配策略');
+    // 添加一些基本維度作為默認匹配
+    const defaultDimensions = ['0099', '0071', '0032']; // Learning, Social Achievement, Emotional Stability
+    defaultDimensions.forEach(dimId => {
+      if (REAL_TWIN3_METADATA[dimId]) {
+        matchedDimensions.push({ id: dimId, similarity: 0.3 });
+        console.log(`📊 默認匹配維度 ${dimId}: 相似度 30%`);
+      }
+    });
+  }
+  
   return { metaTags: extractedTags, matchedDimensions };
 };
 
+// 語意相似度計算（簡化版）
+const calculateSemanticSimilarity = (userTags: string[], dimensionTags: string[]): number => {
+  let score = 0;
+  
+  // 檢查語意相關性
+  const semanticGroups = {
+    learning: ['學習', '知識', '技能', '教育', '研究', '課程'],
+    social: ['朋友', '社交', '聚會', '團隊', '合作', '互動'],
+    achievement: ['成就', '完成', '成功', '達成', '獲得', '表現'],
+    food: ['食物', '吃', '餐', '飲食', '料理', '營養'],
+    leadership: ['領導', '帶領', '指導', '管理', '組織'],
+    responsibility: ['責任', '環保', '永續', '社會', '公益'],
+    emotion: ['情緒', '感受', '心情', '情感', '穩定']
+  };
+  
+  for (const [group, keywords] of Object.entries(semanticGroups)) {
+    const userMatches = userTags.filter(tag => keywords.includes(tag)).length;
+    const dimMatches = dimensionTags.filter(tag => keywords.includes(tag)).length;
+    
+    if (userMatches > 0 && dimMatches > 0) {
+      score += Math.min(userMatches, dimMatches) * 0.2;
+    }
+  }
+  
+  return Math.min(score, 1.0);
+};
 // 真實的ULTU動態評分算法
 const runULTU = (
   dimensionId: string, 
@@ -186,11 +257,56 @@ const runULTU = (
     }
   }
   
+  // 學習導向維度特定分析
+  if (dimensionId === '0099') {
+    if (textLower.includes('學習') || textLower.includes('知識') || textLower.includes('技能')) {
+      const learningBonus = 55;
+      geminiRawScore += learningBonus;
+      relevanceFactors.push({
+        factor: '學習行為識別',
+        contribution: learningBonus,
+        description: '識別到學習和知識獲取行為'
+      });
+    }
+  }
+  
+  // 飲食習慣維度特定分析
+  if (dimensionId === '0008') {
+    if (textLower.includes('吃') || textLower.includes('食物') || textLower.includes('餐')) {
+      const foodBonus = 45;
+      geminiRawScore += foodBonus;
+      relevanceFactors.push({
+        factor: '飲食行為識別',
+        contribution: foodBonus,
+        description: '識別到飲食相關活動'
+      });
+    }
+  }
+  
+  // 情緒穩定性維度特定分析
+  if (dimensionId === '0032') {
+    if (textLower.includes('開心') || textLower.includes('快樂') || textLower.includes('滿足')) {
+      const emotionBonus = 40;
+      geminiRawScore += emotionBonus;
+      relevanceFactors.push({
+        factor: '正面情緒識別',
+        contribution: emotionBonus,
+        description: '識別到正面情緒表達'
+      });
+    }
+  }
+  
   // 確保分數在有效範圍內
   geminiRawScore = Math.max(0, Math.min(255, geminiRawScore));
   
   // 2. ULTU分數平滑（Twin3標準公式）
-  const alpha = updateCount === 0 ? 1.0 : 0.3; // 首次更新直接使用新分數
+  let alpha = updateCount === 0 ? 1.0 : 0.3; // 首次更新直接使用新分數
+  
+  // 確保有意義的分數變化
+  if (geminiRawScore < 50 && updateCount === 0) {
+    geminiRawScore = Math.max(50, geminiRawScore + 30); // 提升初始分數
+  }
+  
   const smoothedScore = Math.round(alpha * geminiRawScore + (1 - alpha) * previousScore);
   
   // 3. 智能更新策略（基於真實ULTU邏輯）
@@ -199,6 +315,7 @@ const runULTU = (
   
   if (updateCount === 0) {
     strategy = '首次評分';
+    finalScore = Math.max(finalScore, 80); // 確保首次評分有合理的基礎分數
   } else if (updateCount < 3) {
     // 早期更新：較積極的學習
     const aggressiveAlpha = 0.7;
@@ -209,6 +326,11 @@ const runULTU = (
     const conservativeAlpha = 0.15;
     finalScore = Math.round(conservativeAlpha * geminiRawScore + (1 - conservativeAlpha) * previousScore);
     strategy = '異常保護';
+  }
+  
+  // 確保分數有實際變化
+  if (finalScore === previousScore && geminiRawScore !== previousScore) {
+    finalScore = previousScore + (geminiRawScore > previousScore ? 5 : -5);
   }
   
   console.log(`📊 ${dimensionId}: ${previousScore} → ${finalScore} (Gemini: ${geminiRawScore}, 策略: ${strategy})`);

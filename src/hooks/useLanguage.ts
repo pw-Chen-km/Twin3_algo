@@ -48,6 +48,9 @@ export const useLanguage = () => {
     
     // 更新 document 的 lang 屬性
     document.documentElement.lang = language;
+    
+    // 觸發自定義事件通知其他組件語言已變更
+    window.dispatchEvent(new CustomEvent('languageChanged', { detail: language }));
   }, [language]);
 
   const changeLanguage = (newLanguage: Language) => {
