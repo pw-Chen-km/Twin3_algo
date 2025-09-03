@@ -16,7 +16,7 @@ export class AIResponseService {
   constructor() {
     this.apiKey = import.meta.env.VITE_GEMINI_API_KEY;
     if (!this.apiKey) {
-      console.error('❌ Gemini API key not found in environment variables');
+      console.warn('⚠️ Gemini API key not found in environment variables - using fallback responses');
     } else {
       console.log('✅ Gemini API key loaded successfully');
     }

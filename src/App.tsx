@@ -26,6 +26,43 @@ interface Message {
   processingTime?: number;
 }
 
+// 語言相關的訊息生成函數
+const getWelcomeMessage = (lang: Language): string => {
+  const messages = {
+    'en': 'Welcome to twin3 intelligent analysis system! Share your experiences and AI will provide personalized insights.',
+    'zh-CN': '欢迎使用 twin3 智能分析系统！请分享您的体验，AI 将为您提供个性化洞察。',
+    'ja': 'twin3 インテリジェント分析システムへようこそ！あなたの体験をシェアしてください。AIがパーソナライズされた洞察を提供します。',
+    'ko': 'twin3 지능형 분석 시스템에 오신 것을 환영합니다! 경험을 공유하시면 AI가 개인화된 통찰을 제공합니다.',
+    'es': '¡Bienvenido al sistema de análisis inteligente twin3! Comparte tus experiencias y la IA te proporcionará perspectivas personalizadas.',
+    'zh-TW': '歡迎使用 twin3 智能分析系統！請分享您的體驗，AI 將為您提供個人化洞察。'
+  };
+  return messages[lang] || messages['zh-TW'];
+};
+
+const getUserSwitchMessage = (lang: Language, userId: number): string => {
+  const messages = {
+    'en': `Switched to User ${userId}. Welcome to twin3 intelligent analysis system!`,
+    'zh-CN': `已切换到用户 ${userId}。欢迎使用 twin3 智能分析系统！`,
+    'ja': `ユーザー ${userId} に切り替えました。twin3 インテリジェント分析システムへようこそ！`,
+    'ko': `사용자 ${userId}로 전환했습니다. twin3 지능형 분석 시스템에 오신 것을 환영합니다!`,
+    'es': `Cambiado al Usuario ${userId}. ¡Bienvenido al sistema de análisis inteligente twin3!`,
+    'zh-TW': `已切換到用戶 ${userId}。歡迎使用 twin3 智能分析系統！`
+  };
+  return messages[lang] || messages['zh-TW'];
+};
+
+const getErrorMessage = (lang: Language): string => {
+  const messages = {
+    'en': 'An error occurred during processing, please try again later.',
+    'zh-CN': '处理过程中发生错误，请稍后再试。',
+    'ja': '処理中にエラーが発生しました。後でもう一度お試しください。',
+    'ko': '처리 중 오류가 발생했습니다. 나중에 다시 시도해주세요.',
+    'es': 'Ocurrió un error durante el procesamiento, por favor inténtalo de nuevo más tarde.',
+    'zh-TW': '處理過程中發生錯誤，請稍後再試。'
+  };
+  return messages[lang] || messages['zh-TW'];
+};
+
 function App() {
   const { theme } = useTheme();
   const { language } = useLanguage();
@@ -82,43 +119,6 @@ function App() {
       );
     }
   }, [language, currentLanguage]);
-
-  // 語言相關的訊息生成函數
-  const getWelcomeMessage = (lang: Language): string => {
-    const messages = {
-      'en': 'Welcome to twin3 intelligent analysis system! Share your experiences and AI will provide personalized insights.',
-      'zh-CN': '欢迎使用 twin3 智能分析系统！请分享您的体验，AI 将为您提供个性化洞察。',
-      'ja': 'twin3 インテリジェント分析システムへようこそ！あなたの体験をシェアしてください。AIがパーソナライズされた洞察を提供します。',
-      'ko': 'twin3 지능형 분석 시스템에 오신 것을 환영합니다! 경험을 공유하시면 AI가 개인화된 통찰을 제공합니다.',
-      'es': '¡Bienvenido al sistema de análisis inteligente twin3! Comparte tus experiencias y la IA te proporcionará perspectivas personalizadas.',
-      'zh-TW': '歡迎使用 twin3 智能分析系統！請分享您的體驗，AI 將為您提供個人化洞察。'
-    };
-    return messages[lang] || messages['zh-TW'];
-  };
-
-  const getUserSwitchMessage = (lang: Language, userId: number): string => {
-    const messages = {
-      'en': `Switched to User ${userId}. Welcome to twin3 intelligent analysis system!`,
-      'zh-CN': `已切换到用户 ${userId}。欢迎使用 twin3 智能分析系统！`,
-      'ja': `ユーザー ${userId} に切り替えました。twin3 インテリジェント分析システムへようこそ！`,
-      'ko': `사용자 ${userId}로 전환했습니다. twin3 지능형 분석 시스템에 오신 것을 환영합니다!`,
-      'es': `Cambiado al Usuario ${userId}. ¡Bienvenido al sistema de análisis inteligente twin3!`,
-      'zh-TW': `已切換到用戶 ${userId}。歡迎使用 twin3 智能分析系統！`
-    };
-    return messages[lang] || messages['zh-TW'];
-  };
-
-  const getErrorMessage = (lang: Language): string => {
-    const messages = {
-      'en': 'An error occurred during processing, please try again later.',
-      'zh-CN': '处理过程中发生错误，请稍后再试。',
-      'ja': '処理中にエラーが発生しました。後でもう一度お試しください。',
-      'ko': '처리 중 오류가 발생했습니다. 나중에 다시 시도해주세요.',
-      'es': 'Ocurrió un error durante el procesamiento, por favor inténtalo de nuevo más tarde.',
-      'zh-TW': '處理過程中發生錯誤，請稍後再試。'
-    };
-    return messages[lang] || messages['zh-TW'];
-  };
 
   const handleContentSubmit = async (content: UserContent) => {
     if (processingState === 'processing') return;
