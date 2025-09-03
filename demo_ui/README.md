@@ -1,4 +1,4 @@
-Twin3 HWAM Demo UI
+twin3 HWAM Demo UI
 
 快速啟動
 

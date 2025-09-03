@@ -1,0 +1,262 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== 配色方案定義 ===== */
+:root {
+  /* 淺色模式配色 - 高對比度設計 */
+  --background: 255 255 255;           /* 純白背景 */
+  --foreground: 15 23 42;              /* 深藍灰文字 #0f172a */
+  --card: 255 255 255;                 /* 卡片白色背景 */
+  --card-foreground: 30 41 59;         /* 卡片深灰文字 #1e293b */
+  --popover: 255 255 255;              /* 彈出層白色背景 */
+  --popover-foreground: 15 23 42;      /* 彈出層深色文字 */
+  --primary: 37 99 235;                /* 主色藍色 #2563eb */
+  --primary-foreground: 255 255 255;   /* 主色文字白色 */
+  --secondary: 248 250 252;            /* 次要背景淺灰 #f8fafc */
+  --secondary-foreground: 51 65 85;    /* 次要文字深灰 #334155 */
+  --muted: 241 245 249;                /* 靜音背景 #f1f5f9 */
+  --muted-foreground: 100 116 139;     /* 靜音文字 #64748b */
+  --accent: 239 246 255;               /* 強調背景淺藍 #eff6ff */
+  --accent-foreground: 30 58 138;      /* 強調文字深藍 #1e3a8a */
+  --destructive: 239 68 68;            /* 危險紅色 #ef4444 */
+  --destructive-foreground: 255 255 255; /* 危險文字白色 */
+  --border: 203 213 225;               /* 邊框中灰 #cbd5e1 - 更清晰 */
+  --input: 255 255 255;                /* 輸入框白色背景 */
+  --ring: 37 99 235;                   /* 焦點環藍色 */
+}
+
+.dark {
+  /* 深色模式配色 - 高對比度設計 */
+  --background: 15 23 42;              /* 深藍灰背景 #0f172a */
+  --foreground: 248 250 252;           /* 淺色文字 #f8fafc */
+  --card: 30 41 59;                    /* 卡片深灰背景 #1e293b */
+  --card-foreground: 241 245 249;      /* 卡片淺色文字 #f1f5f9 */
+  --popover: 30 41 59;                 /* 彈出層深灰背景 */
+  --popover-foreground: 248 250 252;   /* 彈出層淺色文字 */
+  --primary: 59 130 246;               /* 主色亮藍 #3b82f6 */
+  --primary-foreground: 15 23 42;      /* 主色文字深色 */
+  --secondary: 51 65 85;               /* 次要背景中灰 #334155 */
+  --secondary-foreground: 226 232 240; /* 次要文字淺灰 #e2e8f0 */
+  --muted: 51 65 85;                   /* 靜音背景中灰 */
+  --muted-foreground: 148 163 184;     /* 靜音文字 #94a3b8 */
+  --accent: 30 58 138;                 /* 強調背景深藍 #1e3a8a */
+  --accent-foreground: 219 234 254;    /* 強調文字淺藍 #dbeafe */
+  --destructive: 248 113 113;          /* 危險亮紅 #f87171 */
+  --destructive-foreground: 15 23 42;  /* 危險文字深色 */
+  --border: 71 85 105;                 /* 邊框中灰 #475569 */
+  --input: 51 65 85;                   /* 輸入框深灰背景 */
+  --ring: 59 130 246;                  /* 焦點環亮藍 */
+}
+
+/* ===== 基礎樣式 ===== */
+* {
+  border-color: rgb(var(--border));
+}
+
+body {
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ===== 主題過渡動畫 ===== */
+.theme-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== 256維度矩陣樣式 ===== */
+.matrix-256-grid {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  gap: 2px;
+  padding: 8px;
+  background: rgb(var(--muted));
+  border: 2px solid rgb(var(--border));
+  border-radius: 8px;
+}
+
+.matrix-cell-256 {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  border: 1px solid rgb(var(--border));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.matrix-cell-256:hover {
+  transform: scale(1.2);
+  z-index: 10;
+  border: 2px solid rgb(var(--primary));
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.matrix-cell-256.active {
+  border: 2px solid rgb(var(--primary));
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.5);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.matrix-address-label {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  color: rgb(var(--muted-foreground));
+  margin-bottom: 4px;
+}
+
+/* ===== 組件樣式 ===== */
+.matrix-cell {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.matrix-cell:hover {
+  transform: scale(1.08) translateY(-4px);
+  z-index: 10;
+}
+
+.matrix-cell::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.matrix-cell:hover::before {
+  left: 100%;
+}
+
+.processing-animation {
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.meta-tag {
+  animation: slideUp 0.3s ease-out;
+}
+
+.pipeline-step {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pipeline-step.active {
+  transform: scale(1.05) translateY(-2px);
+}
+
+/* ===== 滾動條樣式 ===== */
+.conversation-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.conversation-scroll::-webkit-scrollbar-track {
+  background: rgb(var(--muted));
+}
+
+.conversation-scroll::-webkit-scrollbar-thumb {
+  background: rgb(var(--muted-foreground));
+  border-radius: 3px;
+}
+
+.conversation-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--primary));
+}
+
+/* ===== 深色模式特定樣式 ===== */
+.dark .matrix-cell {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dark .matrix-cell:hover {
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+}
+
+.dark .pipeline-step.active {
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+}
+
+.dark .matrix-cell-256 {
+  border-color: rgb(var(--border));
+}
+
+.dark .matrix-cell-256:hover {
+  border-color: rgb(var(--primary));
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* ===== 動畫關鍵幀 ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(10px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+  }
+}
+
+.processing-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ===== 無障礙支援 ===== */
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition,
+  .matrix-cell,
+  .pipeline-step {
+    transition: none;
+  }
+  
+  .processing-animation,
+  .processing-glow {
+    animation: none;
+  }
+}
+
+/* ===== 高對比度模式支援 ===== */
+@media (prefers-contrast: high) {
+  :root {
+    --border: 0 0 0;
+    --muted-foreground: 0 0 0;
+  }
+  
+  .dark {
+    --border: 255 255 255;
+    --muted-foreground: 255 255 255;
+  }
+}
