@@ -1,67 +1,69 @@
 import { UserContent, ProcessingResult, MetaTag, CalculationDetails } from '../types';
 
-// 載入真實的Twin3維度定義（從專案metadata）
-const REAL_TWIN3_METADATA = {
-  '0008': {
-    name: 'Dietary Habits',
-    definition: '個人飲食習慣和營養選擇的傾向',
-    meta_tags: ['食物', '營養', '健康', '飲食', '料理', '早餐', '晚餐', '餐廳'],
-    encoding_rules: '基於飲食選擇的健康程度和多樣性評分',
-    ai_parsing_guidelines: '分析飲食相關內容，評估營養意識和飲食習慣'
-  },
-  '0071': {
-    name: 'Social Achievements',
-    definition: '在社會環境中的成就和認可程度',
-    meta_tags: ['成就', '成功', '認可', '表現', '完成', '獲得', '達成'],
-    encoding_rules: '基於社會成就的影響力和重要性評分',
-    ai_parsing_guidelines: '識別成就相關內容，評估社會影響力和成功程度'
-  },
-  '0048': {
-    name: 'Leadership Ability',
-    definition: '領導他人和組織團隊的能力',
-    meta_tags: ['領導', '指導', '管理', '組織', '帶領', '主持', '協調'],
-    encoding_rules: '基於領導行為的效果和影響範圍評分',
-    ai_parsing_guidelines: '識別領導行為，評估領導效果和團隊影響力'
-  },
-  '0099': {
-    name: 'Learning Orientation',
-    definition: '對學習新知識和技能的積極程度',
-    meta_tags: ['學習', '知識', '技能', '成長', '教育', '研究', '課程'],
-    encoding_rules: '基於學習活動的主動性和深度評分',
-    ai_parsing_guidelines: '分析學習相關活動，評估學習動機和深度'
-  },
-  'SP088': {
-    name: 'Social Responsibility',
-    definition: '對社會責任和環境保護的關注程度',
-    meta_tags: ['責任', '環保', '社會', '永續', '公益', '志工', '社區'],
-    encoding_rules: '基於社會責任行為的影響力和持續性評分',
-    ai_parsing_guidelines: '識別社會責任行為，評估環保意識和社會參與度'
-  },
-  '0067': {
-    name: 'Spiritual Awareness',
-    definition: '對精神層面和內在成長的關注程度',
-    meta_tags: ['精神', '內在', '成長', '覺察', '靈性', '冥想', '反思'],
-    encoding_rules: '基於精神實踐和自我反思的深度評分',
-    ai_parsing_guidelines: '分析精神成長相關內容，評估內在覺察程度'
-  },
-  '006C': {
-    name: 'Emotional Intelligence',
-    definition: '理解和管理自己及他人情緒的能力',
-    meta_tags: ['情緒', '理解', '同理心', '溝通', '感受', '情感', '關懷'],
-    encoding_rules: '基於情緒識別和管理能力評分',
-    ai_parsing_guidelines: '分析情緒相關表達，評估情緒智商和同理心'
-  },
-  '0032': {
-    name: 'Emotional Stability',
-    definition: '情緒管理和心理穩定性',
-    meta_tags: ['情緒', '穩定', '平衡', '調節', '心理', '冷靜', '控制'],
-    encoding_rules: '基於情緒表達的穩定性和適應性評分',
-    ai_parsing_guidelines: '評估情緒穩定性和壓力處理能力'
+// 動態載入真實的 Twin3 維度定義（從後端 /metadata）
+let REAL_TWIN3_METADATA: Record<string, { name: string; definition: string; meta_tags: string[]; encoding_rules?: string; ai_parsing_guidelines?: string }> = {} as any;
+const ensureMetadataLoaded = async () => {
+  if (Object.keys(REAL_TWIN3_METADATA).length > 0) return;
+  try {
+    const resp = await fetch('/metadata');
+    const data = await resp.json();
+    // 轉換結構：後端是 attribute_name/meta_tags 鍵名
+    const mapped: Record<string, any> = {};
+    Object.entries<any>(data).forEach(([id, v]) => {
+      mapped[id] = {
+        name: v.attribute_name,
+        definition: v.definition,
+        meta_tags: v.attribute_meta_tags || [],
+        encoding_rules: v.encoding_rules,
+        ai_parsing_guidelines: v.ai_parsing_guidelines
+      };
+    });
+    REAL_TWIN3_METADATA = mapped as any;
+  } catch (e) {
+    console.warn('⚠️ 載入後端 metadata 失敗：', e);
   }
 };
 
-// 真實的MSMM語意匹配算法
-const runMSMM = (text: string, image?: File | string): { metaTags: string[], matchedDimensions: Array<{id: string, similarity: number}> } => {
+// 將 File 轉成 data URL（base64）
+const fileToDataUrl = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+};
+
+// 透過後端 API 呼叫真實的 MSMM（若失敗則回退本地模擬）
+const runMSMMViaAPI = async (
+  text: string,
+  image?: File | string
+): Promise<{ metaTags: string[]; matchedDimensions: Array<{ id: string; similarity: number }> }> => {
+  try {
+    const payload: any = { text, threshold: 0.6 };
+    if (typeof image === 'string') {
+      payload.image = image;
+    } else if (image instanceof File) {
+      payload.image = await fileToDataUrl(image);
+    }
+    const resp = await fetch('/msmm', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!resp.ok) throw new Error(`MSMM API error ${resp.status}`);
+    const data = await resp.json();
+    const metaTags: string[] = data.meta_tags || [];
+    const matchedDimensions = (data.matches || []).map((m: any) => ({ id: m.attribute_id, similarity: m.similarity }));
+    return { metaTags, matchedDimensions };
+  } catch (e) {
+    console.warn('⚠️ MSMM API 失敗，回退本地模擬：', e);
+    return runMSMMLocal(text, image);
+  }
+};
+
+// 本地模擬的MSMM（保留為回退）
+const runMSMMLocal = (text: string, image?: File | string): { metaTags: string[], matchedDimensions: Array<{id: string, similarity: number}> } => {
   console.log('🔍 MSMM: 開始語意匹配分析...');
   
   // 1. Meta-Tag提取（模擬Gemini 2.5 Flash）
@@ -185,11 +187,25 @@ const runULTU = (
   console.log(`⚡ ULTU: 開始為維度 ${dimensionId} 計算分數...`);
   
   const dimension = REAL_TWIN3_METADATA[dimensionId];
-  if (!dimension) return { score: 128, details: null };
+  if (!dimension) {
+    const defaultDetails: CalculationDetails = {
+      msmmSimilarity,
+      geminiRawScore: 0,
+      previousScore,
+      smoothingFactor: 1.0,
+      timeDecayFactor: 1.0,
+      finalScore: previousScore,
+      matchedMetaTags,
+      relevanceFactors: [],
+      strategy: 'not-applicable',
+      updateCount: updateCount + 1
+    };
+    return { score: previousScore, details: defaultDetails };
+  }
   
   // 1. Gemini AI評分模擬（基於真實的AI解析指導）
   let geminiRawScore = 0; // 基準分數從0開始
-  const relevanceFactors = [];
+  const relevanceFactors: Array<{ factor: string; contribution: number; description: string }> = [];
   
   // Meta-Tags匹配強度分析
   const tagMatchStrength = matchedMetaTags.length / dimension.meta_tags.length;
@@ -362,16 +378,31 @@ export const processContentWithTwin3Algorithm = async (
   algorithmSteps: Array<{step: string, timestamp: string, data: any}>
 }> => {
   const baseDelay = 800 / speed;
-  const algorithmSteps = [];
+  const algorithmSteps: Array<{ step: string; timestamp: string; data: any }> = [];
   
   console.log('🚀 Twin3演算法開始處理...');
   console.log('🚀 twin3演算法開始處理...');
   
-  // 步驟1: MSMM語意匹配
+  // 步驟1: MSMM語意匹配（優先走後端 API）
   onStepUpdate?.('msmm', { status: 'running', message: '正在提取Meta-Tags...' });
   await new Promise(resolve => setTimeout(resolve, baseDelay));
+  await ensureMetadataLoaded();
   
-  const msmmResult = runMSMM(content.text, content.image);
+  const msmmResult = await runMSMMViaAPI(content.text, content.image);
+
+  // 若 metaTags 為空，直接終止流程
+  if (!msmmResult.metaTags || msmmResult.metaTags.length === 0) {
+    onStepUpdate?.('msmm', { status: 'complete', metaTags: [], matchedDimensions: [] });
+    onStepUpdate?.('complete', { status: 'complete', totalUpdates: 0, summary: [] });
+    return {
+      metaTags: [],
+      matrixUpdates: {},
+      processingTime: Math.round(baseDelay),
+      matchedDimensions: [],
+      calculationDetails: {},
+      algorithmSteps: []
+    };
+  }
   algorithmSteps.push({
     step: 'MSMM完成',
     timestamp: new Date().toISOString(),
@@ -396,24 +427,63 @@ export const processContentWithTwin3Algorithm = async (
   const calculationDetails: Record<string, CalculationDetails> = {};
   
   // 為每個匹配的維度計算新分數
-  msmmResult.matchedDimensions.forEach(match => {
-    const previousScore = currentMatrix[match.id] || 0;
-    const updateCount = 0; // 在真實系統中這會從狀態文件讀取
-    
-    const result = runULTU(
-      match.id,
-      content.text,
-      previousScore, 
-      updateCount,
-      match.similarity,
-      msmmResult.metaTags.filter(tag => 
-        REAL_TWIN3_METADATA[match.id]?.meta_tags.includes(tag)
-      )
-    );
-    
-    matrixUpdates[match.id] = result.score;
-    calculationDetails[match.id] = result.details;
-  });
+  try {
+    const resp = await fetch('/ultu', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        text: content.text,
+        image: typeof content.image === 'string' 
+          ? content.image 
+          : (content.image instanceof File ? await fileToDataUrl(content.image) : undefined),
+        matches: msmmResult.matchedDimensions.map(m => ({
+          attribute_id: m.id,
+          attribute_name: REAL_TWIN3_METADATA[m.id]?.name,
+          similarity_score: m.similarity
+        })),
+        user_id: 1
+      })
+    });
+    if (!resp.ok) throw new Error(`ULTU API error ${resp.status}`);
+    const data = await resp.json();
+    console.log('🔍 ULTU API 回傳:', data);
+    const updates = data.updates || {};
+    console.log('🔍 updates 內容:', updates);
+    Object.entries(updates).forEach(([id, info]: any) => {
+      console.log(`🔍 處理維度 ${id}:`, info);
+      matrixUpdates[id] = info.smoothed_score;
+      calculationDetails[id] = {
+        msmmSimilarity: msmmResult.matchedDimensions.find(d => d.id === id)?.similarity || 0,
+        geminiRawScore: info.new_raw_score ?? 0,
+        previousScore: info.previous_score ?? 128,
+        smoothingFactor: 0.3,
+        timeDecayFactor: 1.0,
+        finalScore: info.smoothed_score ?? info.previous_score ?? 128,
+        matchedMetaTags: msmmResult.metaTags.filter(tag => REAL_TWIN3_METADATA[id]?.meta_tags.includes(tag)),
+        relevanceFactors: [],
+        strategy: info.strategy_used ?? 'balanced',
+        updateCount: info.update_count ?? 1
+      };
+    });
+  } catch (e) {
+    console.warn('⚠️ ULTU API 失敗，暫以本地模擬：', e);
+    msmmResult.matchedDimensions.forEach(match => {
+      const previousScore = currentMatrix[match.id] || 0;
+      const updateCount = 0;
+      const result = runULTU(
+        match.id,
+        content.text,
+        previousScore, 
+        updateCount,
+        match.similarity,
+        msmmResult.metaTags.filter(tag => 
+          REAL_TWIN3_METADATA[match.id]?.meta_tags.includes(tag)
+        )
+      );
+      matrixUpdates[match.id] = result.score;
+      calculationDetails[match.id] = result.details;
+    });
+  }
   
   algorithmSteps.push({
     step: 'ULTU完成',
@@ -453,6 +523,7 @@ export const processContentWithTwin3Algorithm = async (
   console.log('✅ Twin3演算法處理完成');
   console.log('✅ twin3演算法處理完成');
   console.log(`📊 更新了 ${Object.keys(matrixUpdates).length} 個維度`);
+  console.log('📊 matrixUpdates 詳細內容:', matrixUpdates);
   
   return {
     metaTags,

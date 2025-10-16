@@ -5,6 +5,7 @@ Gemini 2.5 Flash 多模態輸入已全面支援
 """
 
 import json, math, random, re, warnings, io, os, mimetypes
+import base64
 from datetime import datetime, timezone
 from typing import Dict, List, Tuple, Optional
 
@@ -34,7 +35,7 @@ class ULTUProcessor:
         self.metadata = self._load_metadata()
 
         # Google Gemini Client
-        self.gemini_client = genai.Client(api_key="AIzaSyASSZjukErHRK7fZfbhBZEfNECUR7C1bdc")
+        self.gemini_client = genai.Client(api_key="AIzaSyDTZhjS_V4HNFbWWcDoBb_VFbVf_W_Mvlc")
         self.gemini_model_name = gemini_model_name
 
     # ---------------------------------------------------------- #
@@ -95,6 +96,20 @@ AI 解析指導：{attr.get('ai_parsing_guidelines', '基於內容相關性評�
 
     def _image_part_from_url_or_path(self, image_url: str) -> types.Part | None:
         try:
+            # data URL (data:image/...;base64,XXXX)
+            if image_url.startswith("data:"):
+                header, b64data = image_url.split(",", 1)
+                mime = header.split(";")[0].split(":")[1] if ";" in header else "image/jpeg"
+                img_bytes = base64.b64decode(b64data)
+                return types.Part.from_bytes(data=img_bytes, mime_type=mime)
+            # raw base64 字串（無 data: 前綴）
+            if re.fullmatch(r"[A-Za-z0-9+/=\r\n]+", image_url) and len(image_url) > 100:
+                try:
+                    img_bytes = base64.b64decode(image_url)
+                except Exception:
+                    padding = '=' * ((4 - len(image_url) % 4) % 4)
+                    img_bytes = base64.b64decode(image_url + padding)
+                return types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg")
             if image_url.startswith(("http://", "https://")):
                 img_bytes = requests.get(image_url, timeout=10).content
                 mime = requests.head(image_url, timeout=10).headers.get("Content-Type", "image/jpeg")
@@ -105,7 +120,7 @@ AI 解析指導：{attr.get('ai_parsing_guidelines', '基於內容相關性評�
                 mime = mime or "image/jpeg"
             return types.Part.from_bytes(data=img_bytes, mime_type=mime)
         except Exception as e:
-            warnings.warn(f"⚠️ 圖片讀取失敗：{e}")
+            warnings.warn(f"⚠️ 圖片讀取失敗：{repr(e)}")
             return None
 
     # ---------------------------------------------------------- #

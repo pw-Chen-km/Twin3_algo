@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Grid, Filter, TrendingUp, TrendingDown, Minus, Info, X, Calculator, Brain, Zap, Clock, BarChart3, Eye, EyeOff } from 'lucide-react';
 import { ProcessingState, DimensionHistory } from '../types';
@@ -19,21 +19,29 @@ const MatrixVisualization: React.FC<MatrixVisualizationProps> = ({ matrixData, p
   const [selectedDimension, setSelectedDimension] = useState<string | null>(null);
   const [showDetailModal, setShowDetailModal] = useState<string | null>(null);
 
-  // 使用真實twin3維度定義
-  const TWIN3_METADATA = {
-    '0008': { name: 'Dietary Habits', definition: '個人飲食習慣和營養選擇的傾向', meta_tags: ['食物', '營養', '健康', '飲食', '料理'] },
-    '0067': { name: 'Spiritual Awareness', definition: '對精神層面和內在成長的關注程度', meta_tags: ['精神', '內在', '成長', '覺察', '靈性'] },
-    '006C': { name: 'Emotional Intelligence', definition: '理解和管理自己及他人情緒的能力', meta_tags: ['情緒', '理解', '同理心', '溝通', '感受'] },
-    '0071': { name: 'Social Achievements', definition: '在社會環境中的成就和認可程度', meta_tags: ['成就', '成功', '認可', '表現', '完成'] },
-    '0048': { name: 'Leadership Ability', definition: '領導他人和組織團隊的能力', meta_tags: ['領導', '指導', '管理', '組織', '帶領'] },
-    '0040': { name: 'Social Relationships', definition: '建立和維持人際關係的能力', meta_tags: ['朋友', '關係', '社交', '互動', '連結'] },
-    '0099': { name: 'Learning Orientation', definition: '對學習新知識和技能的積極程度', meta_tags: ['學習', '知識', '技能', '成長', '教育'] },
-    '0156': { name: 'Creative Expression', definition: '創意表達和藝術創作的能力', meta_tags: ['創意', '創作', '藝術', '表達', '想像'] },
-    'SP088': { name: 'Social Responsibility', definition: '對社會責任和環境保護的關注程度', meta_tags: ['責任', '環保', '社會', '永續', '公益'] },
-    '0010': { name: 'Physical Fitness', definition: '身體健康和體能狀況', meta_tags: ['健身', '運動', '體能', '健康', '鍛鍊'] },
-    '0081': { name: 'Technology Adoption', definition: '對新技術的接受和應用能力', meta_tags: ['科技', '技術', '數位', '創新', '應用'] },
-    '0032': { name: 'Emotional Stability', definition: '情緒管理和心理穩定性', meta_tags: ['情緒', '穩定', '平衡', '調節', '心理'] }
-  };
+  // 從後端載入完整 metadata
+  const [TWIN3_METADATA, setTWIN3_METADATA] = useState<Record<string, { name: string; definition: string; meta_tags: string[] }>>({});
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const resp = await fetch('/metadata');
+        const raw = await resp.json();
+        const mapped: Record<string, { name: string; definition: string; meta_tags: string[] }> = {};
+        Object.entries<any>(raw).forEach(([id, v]) => {
+          mapped[id] = {
+            name: v.attribute_name,
+            definition: v.definition,
+            meta_tags: v.attribute_meta_tags || [],
+          };
+        });
+        if (mounted) setTWIN3_METADATA(mapped);
+      } catch (e) {
+        console.warn('載入 /metadata 失敗：', e);
+      }
+    })();
+    return () => { mounted = false; };
+  }, []);
 
   const categories = {
     physical: { name: t.matrix.categories.physical, color: 'bg-red-500', attributes: ['0010', '0012', '0016', '0019', '0021', '0033', '0034', '0035'] },

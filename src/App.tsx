@@ -195,6 +195,8 @@ function App() {
       console.log('📊 Matrix更新前:', previousMatrix);
       console.log('📊 Matrix更新後:', newMatrixData);
       console.log('📊 本次更新:', result.matrixUpdates);
+      console.log('📊 result.matrixUpdates 類型:', typeof result.matrixUpdates);
+      console.log('📊 result.matrixUpdates 鍵值對:', Object.entries(result.matrixUpdates));
       
       setMatrixData(newMatrixData);
       
