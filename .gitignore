@@ -62,3 +62,4 @@ temp/
 
 # HuggingFace cache（可選）
 .cache/ 
+.env
